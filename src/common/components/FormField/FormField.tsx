@@ -1,5 +1,7 @@
 import { cloneElement, type ReactElement } from 'react';
 import { Controller, type FieldValues } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+import { translateDynamicKey } from '@/i18n/translateKey';
 import type { FormFieldProps } from './FormField.types';
 
 /**
@@ -35,6 +37,7 @@ export function FormField<T extends FieldValues = FieldValues>({
   required,
   children,
 }: FormFieldProps<T>) {
+  const { t } = useTranslation();
   return (
     <Controller
       name={name}
@@ -45,7 +48,9 @@ export function FormField<T extends FieldValues = FieldValues>({
           value,
           onChangeText: onChange,
           onBlur,
-          error: error?.message,
+          // Zod schemas store validation messages as i18n keys (e.g. 'validation.required'),
+          // not display text — translate here so every consumer doesn't have to.
+          error: error?.message ? translateDynamicKey(t, error.message) : undefined,
         })
       }
     />

@@ -15,13 +15,25 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: t('tabs.home'),
+          title: t('tabs.discover'),
         }}
       />
       <Tabs.Screen
-        name="settings"
+        name="my-pets"
         options={{
-          title: t('tabs.settings'),
+          title: t('tabs.myPets'),
+        }}
+      />
+      <Tabs.Screen
+        name="requests"
+        options={{
+          title: t('tabs.requests'),
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: t('tabs.profile'),
         }}
       />
     </Tabs>

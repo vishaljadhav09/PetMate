@@ -2,8 +2,9 @@ import { createClient } from '@supabase/supabase-js';
 import type { SupabaseClient } from '@supabase/supabase-js';
 import { createMMKV } from 'react-native-mmkv';
 import { env } from '@/config/env';
+import type { Database } from '@/types/database';
 
-let supabase: SupabaseClient;
+let supabase: SupabaseClient<Database>;
 
 function isValidUrl(url: string): boolean {
   try {
@@ -25,7 +26,7 @@ if (env.supabaseUrl && env.supabaseAnonKey && isValidUrl(env.supabaseUrl)) {
     },
   };
 
-  supabase = createClient(env.supabaseUrl, env.supabaseAnonKey, {
+  supabase = createClient<Database>(env.supabaseUrl, env.supabaseAnonKey, {
     auth: {
       storage: supabaseStorageAdapter,
       persistSession: true,
@@ -41,7 +42,7 @@ if (env.supabaseUrl && env.supabaseAnonKey && isValidUrl(env.supabaseUrl)) {
     );
   }
   // Create a minimal stub so imports don't crash
-  supabase = null as unknown as SupabaseClient;
+  supabase = null as unknown as SupabaseClient<Database>;
 }
 
 export { supabase };

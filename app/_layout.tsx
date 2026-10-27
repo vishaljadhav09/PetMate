@@ -1,3 +1,5 @@
+import '../global.css';
+
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
@@ -8,6 +10,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import Toast from 'react-native-toast-message';
 import { StyleSheet, useUnistyles } from 'react-native-unistyles';
 import { ErrorBoundary } from '@/common/components/ErrorBoundary';
+import { useProtectedRoute } from '@/hooks/useProtectedRoute';
 import i18n from '@/i18n/config';
 import { QueryProvider } from '@/providers';
 import { useAuthStore } from '@/providers/auth/authStore';
@@ -32,6 +35,7 @@ function useAuthInit() {
 
 function RootNavigator() {
   const { theme } = useUnistyles();
+  useProtectedRoute();
 
   return (
     <Stack
@@ -41,6 +45,7 @@ function RootNavigator() {
       }}
       initialRouteName="(main)"
     >
+      <Stack.Screen name="(auth)" />
       <Stack.Screen name="(main)" />
     </Stack>
   );

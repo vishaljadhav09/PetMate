@@ -1,40 +1,51 @@
-// TODO: Implement your auth service functions here
-// This file provides the API for authentication operations.
-//
-// Example with Supabase:
-//   import { supabase } from '@/integrations/supabase';
-//   export async function login({ email, password }) { ... }
-//
-// Example with custom API:
-//   import { api } from '@/services/api';
-//   export async function login({ email, password }) { ... }
+import { GoogleSignin, isSuccessResponse } from '@react-native-google-signin/google-signin';
+import { env } from '@/config/env';
+import { supabase } from '@/integrations/supabase';
 
-interface LoginParams {
-  email: string;
-  password: string;
+let isGoogleConfigured = false;
+
+function configureGoogle() {
+  if (isGoogleConfigured) return;
+  GoogleSignin.configure({ webClientId: env.googleWebClientId });
+  isGoogleConfigured = true;
 }
 
-interface RegisterParams {
-  email: string;
-  password: string;
-  username?: string;
+function requireSupabase() {
+  if (!supabase) {
+    throw new Error('Supabase is not configured. Add the Supabase env vars to .env.');
+  }
+  return supabase;
 }
 
-export async function login(_params: LoginParams) {
-  // TODO: Implement login
-  throw new Error('Auth not configured. See docs/MIGRATION.md for setup instructions.');
+/**
+ * Signs in with Google and exchanges the ID token for a Supabase session.
+ * Returns `false` when the user dismisses the Google dialog.
+ */
+export async function signInWithGoogle(): Promise<boolean> {
+  const client = requireSupabase();
+  configureGoogle();
+
+  await GoogleSignin.hasPlayServices();
+  const response = await GoogleSignin.signIn();
+  if (!isSuccessResponse(response)) return false;
+
+  const idToken = response.data.idToken;
+  if (!idToken) throw new Error('Google did not return an ID token');
+
+  const { error } = await client.auth.signInWithIdToken({ provider: 'google', token: idToken });
+  if (error) throw error;
+  return true;
 }
 
-export async function register(_params: RegisterParams) {
-  // TODO: Implement registration
-  throw new Error('Auth not configured. See docs/MIGRATION.md for setup instructions.');
+export async function signOut(): Promise<void> {
+  configureGoogle();
+  await GoogleSignin.signOut().catch(() => undefined);
+  if (supabase) await supabase.auth.signOut();
 }
 
-export async function logout() {
-  // TODO: Implement logout
-}
-
-export async function getSession() {
-  // TODO: Implement session retrieval
-  return { session: null };
+export async function deleteMyAccount(): Promise<void> {
+  const client = requireSupabase();
+  const { error } = await client.functions.invoke('delete-account');
+  if (error) throw error;
+  await signOut();
 }

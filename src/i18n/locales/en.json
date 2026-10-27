@@ -17,105 +17,180 @@
     "ok": "OK"
   },
   "tabs": {
-    "home": "Home",
-    "showcase": "Showcase",
-    "settings": "Settings"
+    "discover": "Discover",
+    "myPets": "My Pets",
+    "requests": "Requests",
+    "profile": "Profile"
   },
-  "home": {
-    "welcome": "Welcome",
-    "subtitle": "Your app is ready to go.",
-    "greetingMorning": "Good morning",
-    "greetingAfternoon": "Good afternoon",
-    "greetingEvening": "Good evening",
-    "userName": "Alex Johnson",
-    "searchPlaceholder": "Search anything...",
-    "quickActions": {
-      "send": "Send",
-      "receive": "Receive",
-      "pay": "Pay",
-      "more": "More"
+  "discover": {
+    "title": "Discover",
+    "subtitle": "Compatible pets near you",
+    "distanceAway": "{{distance}} km away",
+    "emptyTitle": "No pets nearby yet",
+    "emptyMessage": "Check back soon as more owners join PetMate.",
+    "noEligiblePetsTitle": "Add a breeding-age pet to browse",
+    "noEligiblePetsMessage": "Discover is matched against one of your own eligible pets — add one to start browsing.",
+    "matchingForLabel": "Matching for",
+    "searchPlaceholder": "Search breed",
+    "verifiedOnlyLabel": "Verified profiles only"
+  },
+  "pets": {
+    "species": {
+      "dog": "Dog",
+      "cat": "Cat",
+      "bird": "Bird",
+      "rabbit": "Rabbit",
+      "horse": "Horse",
+      "other": "Other"
     },
-    "featured": {
-      "title": "Featured",
-      "seeAll": "See all",
-      "card1Title": "Design System",
-      "card1Subtitle": "Build consistent UIs with tokens",
-      "card2Title": "Analytics",
-      "card2Subtitle": "Track performance metrics",
-      "card3Title": "Integrations",
-      "card3Subtitle": "Connect your favorite tools"
+    "gender": {
+      "male": "Male",
+      "female": "Female"
     },
-    "stats": {
-      "projects": "Projects",
-      "tasks": "Tasks",
-      "messages": "Messages"
+    "studTerms": {
+      "fixedFee": "Fixed fee",
+      "negotiable": "Negotiable",
+      "pickOfLitter": "Pick of the litter",
+      "free": "No fee"
     },
-    "recentActivity": {
-      "title": "Recent Activity",
-      "seeAll": "See all",
-      "item1Title": "New project created",
-      "item1Subtitle": "Mobile App Redesign",
-      "item1Time": "2m ago",
-      "item2Title": "Task completed",
-      "item2Subtitle": "Update design tokens",
-      "item2Time": "15m ago",
-      "item3Title": "Message received",
-      "item3Subtitle": "Sarah shared a file",
-      "item3Time": "1h ago",
-      "item4Title": "Payment processed",
-      "item4Subtitle": "Invoice #1042 paid",
-      "item4Time": "3h ago"
+    "verifiedOwner": "Verified owner",
+    "breedingIneligible": "Not yet breeding age",
+    "age": "{{years}}y {{months}}m",
+    "vaccinationStatus": {
+      "upToDate": "Vaccinations up to date",
+      "notConfirmed": "Vaccinations not confirmed"
+    },
+    "pedigreeStatus": {
+      "certified": "Pedigree certified",
+      "notCertified": "Not pedigree certified"
+    },
+    "matchIncompatibility": {
+      "speciesMismatch": "Species must match to send a request.",
+      "genderMismatch": "Pets must be opposite genders for a match request.",
+      "senderIneligible": "This pet hasn't reached breeding age yet.",
+      "recipientIneligible": "This pet hasn't reached breeding age yet.",
+      "senderUnavailable": "This pet is not currently open to match requests.",
+      "recipientUnavailable": "This pet is not currently open to match requests.",
+      "sameOwner": "You can't send a match request to your own pet."
     }
   },
-  "settings": {
-    "title": "Settings",
-    "appearance": "Appearance",
-    "darkMode": "Dark Mode",
-    "language": "Language",
-    "notifications": "Notifications",
-    "haptics": "Haptic Feedback",
-    "about": "About",
-    "version": "Version",
-    "privacy": "Privacy Policy",
-    "terms": "Terms of Service",
-    "profile": {
-      "name": "Alex Johnson",
-      "email": "alex@example.com",
-      "editProfile": "Edit Profile"
+  "myPets": {
+    "title": "My Pets",
+    "subtitle": "Manage the pets you've listed",
+    "emptyTitle": "You haven't added a pet yet",
+    "emptyMessage": "Add your pet's profile to start finding compatible matches.",
+    "addPet": "Add Pet"
+  },
+  "petForm": {
+    "addTitle": "Add a pet",
+    "editTitle": "Edit pet",
+    "nameLabel": "Pet name",
+    "namePlaceholder": "e.g. Simba",
+    "speciesLabel": "Species",
+    "breedLabel": "Breed",
+    "breedPlaceholder": "e.g. Labrador Retriever",
+    "genderLabel": "Gender",
+    "dobLabel": "Date of birth",
+    "dobPlaceholder": "YYYY-MM-DD",
+    "dobHelperText": "Format: YYYY-MM-DD",
+    "vaccinationLabel": "Vaccinations up to date",
+    "pedigreeLabel": "Pedigree certified",
+    "registrationNumberLabel": "Registration number",
+    "registrationNumberPlaceholder": "e.g. KCI118823",
+    "descriptionLabel": "About this pet",
+    "descriptionPlaceholder": "Temperament, health notes, experience...",
+    "studTermsTypeLabel": "Stud terms",
+    "studFeeAmountLabel": "Fee amount",
+    "studFeeAmountPlaceholder": "e.g. 5000",
+    "cityLabel": "City",
+    "cityPlaceholder": "e.g. Springfield",
+    "availableForMatchingLabel": "Open to match requests",
+    "submit": "Save pet profile",
+    "submitEdit": "Save changes",
+    "createSuccess": "Pet profile created.",
+    "updateSuccess": "Pet profile updated."
+  },
+  "profile": {
+    "title": "Profile",
+    "notVerifiedLabel": "Not yet verified",
+    "ratingSummaryTitle": "Trust rating",
+    "phoneLabel": "Phone",
+    "petsCountLabel": "{{count}} pet(s) listed",
+    "viewMyPetsAction": "View my pets",
+    "editTitle": "Your details",
+    "nameLabel": "Name",
+    "cityLabel": "City",
+    "phonePlaceholder": "+919876543210",
+    "phoneHelp": "Not verified. Shown to another owner only after they accept your request.",
+    "saveSuccess": "Profile saved",
+    "signOutAction": "Sign out",
+    "deleteAccountAction": "Delete account",
+    "deleteAccountTitle": "Delete your account?",
+    "deleteAccountMessage": "This permanently deletes your profile, pets, requests and ratings. This cannot be undone.",
+    "deleteAccountFailed": "Could not delete your account. Please try again."
+  },
+  "requests": {
+    "title": "Requests",
+    "subtitle": "Match requests you've received and sent.",
+    "tabs": {
+      "inbox": "Inbox",
+      "sent": "Sent"
     },
-    "sections": {
-      "account": "Account",
-      "preferences": "Preferences",
-      "support": "Support",
-      "danger": "Danger Zone"
+    "emptyInboxTitle": "No requests yet",
+    "emptyInboxMessage": "Requests from interested owners will show up here.",
+    "emptySentTitle": "You haven't sent any requests",
+    "emptySentMessage": "Browse Discover to find a compatible pet and send one.",
+    "status": {
+      "new": "New",
+      "accepted": "Accepted",
+      "declined": "Declined",
+      "completed": "Completed"
     },
-    "account": {
-      "profile": "Profile",
-      "profileSubtitle": "Manage your personal info",
-      "security": "Security",
-      "securitySubtitle": "Password & authentication",
-      "billing": "Billing",
-      "billingSubtitle": "Plans & payment methods",
-      "notifications": "Notifications",
-      "notificationsSubtitle": "Push & email preferences"
-    },
-    "preferences": {
-      "pushNotifications": "Push Notifications",
-      "appIcon": "App Icon",
-      "appIconSubtitle": "Choose your icon style"
-    },
-    "support": {
-      "helpCenter": "Help Center",
-      "helpCenterSubtitle": "FAQs & guides",
-      "feedback": "Send Feedback",
-      "feedbackSubtitle": "Help us improve",
-      "aboutSubtitle": "Version & legal info"
-    },
-    "danger": {
-      "logout": "Log Out",
-      "logoutSubtitle": "Sign out of your account",
-      "deleteAccount": "Delete Account",
-      "deleteAccountSubtitle": "Permanently remove your data"
+    "acceptAction": "Accept",
+    "declineAction": "Decline",
+    "completeAction": "Mark as completed",
+    "phoneRevealedLabel": "Contact: {{phone}}",
+    "rateAction": "Rate {{name}}",
+    "rated": "Rated",
+    "rate": {
+      "title": "Rate {{name}}",
+      "commentLabel": "Comment (optional)",
+      "commentPlaceholder": "How did it go?",
+      "submit": "Submit rating",
+      "success": "Thanks — your rating was added."
+    }
+  },
+  "petDetail": {
+    "healthTitle": "Vaccinations",
+    "pedigreeLabel": "Pedigree",
+    "studTermsTitle": "Stud terms",
+    "ratingSummary": "{{average}} from {{count}} review(s)",
+    "noRatingsYet": "No ratings yet",
+    "noOwnPetTitle": "Add a pet to send a request",
+    "noOwnPetMessage": "You'll need one of your own pets before you can send a match request.",
+    "sendRequestTitle": "Send a match request",
+    "sendFromLabel": "Sending from",
+    "messageLabel": "Message",
+    "messagePlaceholder": "Introduce your pet and what you're hoping to arrange.",
+    "proposedDateLabel": "Proposed date (optional)",
+    "proposedDatePlaceholder": "YYYY-MM-DD",
+    "sendRequestSubmit": "Send request",
+    "requestSentSuccess": "Match request sent.",
+    "report": {
+      "menuLabel": "Report this profile",
+      "title": "Report profile",
+      "reasonLabel": "Reason",
+      "reasons": {
+        "underage_pet": "Pet appears underage for breeding",
+        "no_health_docs": "Missing or suspicious health info",
+        "spam": "Spam or fake listing",
+        "scam": "Suspected scam",
+        "abuse_concern": "Animal welfare concern"
+      },
+      "detailsLabel": "Details (optional)",
+      "detailsPlaceholder": "Anything that will help our team review this.",
+      "submit": "Submit report",
+      "success": "Report submitted. Our team reviews every report before any action is taken."
     }
   },
   "errorBoundary": {
@@ -145,6 +220,29 @@
     "passwordMismatch": "Passwords do not match",
     "usernameMin": "Username must be at least 3 characters",
     "usernameMax": "Username must be at most 20 characters",
-    "usernameFormat": "Username can only contain letters, numbers, and underscores"
+    "usernameFormat": "Username can only contain letters, numbers, and underscores",
+    "dateInvalid": "Please enter a valid date (YYYY-MM-DD)",
+    "dobFuture": "Date of birth can't be in the future",
+    "nameTooLong": "Name must be at most 40 characters",
+    "breedTooLong": "Breed must be at most 60 characters",
+    "descriptionMax": "Description must be at most 500 characters",
+    "cityTooLong": "City must be at most 60 characters",
+    "studFeeRequired": "Enter a fee amount for a fixed-fee stud",
+    "studFeeMin": "Fee amount can't be negative",
+    "registrationNumberRequired": "Enter a registration number for a pedigree-certified pet",
+    "registrationNumberTooLong": "Registration number must be at most 40 characters",
+    "messageMax": "Message must be at most 300 characters",
+    "ratingRequired": "Please choose a star rating",
+    "commentMax": "Comment must be at most 300 characters",
+    "detailsMax": "Details must be at most 500 characters",
+    "profileNameMax": "Name must be at most 60 characters",
+    "profileCityMax": "City must be at most 80 characters",
+    "phoneInvalid": "Enter the number with country code, e.g. +919876543210"
+  },
+  "auth": {
+    "welcomeTitle": "Welcome to PetMate",
+    "welcomeSubtitle": "Find trusted breeding partners for your pet, close to home.",
+    "continueWithGoogle": "Continue with Google",
+    "signInFailed": "Sign in failed. Please try again."
   }
 }

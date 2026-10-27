@@ -4,6 +4,8 @@ interface EnvConfig {
   supabaseUrl: string;
   supabaseAnonKey: string;
   apiBaseUrl: string;
+  googleWebClientId: string;
+  easProjectId: string;
   sentryDsn: string;
   appEnv: 'development' | 'staging' | 'production';
   isDev: boolean;
@@ -18,6 +20,8 @@ export const env: EnvConfig = {
   supabaseUrl: getEnvVar('EXPO_PUBLIC_SUPABASE_URL'),
   supabaseAnonKey: getEnvVar('EXPO_PUBLIC_SUPABASE_PUBLISHED_KEY'),
   apiBaseUrl: getEnvVar('EXPO_PUBLIC_API_BASE_URL', 'https://api.example.com'),
+  googleWebClientId: getEnvVar('EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID'),
+  easProjectId: getEnvVar('EXPO_PUBLIC_EAS_PROJECT_ID'),
   sentryDsn: getEnvVar('EXPO_PUBLIC_SENTRY_DSN'),
   appEnv: getEnvVar('EXPO_PUBLIC_APP_ENV', 'development') as EnvConfig['appEnv'],
   get isDev() {

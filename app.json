@@ -1,16 +1,16 @@
 {
   "expo": {
-    "name": "My App",
+    "name": "PetMate",
     "slug": "my-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "scheme": "my-app",
+    "scheme": "petmate",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "supportsRTL": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.myapp.app",
+      "bundleIdentifier": "com.petmate.app",
       "infoPlist": {
         "CFBundleAllowMixedLocalizations": true,
         "CFBundleLocalizations": ["en", "ar"],
@@ -26,7 +26,7 @@
         "monochromeImage": "./assets/android-icon-monochrome.png",
         "backgroundColor": "#0F172A"
       },
-      "package": "com.myapp.app"
+      "package": "com.petmate.app"
     },
     "web": {
       "output": "static",
@@ -35,7 +35,7 @@
     "extra": {
       "router": {},
       "eas": {
-        "projectId": ""
+        "projectId": "68b8f9c2-4ec6-4fde-8b48-c945bfb1a33e"
       }
     },
     "plugins": [
@@ -73,11 +73,13 @@
           ]
         }
       ],
-      "expo-image"
+      "expo-image",
+      "@react-native-google-signin/google-signin"
     ],
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": false
-    }
+    },
+    "owner": "petmate_dev"
   }
 }

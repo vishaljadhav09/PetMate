@@ -1,30 +1,21 @@
+import type { Session, User } from '@supabase/supabase-js';
 import { useEffect } from 'react';
 import { create } from 'zustand';
-
-interface AuthUser {
-  id: string;
-  email: string;
-  [key: string]: unknown;
-}
-
-interface AuthSession {
-  access_token: string;
-  refresh_token: string;
-  [key: string]: unknown;
-}
+import { supabase } from '@/integrations/supabase';
 
 interface AuthState {
-  user: AuthUser | null;
-  session: AuthSession | null;
+  user: User | null;
+  session: Session | null;
   isLoading: boolean;
   isAuthenticated: boolean;
-  setUser: (user: AuthUser | null) => void;
-  setSession: (session: AuthSession | null) => void;
+  setSession: (session: Session | null) => void;
   setLoading: (isLoading: boolean) => void;
   clearSession: () => void;
   initialize: () => Promise<void>;
   cleanup: () => void;
 }
+
+let unsubscribe: (() => void) | null = null;
 
 export const useAuthStore = create<AuthState>((set) => ({
   user: null,
@@ -32,22 +23,37 @@ export const useAuthStore = create<AuthState>((set) => ({
   isLoading: true,
   isAuthenticated: false,
 
-  setUser: (user) => set({ user, isAuthenticated: !!user }),
-
-  setSession: (session) => set({ session }),
+  setSession: (session) =>
+    set({ session, user: session?.user ?? null, isAuthenticated: !!session }),
 
   setLoading: (isLoading) => set({ isLoading }),
 
   clearSession: () => set({ user: null, session: null, isAuthenticated: false }),
 
   initialize: async () => {
-    // TODO: Add your auth initialization logic here
-    // Example: Check for existing session, set up auth state listener
-    set({ isLoading: false });
+    if (!supabase) {
+      set({ isLoading: false });
+      return;
+    }
+
+    const { data } = await supabase.auth.getSession();
+    set({
+      session: data.session,
+      user: data.session?.user ?? null,
+      isAuthenticated: !!data.session,
+      isLoading: false,
+    });
+
+    unsubscribe?.();
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+      set({ session, user: session?.user ?? null, isAuthenticated: !!session });
+    });
+    unsubscribe = () => listener.subscription.unsubscribe();
   },
 
   cleanup: () => {
-    // TODO: Clean up auth subscriptions here
+    unsubscribe?.();
+    unsubscribe = null;
   },
 }));
 

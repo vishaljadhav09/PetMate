@@ -12,8 +12,10 @@ import type { TabBarProps } from './TabBar.types';
 type IoniconsName = React.ComponentProps<typeof Ionicons>['name'];
 
 const TAB_ICONS: Record<string, { active: IoniconsName; inactive: IoniconsName }> = {
-  index: { active: 'home', inactive: 'home-outline' },
-  settings: { active: 'settings', inactive: 'settings-outline' },
+  index: { active: 'compass', inactive: 'compass-outline' },
+  'my-pets': { active: 'paw', inactive: 'paw-outline' },
+  requests: { active: 'mail', inactive: 'mail-outline' },
+  profile: { active: 'person', inactive: 'person-outline' },
 };
 
 const SPRING_CONFIG = {

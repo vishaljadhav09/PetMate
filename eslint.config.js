@@ -12,6 +12,7 @@ module.exports = [
   {
     ignores: [
       'node_modules/',
+      'supabase/functions/',
       '.expo/',
       'dist/',
       'web-build/',
@@ -20,6 +21,7 @@ module.exports = [
       'coverage/',
       'babel.config.js',
       'metro.config.js',
+      'tailwind.config.js',
       'commitlint.config.js',
       'eslint.config.js',
       'jest.config.ts',

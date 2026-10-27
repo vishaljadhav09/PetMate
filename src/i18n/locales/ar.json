@@ -17,105 +17,180 @@
     "ok": "حسنًا"
   },
   "tabs": {
-    "home": "الرئيسية",
-    "showcase": "العرض",
-    "settings": "الإعدادات"
+    "discover": "اكتشف",
+    "myPets": "حيواناتي",
+    "requests": "الطلبات",
+    "profile": "الملف الشخصي"
   },
-  "home": {
-    "welcome": "مرحبًا",
-    "subtitle": "تطبيقك جاهز للاستخدام.",
-    "greetingMorning": "صباح الخير",
-    "greetingAfternoon": "مساء الخير",
-    "greetingEvening": "مساء الخير",
-    "userName": "أليكس جونسون",
-    "searchPlaceholder": "ابحث عن أي شيء...",
-    "quickActions": {
-      "send": "إرسال",
-      "receive": "استلام",
-      "pay": "دفع",
-      "more": "المزيد"
+  "discover": {
+    "title": "اكتشف",
+    "subtitle": "حيوانات أليفة متوافقة بالقرب منك",
+    "distanceAway": "على بعد {{distance}} كم",
+    "emptyTitle": "لا توجد حيوانات أليفة قريبة بعد",
+    "emptyMessage": "تحقق مرة أخرى قريبًا مع انضمام المزيد من الملاك إلى PetMate.",
+    "noEligiblePetsTitle": "أضف حيوانًا في سن التزاوج للتصفح",
+    "noEligiblePetsMessage": "تعتمد صفحة الاكتشاف على أحد حيواناتك المؤهلة — أضف واحدًا لبدء التصفح.",
+    "matchingForLabel": "المطابقة مع",
+    "searchPlaceholder": "ابحث عن سلالة",
+    "verifiedOnlyLabel": "الملفات الموثّقة فقط"
+  },
+  "pets": {
+    "species": {
+      "dog": "كلب",
+      "cat": "قطة",
+      "bird": "طائر",
+      "rabbit": "أرنب",
+      "horse": "حصان",
+      "other": "آخر"
     },
-    "featured": {
-      "title": "المميز",
-      "seeAll": "عرض الكل",
-      "card1Title": "نظام التصميم",
-      "card1Subtitle": "بناء واجهات متسقة باستخدام الرموز",
-      "card2Title": "التحليلات",
-      "card2Subtitle": "تتبع مقاييس الأداء",
-      "card3Title": "التكاملات",
-      "card3Subtitle": "اربط أدواتك المفضلة"
+    "gender": {
+      "male": "ذكر",
+      "female": "أنثى"
     },
-    "stats": {
-      "projects": "المشاريع",
-      "tasks": "المهام",
-      "messages": "الرسائل"
+    "studTerms": {
+      "fixedFee": "رسم ثابت",
+      "negotiable": "قابل للتفاوض",
+      "pickOfLitter": "اختيار من المولود",
+      "free": "بدون رسوم"
     },
-    "recentActivity": {
-      "title": "النشاط الأخير",
-      "seeAll": "عرض الكل",
-      "item1Title": "مشروع جديد",
-      "item1Subtitle": "إعادة تصميم التطبيق",
-      "item1Time": "منذ دقيقتين",
-      "item2Title": "مهمة مكتملة",
-      "item2Subtitle": "تحديث رموز التصميم",
-      "item2Time": "منذ ١٥ دقيقة",
-      "item3Title": "رسالة مستلمة",
-      "item3Subtitle": "سارة شاركت ملفًا",
-      "item3Time": "منذ ساعة",
-      "item4Title": "دفعة تمت معالجتها",
-      "item4Subtitle": "الفاتورة #١٠٤٢ مدفوعة",
-      "item4Time": "منذ ٣ ساعات"
+    "verifiedOwner": "مالك موثّق",
+    "breedingIneligible": "لم يبلغ سن التزاوج بعد",
+    "age": "{{years}} سنة و{{months}} شهر",
+    "vaccinationStatus": {
+      "upToDate": "التطعيمات محدثة",
+      "notConfirmed": "التطعيمات غير مؤكدة"
+    },
+    "pedigreeStatus": {
+      "certified": "معتمد النسب",
+      "notCertified": "غير معتمد النسب"
+    },
+    "matchIncompatibility": {
+      "speciesMismatch": "يجب أن يتطابق النوع لإرسال طلب.",
+      "genderMismatch": "يجب أن يكون الحيوانان من جنسين مختلفين لإرسال طلب تزاوج.",
+      "senderIneligible": "هذا الحيوان لم يبلغ سن التزاوج بعد.",
+      "recipientIneligible": "هذا الحيوان لم يبلغ سن التزاوج بعد.",
+      "senderUnavailable": "هذا الحيوان غير مفتوح حاليًا لطلبات التزاوج.",
+      "recipientUnavailable": "هذا الحيوان غير مفتوح حاليًا لطلبات التزاوج.",
+      "sameOwner": "لا يمكنك إرسال طلب تزاوج لحيوانك الخاص."
     }
   },
-  "settings": {
-    "title": "الإعدادات",
-    "appearance": "المظهر",
-    "darkMode": "الوضع الداكن",
-    "language": "اللغة",
-    "notifications": "الإشعارات",
-    "haptics": "الاهتزاز",
-    "about": "حول",
-    "version": "الإصدار",
-    "privacy": "سياسة الخصوصية",
-    "terms": "شروط الخدمة",
-    "profile": {
-      "name": "أليكس جونسون",
-      "email": "alex@example.com",
-      "editProfile": "تعديل الملف الشخصي"
+  "myPets": {
+    "title": "حيواناتي",
+    "subtitle": "إدارة الحيوانات الأليفة التي أضفتها",
+    "emptyTitle": "لم تضف حيوانًا أليفًا بعد",
+    "emptyMessage": "أضف ملف حيوانك الأليف لبدء البحث عن شركاء متوافقين.",
+    "addPet": "إضافة حيوان أليف"
+  },
+  "petForm": {
+    "addTitle": "إضافة حيوان أليف",
+    "editTitle": "تعديل الحيوان الأليف",
+    "nameLabel": "اسم الحيوان الأليف",
+    "namePlaceholder": "مثال: سيمبا",
+    "speciesLabel": "النوع",
+    "breedLabel": "السلالة",
+    "breedPlaceholder": "مثال: لابرادور ريتريفر",
+    "genderLabel": "الجنس",
+    "dobLabel": "تاريخ الميلاد",
+    "dobPlaceholder": "سنة-شهر-يوم",
+    "dobHelperText": "الصيغة: سنة-شهر-يوم",
+    "vaccinationLabel": "التطعيمات محدثة",
+    "pedigreeLabel": "معتمد النسب",
+    "registrationNumberLabel": "رقم التسجيل",
+    "registrationNumberPlaceholder": "مثال: KCI118823",
+    "descriptionLabel": "نبذة عن الحيوان الأليف",
+    "descriptionPlaceholder": "الطباع، الملاحظات الصحية، الخبرة...",
+    "studTermsTypeLabel": "شروط التزاوج",
+    "studFeeAmountLabel": "قيمة الرسم",
+    "studFeeAmountPlaceholder": "مثال: 5000",
+    "cityLabel": "المدينة",
+    "cityPlaceholder": "مثال: سبرينغفيلد",
+    "availableForMatchingLabel": "مفتوح لطلبات التزاوج",
+    "submit": "حفظ ملف الحيوان الأليف",
+    "submitEdit": "حفظ التغييرات",
+    "createSuccess": "تم إنشاء ملف الحيوان الأليف.",
+    "updateSuccess": "تم تحديث ملف الحيوان الأليف."
+  },
+  "profile": {
+    "title": "الملف الشخصي",
+    "notVerifiedLabel": "غير موثّق بعد",
+    "ratingSummaryTitle": "تقييم الثقة",
+    "phoneLabel": "الهاتف",
+    "petsCountLabel": "{{count}} حيوان أليف مُدرَج",
+    "viewMyPetsAction": "عرض حيواناتي",
+    "editTitle": "بياناتك",
+    "nameLabel": "الاسم",
+    "cityLabel": "المدينة",
+    "phonePlaceholder": "+919876543210",
+    "phoneHelp": "غير موثّق. يظهر لمالك آخر فقط بعد قبول طلبك.",
+    "saveSuccess": "تم حفظ الملف الشخصي",
+    "signOutAction": "تسجيل الخروج",
+    "deleteAccountAction": "حذف الحساب",
+    "deleteAccountTitle": "حذف حسابك؟",
+    "deleteAccountMessage": "سيؤدي هذا إلى حذف ملفك الشخصي وحيواناتك وطلباتك وتقييماتك نهائيًا. لا يمكن التراجع عن ذلك.",
+    "deleteAccountFailed": "تعذر حذف حسابك. يرجى المحاولة مرة أخرى."
+  },
+  "requests": {
+    "title": "الطلبات",
+    "subtitle": "طلبات التزاوج التي استلمتها وأرسلتها.",
+    "tabs": {
+      "inbox": "الواردة",
+      "sent": "المُرسَلة"
     },
-    "sections": {
-      "account": "الحساب",
-      "preferences": "التفضيلات",
-      "support": "الدعم",
-      "danger": "منطقة الخطر"
+    "emptyInboxTitle": "لا توجد طلبات بعد",
+    "emptyInboxMessage": "ستظهر هنا طلبات الملاك المهتمين.",
+    "emptySentTitle": "لم ترسل أي طلبات بعد",
+    "emptySentMessage": "تصفح صفحة الاكتشاف للعثور على حيوان متوافق وأرسل طلبًا.",
+    "status": {
+      "new": "جديد",
+      "accepted": "مقبول",
+      "declined": "مرفوض",
+      "completed": "مكتمل"
     },
-    "account": {
-      "profile": "الملف الشخصي",
-      "profileSubtitle": "إدارة معلوماتك الشخصية",
-      "security": "الأمان",
-      "securitySubtitle": "كلمة المرور والمصادقة",
-      "billing": "الفواتير",
-      "billingSubtitle": "الخطط وطرق الدفع",
-      "notifications": "الإشعارات",
-      "notificationsSubtitle": "تفضيلات الإشعارات والبريد"
-    },
-    "preferences": {
-      "pushNotifications": "إشعارات الدفع",
-      "appIcon": "أيقونة التطبيق",
-      "appIconSubtitle": "اختر نمط الأيقونة"
-    },
-    "support": {
-      "helpCenter": "مركز المساعدة",
-      "helpCenterSubtitle": "الأسئلة الشائعة والأدلة",
-      "feedback": "إرسال ملاحظات",
-      "feedbackSubtitle": "ساعدنا في التحسين",
-      "aboutSubtitle": "الإصدار والمعلومات القانونية"
-    },
-    "danger": {
-      "logout": "تسجيل الخروج",
-      "logoutSubtitle": "الخروج من حسابك",
-      "deleteAccount": "حذف الحساب",
-      "deleteAccountSubtitle": "إزالة بياناتك نهائيًا"
+    "acceptAction": "قبول",
+    "declineAction": "رفض",
+    "completeAction": "وضع علامة مكتمل",
+    "phoneRevealedLabel": "للتواصل: {{phone}}",
+    "rateAction": "تقييم {{name}}",
+    "rated": "تم التقييم",
+    "rate": {
+      "title": "تقييم {{name}}",
+      "commentLabel": "تعليق (اختياري)",
+      "commentPlaceholder": "كيف سارت الأمور؟",
+      "submit": "إرسال التقييم",
+      "success": "شكرًا — تمت إضافة تقييمك."
+    }
+  },
+  "petDetail": {
+    "healthTitle": "التطعيمات",
+    "pedigreeLabel": "النسب",
+    "studTermsTitle": "شروط التزاوج",
+    "ratingSummary": "{{average}} من {{count}} تقييم",
+    "noRatingsYet": "لا توجد تقييمات بعد",
+    "noOwnPetTitle": "أضف حيوانًا أليفًا لإرسال طلب",
+    "noOwnPetMessage": "ستحتاج إلى أحد حيواناتك الأليفة قبل أن تتمكن من إرسال طلب تزاوج.",
+    "sendRequestTitle": "إرسال طلب تزاوج",
+    "sendFromLabel": "الإرسال من",
+    "messageLabel": "الرسالة",
+    "messagePlaceholder": "عرّف بحيوانك الأليف وما تأمل في ترتيبه.",
+    "proposedDateLabel": "التاريخ المقترح (اختياري)",
+    "proposedDatePlaceholder": "سنة-شهر-يوم",
+    "sendRequestSubmit": "إرسال الطلب",
+    "requestSentSuccess": "تم إرسال طلب التزاوج.",
+    "report": {
+      "menuLabel": "الإبلاغ عن هذا الملف",
+      "title": "الإبلاغ عن الملف",
+      "reasonLabel": "السبب",
+      "reasons": {
+        "underage_pet": "يبدو الحيوان دون سن التزاوج",
+        "no_health_docs": "معلومات صحية مفقودة أو مشبوهة",
+        "spam": "إعلان مزعج أو وهمي",
+        "scam": "احتيال محتمل",
+        "abuse_concern": "مخاوف تتعلق برفاهية الحيوان"
+      },
+      "detailsLabel": "تفاصيل (اختياري)",
+      "detailsPlaceholder": "أي شيء يساعد فريقنا في مراجعة هذا البلاغ.",
+      "submit": "إرسال البلاغ",
+      "success": "تم إرسال البلاغ. يراجع فريقنا كل بلاغ قبل اتخاذ أي إجراء."
     }
   },
   "errorBoundary": {
@@ -145,6 +220,29 @@
     "passwordMismatch": "كلمتا المرور غير متطابقتين",
     "usernameMin": "يجب أن يكون اسم المستخدم 3 أحرف على الأقل",
     "usernameMax": "يجب ألا يتجاوز اسم المستخدم 20 حرفًا",
-    "usernameFormat": "يمكن أن يحتوي اسم المستخدم على أحرف وأرقام وشرطات سفلية فقط"
+    "usernameFormat": "يمكن أن يحتوي اسم المستخدم على أحرف وأرقام وشرطات سفلية فقط",
+    "dateInvalid": "يرجى إدخال تاريخ صحيح (سنة-شهر-يوم)",
+    "dobFuture": "لا يمكن أن يكون تاريخ الميلاد في المستقبل",
+    "nameTooLong": "يجب ألا يتجاوز الاسم 40 حرفًا",
+    "breedTooLong": "يجب ألا تتجاوز السلالة 60 حرفًا",
+    "descriptionMax": "يجب ألا يتجاوز الوصف 500 حرف",
+    "cityTooLong": "يجب ألا تتجاوز المدينة 60 حرفًا",
+    "studFeeRequired": "أدخل قيمة الرسم لخيار الرسم الثابت",
+    "studFeeMin": "لا يمكن أن تكون قيمة الرسم سالبة",
+    "registrationNumberRequired": "أدخل رقم التسجيل للحيوان المعتمد النسب",
+    "registrationNumberTooLong": "يجب ألا يتجاوز رقم التسجيل 40 حرفًا",
+    "messageMax": "يجب ألا تتجاوز الرسالة 300 حرف",
+    "ratingRequired": "يرجى اختيار تقييم بالنجوم",
+    "commentMax": "يجب ألا يتجاوز التعليق 300 حرف",
+    "detailsMax": "يجب ألا تتجاوز التفاصيل 500 حرف",
+    "profileNameMax": "يجب ألا يزيد الاسم عن 60 حرفًا",
+    "profileCityMax": "يجب ألا تزيد المدينة عن 80 حرفًا",
+    "phoneInvalid": "أدخل الرقم مع رمز الدولة، مثل +919876543210"
+  },
+  "auth": {
+    "welcomeTitle": "مرحبًا بك في PetMate",
+    "welcomeSubtitle": "اعثر على شريك تزاوج موثوق لحيوانك الأليف بالقرب منك.",
+    "continueWithGoogle": "المتابعة باستخدام Google",
+    "signInFailed": "فشل تسجيل الدخول. يرجى المحاولة مرة أخرى."
   }
 }
