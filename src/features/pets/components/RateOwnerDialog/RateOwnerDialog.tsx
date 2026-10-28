@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
 import Toast from 'react-native-toast-message';
 import { Dialog, FormField, TextArea } from '@/common/components';
+import { friendlyError } from '@/utils/friendlyError';
 import { useCreateRating } from '../../hooks/useRatings';
 import { ratingSchema } from '../../schemas/ratingSchema';
 import type { RatingFormData } from '../../schemas/ratingSchema';
@@ -13,7 +14,6 @@ export interface RateOwnerDialogProps {
   visible: boolean;
   onDismiss: () => void;
   matchRequestId: string;
-  ratedUserId: string;
   ratedUserName: string;
 }
 
@@ -21,7 +21,6 @@ export function RateOwnerDialog({
   visible,
   onDismiss,
   matchRequestId,
-  ratedUserId,
   ratedUserName,
 }: RateOwnerDialogProps) {
   const { t } = useTranslation();
@@ -37,7 +36,6 @@ export function RateOwnerDialog({
     try {
       await createRating.mutateAsync({
         matchRequestId,
-        ratedUserId,
         stars: values.stars as 1 | 2 | 3 | 4 | 5,
         comment: values.comment?.trim() || undefined,
       });
@@ -47,7 +45,7 @@ export function RateOwnerDialog({
     } catch (error) {
       Toast.show({
         type: 'error',
-        text1: error instanceof Error ? error.message : t('errors.generic'),
+        text1: friendlyError(error, t),
       });
     }
   });

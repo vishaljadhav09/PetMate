@@ -58,13 +58,13 @@ Legend: `[x]` done in repo, `[ ]` to do. Nothing has been run against a real Sup
 
 ## Phase 6: Requests, ratings, reports, favorites [12.6, 12.7]
 
-- [ ] T6.1 Send request, inbox, sent lists
-- [ ] T6.2 Accept / decline / cancel / complete via RPC
-- [ ] T6.3 Contact reveal after acceptance; relative-warning UI
-- [ ] T6.4 Ratings after completion
-- [ ] T6.5 Report dialog
-- [ ] T6.6 Favorites
-- [ ] T6.7 `friendlyError` mapper and i18n strings (EN + AR) for all new text
+- [x] T6.1 Send request, inbox, sent lists
+- [x] T6.2 Accept / decline / cancel / complete via RPC
+- [x] T6.3 Contact reveal after acceptance; relative-warning UI
+- [x] T6.4 Ratings after completion
+- [x] T6.5 Report dialog
+- [x] T6.6 Favorites
+- [x] T6.7 `friendlyError` mapper and i18n strings (EN + AR) for all new text
 
 ## Phase 7: Push notifications [10.1, 12.10]
 

@@ -172,7 +172,8 @@
     "deleteAccountAction": "Delete account",
     "deleteAccountTitle": "Delete your account?",
     "deleteAccountMessage": "This permanently deletes your profile, pets, requests and ratings. This cannot be undone.",
-    "deleteAccountFailed": "Could not delete your account. Please try again."
+    "deleteAccountFailed": "Could not delete your account. Please try again.",
+    "savedPetsAction": "Saved pets"
   },
   "requests": {
     "title": "Requests",
@@ -189,7 +190,8 @@
       "new": "New",
       "accepted": "Accepted",
       "declined": "Declined",
-      "completed": "Completed"
+      "completed": "Completed",
+      "cancelled": "Cancelled"
     },
     "acceptAction": "Accept",
     "declineAction": "Decline",
@@ -203,7 +205,10 @@
       "commentPlaceholder": "How did it go?",
       "submit": "Submit rating",
       "success": "Thanks — your rating was added."
-    }
+    },
+    "cancelAction": "Cancel request",
+    "contactRevealedLabel": "Contact {{name}}: {{phone}}",
+    "relativeWarning": "These pets may be close relatives (same litter reference). Check before you meet."
   },
   "petDetail": {
     "healthTitle": "Vaccinations",
@@ -260,7 +265,10 @@
     "title": "Error",
     "generic": "Something went wrong. Please try again.",
     "network": "Network error. Check your connection.",
-    "auth": "Authentication failed."
+    "auth": "Authentication failed.",
+    "duplicate": "You already have an active request for this pair of pets.",
+    "permission": "You do not have permission to do that.",
+    "sessionExpired": "Your session expired. Please sign in again."
   },
   "validation": {
     "required": "This field is required",
@@ -298,5 +306,13 @@
     "welcomeSubtitle": "Find trusted breeding partners for your pet, close to home.",
     "continueWithGoogle": "Continue with Google",
     "signInFailed": "Sign in failed. Please try again."
+  },
+  "favorites": {
+    "title": "Saved pets",
+    "subtitle": "Pets you saved to look at again.",
+    "emptyTitle": "No saved pets yet",
+    "emptyMessage": "Tap the heart on a pet to save it here.",
+    "add": "Save pet",
+    "remove": "Remove from saved"
   }
 }

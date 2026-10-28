@@ -1,7 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useAuthStore } from '@/providers/auth/authStore';
 import {
+  cancelMatchRequest,
   completeMatchRequest,
   createMatchRequest,
+  fetchMatchContact,
   fetchMatchRequests,
   respondToMatchRequest,
 } from '../services/matchRequestsService';
@@ -11,10 +14,35 @@ import type { MatchRequest, MatchRequestStatus } from '../types';
 export const MATCH_REQUESTS_KEYS = {
   all: ['matchRequests'] as const,
   list: () => [...MATCH_REQUESTS_KEYS.all, 'list'] as const,
+  contact: (id: string) => [...MATCH_REQUESTS_KEYS.all, 'contact', id] as const,
 };
 
 export function useMatchRequests() {
-  return useQuery({ queryKey: MATCH_REQUESTS_KEYS.list(), queryFn: fetchMatchRequests });
+  const userId = useAuthStore((s) => s.user?.id);
+  return useQuery({
+    queryKey: MATCH_REQUESTS_KEYS.list(),
+    queryFn: fetchMatchRequests,
+    enabled: !!userId,
+  });
+}
+
+/** Only call for accepted or completed requests: the server refuses earlier. */
+export function useMatchContact(requestId: string, enabled: boolean) {
+  return useQuery({
+    queryKey: MATCH_REQUESTS_KEYS.contact(requestId),
+    queryFn: () => fetchMatchContact(requestId),
+    enabled,
+  });
+}
+
+export function useCancelMatchRequest() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => cancelMatchRequest(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: MATCH_REQUESTS_KEYS.all });
+    },
+  });
 }
 
 export function useCreateMatchRequest() {

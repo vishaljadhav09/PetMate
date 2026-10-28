@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
 import Toast from 'react-native-toast-message';
 import { Button, Card, FormField, Input, Select, Text, TextArea } from '@/common/components';
+import { friendlyError } from '@/utils/friendlyError';
 import { useCreateMatchRequest } from '../../hooks/useMatchRequests';
 import { matchRequestSchema } from '../../schemas/matchRequestSchema';
 import type { MatchRequestFormData } from '../../schemas/matchRequestSchema';
@@ -48,7 +49,7 @@ export function SendMatchRequestForm({
     } catch (error) {
       Toast.show({
         type: 'error',
-        text1: error instanceof Error ? error.message : t('errors.generic'),
+        text1: friendlyError(error, t),
       });
     }
   });

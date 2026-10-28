@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
 import Toast from 'react-native-toast-message';
 import { Dialog, FormField, RadioGroup, Text, TextArea } from '@/common/components';
+import { friendlyError } from '@/utils/friendlyError';
 import { useCreateReport } from '../../hooks/useReports';
 import { reportSchema } from '../../schemas/reportSchema';
 import type { ReportFormData } from '../../schemas/reportSchema';
@@ -44,7 +45,7 @@ export function ReportPetDialog({ visible, onDismiss, petId }: ReportPetDialogPr
     } catch (error) {
       Toast.show({
         type: 'error',
-        text1: error instanceof Error ? error.message : t('errors.generic'),
+        text1: friendlyError(error, t),
       });
     }
   });

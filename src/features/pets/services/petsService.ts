@@ -15,6 +15,7 @@ export async function fetchPets(filters: PetFilters = {}): Promise<Pet[]> {
   let query = client
     .from('pets')
     .select('*, owner:profiles!pets_owner_id_fkey!inner(verified_owner)');
+  if (filters.ids) query = query.in('id', filters.ids);
   if (filters.ownerId) query = query.eq('owner_id', filters.ownerId);
   if (filters.excludeOwnerId) query = query.neq('owner_id', filters.excludeOwnerId);
   if (filters.species) query = query.eq('species', filters.species);

@@ -34,6 +34,8 @@ export function useCreateRating() {
   return useMutation({
     mutationFn: (data: CreateRatingData) => createRating(data),
     onSuccess: (rating) => {
+      queryClient.invalidateQueries({ queryKey: ['petOwners'] });
+      queryClient.invalidateQueries({ queryKey: ['profile'] });
       queryClient.invalidateQueries({ queryKey: RATINGS_KEYS.forUser(rating.ratedUserId) });
       queryClient.invalidateQueries({ queryKey: RATINGS_KEYS.forRequest(rating.matchRequestId) });
     },

@@ -1,31 +1,63 @@
+import { supabase } from '@/integrations/supabase';
+import type { Tables, TablesInsert } from '@/types/database';
 import type { Rating } from '../types';
-import { delay, generateId, mockRatings, MOCK_CURRENT_USER_ID } from './mockDb';
 
 export interface CreateRatingData {
   matchRequestId: string;
-  ratedUserId: string;
   stars: 1 | 2 | 3 | 4 | 5;
   comment?: string;
 }
 
+function requireSupabase() {
+  if (!supabase) {
+    throw new Error('Supabase is not configured. Add the Supabase env vars to .env.');
+  }
+  return supabase;
+}
+
+function mapRatingRow(row: Tables<'ratings'>): Rating {
+  return {
+    id: row.id,
+    matchRequestId: row.match_request_id,
+    raterUserId: row.rated_by,
+    ratedUserId: row.rated_user,
+    stars: row.rating as Rating['stars'],
+    comment: row.comment ?? undefined,
+    createdAt: row.created_at,
+  };
+}
+
 export async function fetchRatingsForUser(userId: string): Promise<Rating[]> {
-  return delay(mockRatings.filter((rating) => rating.ratedUserId === userId));
+  const client = requireSupabase();
+  const { data, error } = await client
+    .from('ratings')
+    .select('*')
+    .eq('rated_user', userId)
+    .order('created_at', { ascending: false });
+  if (error) throw error;
+  return data.map(mapRatingRow);
 }
 
 export async function fetchRatingsForMatchRequest(matchRequestId: string): Promise<Rating[]> {
-  return delay(mockRatings.filter((rating) => rating.matchRequestId === matchRequestId));
+  const client = requireSupabase();
+  const { data, error } = await client
+    .from('ratings')
+    .select('*')
+    .eq('match_request_id', matchRequestId);
+  if (error) throw error;
+  return data.map(mapRatingRow);
 }
 
+/** The database only accepts ratings for completed matches and fills in who is being rated. */
 export async function createRating(data: CreateRatingData): Promise<Rating> {
-  const rating: Rating = {
-    id: generateId('rating'),
-    matchRequestId: data.matchRequestId,
-    raterUserId: MOCK_CURRENT_USER_ID,
-    ratedUserId: data.ratedUserId,
-    stars: data.stars,
-    comment: data.comment,
-    createdAt: new Date().toISOString().slice(0, 10),
-  };
-  mockRatings.push(rating);
-  return delay(rating);
+  const client = requireSupabase();
+  // `rated_user` is set by a trigger and clients may not write it, so it is left out.
+  const payload = {
+    match_request_id: data.matchRequestId,
+    rating: data.stars,
+    comment: data.comment ?? null,
+  } as TablesInsert<'ratings'>;
+  const { data: row, error } = await client.from('ratings').insert(payload).select().single();
+  if (error) throw error;
+  return mapRatingRow(row);
 }

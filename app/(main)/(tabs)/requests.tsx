@@ -11,8 +11,8 @@ import {
 } from '@/common/components';
 import { RequestCard } from '@/features/pets/components/RequestCard';
 import { useMatchRequests } from '@/features/pets/hooks/useMatchRequests';
-import { MOCK_CURRENT_USER_ID } from '@/features/pets/services/mockDb';
 import type { MatchRequest } from '@/features/pets/types';
+import { useAuthStore } from '@/providers/auth/authStore';
 
 type RequestsSubtab = 'inbox' | 'sent';
 
@@ -22,20 +22,17 @@ function sortByCreatedAtDesc(requests: MatchRequest[]): MatchRequest[] {
 
 export default function RequestsTab() {
   const { t } = useTranslation();
+  const userId = useAuthStore((s) => s.user?.id);
   const { data: requests, isLoading } = useMatchRequests();
   const [subtab, setSubtab] = useState<RequestsSubtab>('inbox');
 
   const inbox = useMemo(
-    () =>
-      sortByCreatedAtDesc(
-        (requests ?? []).filter((r) => r.recipientOwnerId === MOCK_CURRENT_USER_ID)
-      ),
-    [requests]
+    () => sortByCreatedAtDesc((requests ?? []).filter((r) => r.recipientOwnerId === userId)),
+    [requests, userId]
   );
   const sent = useMemo(
-    () =>
-      sortByCreatedAtDesc((requests ?? []).filter((r) => r.senderOwnerId === MOCK_CURRENT_USER_ID)),
-    [requests]
+    () => sortByCreatedAtDesc((requests ?? []).filter((r) => r.senderOwnerId === userId)),
+    [requests, userId]
   );
   const list = subtab === 'inbox' ? inbox : sent;
   const emptyTitle =

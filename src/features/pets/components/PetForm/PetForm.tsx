@@ -18,6 +18,7 @@ import {
 import { useCurrentLocation } from '@/hooks/useCurrentLocation';
 import { translateDynamicKey } from '@/i18n/translateKey';
 import { useAuthStore } from '@/providers/auth/authStore';
+import { friendlyError } from '@/utils/friendlyError';
 import { useCreatePet, useUpdatePet } from '../../hooks/usePets';
 import { petSchema } from '../../schemas/petSchema';
 import type { PetFormData } from '../../schemas/petSchema';
@@ -154,7 +155,7 @@ export function PetForm({
     } catch (error) {
       Toast.show({
         type: 'error',
-        text1: error instanceof Error ? error.message : t('errors.generic'),
+        text1: friendlyError(error, t),
       });
     }
   });

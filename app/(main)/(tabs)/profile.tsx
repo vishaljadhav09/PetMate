@@ -81,6 +81,13 @@ export default function ProfileTab() {
         </Card>
 
         <Button
+          title={t('profile.savedPetsAction')}
+          variant="secondary"
+          fullWidth
+          onPress={() => router.push('/favorites')}
+        />
+
+        <Button
           title={t('profile.viewMyPetsAction')}
           variant="secondary"
           fullWidth

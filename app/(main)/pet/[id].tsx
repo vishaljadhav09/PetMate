@@ -19,6 +19,7 @@ import { PetAvatar } from '@/features/pets/components/PetAvatar';
 import { PetOwnerCard } from '@/features/pets/components/PetOwnerCard';
 import { ReportPetDialog } from '@/features/pets/components/ReportPetDialog';
 import { SendMatchRequestForm } from '@/features/pets/components/SendMatchRequestForm';
+import { useFavoritePetIds, useToggleFavorite } from '@/features/pets/hooks/useFavorites';
 import { useMyPets, usePet, usePetOwner } from '@/features/pets/hooks/usePets';
 import { ageLabel, isBreedingEligible } from '@/features/pets/utils/breedingEligibility';
 import { getMatchIncompatibilityReason } from '@/features/pets/utils/matchCompatibility';
@@ -31,6 +32,8 @@ export default function PetDetailScreen() {
   const ownerId = pet?.ownerId ?? '';
   const { data: owner } = usePetOwner(ownerId);
   const { data: myPets } = useMyPets();
+  const { data: favoriteIds } = useFavoritePetIds();
+  const toggleFavorite = useToggleFavorite();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isReportOpen, setIsReportOpen] = useState(false);
 
@@ -42,6 +45,7 @@ export default function PetDetailScreen() {
     );
   }
 
+  const isFavorite = (favoriteIds ?? []).includes(pet.id);
   const eligible = isBreedingEligible(pet);
   const age = ageLabel(pet.dateOfBirth);
   const eligibleSenderPets = (myPets ?? []).filter(
@@ -98,26 +102,34 @@ export default function PetDetailScreen() {
         title={pet.name}
         onBack={() => router.back()}
         right={
-          <Menu
-            visible={isMenuOpen}
-            onDismiss={() => setIsMenuOpen(false)}
-            anchor={
-              <IconButton
-                icon="ellipsis-vertical"
-                accessibilityLabel={t('petDetail.report.menuLabel')}
-                variant="ghost"
-                onPress={() => setIsMenuOpen(true)}
-              />
-            }
-            items={[
-              {
-                label: t('petDetail.report.menuLabel'),
-                icon: 'flag-outline',
-                destructive: true,
-                onPress: () => setIsReportOpen(true),
-              },
-            ]}
-          />
+          <View className="flex-row items-center">
+            <IconButton
+              icon={isFavorite ? 'heart' : 'heart-outline'}
+              accessibilityLabel={isFavorite ? t('favorites.remove') : t('favorites.add')}
+              variant="ghost"
+              onPress={() => toggleFavorite.mutate({ petId: pet.id, isFavorite })}
+            />
+            <Menu
+              visible={isMenuOpen}
+              onDismiss={() => setIsMenuOpen(false)}
+              anchor={
+                <IconButton
+                  icon="ellipsis-vertical"
+                  accessibilityLabel={t('petDetail.report.menuLabel')}
+                  variant="ghost"
+                  onPress={() => setIsMenuOpen(true)}
+                />
+              }
+              items={[
+                {
+                  label: t('petDetail.report.menuLabel'),
+                  icon: 'flag-outline',
+                  destructive: true,
+                  onPress: () => setIsReportOpen(true),
+                },
+              ]}
+            />
+          </View>
         }
       />
 

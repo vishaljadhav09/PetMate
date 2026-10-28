@@ -67,6 +67,8 @@ export type CreatePetData = Omit<
 export type UpdatePetData = Partial<CreatePetData>;
 
 export interface PetFilters {
+  /** Restrict to these pet ids, e.g. the user's favorites. */
+  ids?: string[];
   ownerId?: string;
   excludeOwnerId?: string;
   species?: PetSpecies;

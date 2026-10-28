@@ -2,12 +2,18 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
 import Toast from 'react-native-toast-message';
-import { Button, Card, Tag, Text } from '@/common/components';
+import { Button, Card, Notice, Tag, Text } from '@/common/components';
 import type { TagTone } from '@/common/components';
-import { useCompleteMatchRequest, useRespondToMatchRequest } from '../../hooks/useMatchRequests';
+import { useAuthStore } from '@/providers/auth/authStore';
+import { friendlyError } from '@/utils/friendlyError';
+import {
+  useCancelMatchRequest,
+  useCompleteMatchRequest,
+  useMatchContact,
+  useRespondToMatchRequest,
+} from '../../hooks/useMatchRequests';
 import { usePet, usePetOwner } from '../../hooks/usePets';
 import { useRatingsForMatchRequest } from '../../hooks/useRatings';
-import { MOCK_CURRENT_USER_ID } from '../../services/mockDb';
 import type { MatchRequest, MatchRequestStatus } from '../../types';
 import { OwnerAvatar } from '../OwnerAvatar';
 import { RateOwnerDialog } from '../RateOwnerDialog';
@@ -22,10 +28,12 @@ const STATUS_TONES: Record<MatchRequestStatus, TagTone> = {
   accepted: 'success',
   declined: 'neutral',
   completed: 'neutral',
+  cancelled: 'neutral',
 };
 
 export function RequestCard({ request, direction }: RequestCardProps) {
   const { t } = useTranslation();
+  const userId = useAuthStore((s) => s.user?.id);
   const counterpartOwnerId =
     direction === 'inbox' ? request.senderOwnerId : request.recipientOwnerId;
   const counterpartPetId = direction === 'inbox' ? request.senderPetId : request.recipientPetId;
@@ -34,33 +42,20 @@ export function RequestCard({ request, direction }: RequestCardProps) {
   const { data: counterpartPet } = usePet(counterpartPetId);
   const { data: myPet } = usePet(myPetId);
   const { data: existingRatings } = useRatingsForMatchRequest(request.id);
+  const isContactVisible = request.status === 'accepted' || request.status === 'completed';
+  const { data: contact } = useMatchContact(request.id, isContactVisible);
   const respond = useRespondToMatchRequest();
   const complete = useCompleteMatchRequest();
+  const cancel = useCancelMatchRequest();
   const [isRateDialogOpen, setIsRateDialogOpen] = useState(false);
 
-  const alreadyRated = (existingRatings ?? []).some(
-    (rating) => rating.raterUserId === MOCK_CURRENT_USER_ID
-  );
+  const alreadyRated = (existingRatings ?? []).some((rating) => rating.raterUserId === userId);
 
-  const handleRespond = async (status: 'accepted' | 'declined') => {
+  const run = async (action: () => Promise<unknown>) => {
     try {
-      await respond.mutateAsync({ id: request.id, status });
+      await action();
     } catch (error) {
-      Toast.show({
-        type: 'error',
-        text1: error instanceof Error ? error.message : t('errors.generic'),
-      });
-    }
-  };
-
-  const handleComplete = async () => {
-    try {
-      await complete.mutateAsync(request.id);
-    } catch (error) {
-      Toast.show({
-        type: 'error',
-        text1: error instanceof Error ? error.message : t('errors.generic'),
-      });
+      Toast.show({ type: 'error', text1: friendlyError(error, t) });
     }
   };
 
@@ -82,6 +77,10 @@ export function RequestCard({ request, direction }: RequestCardProps) {
           <Tag label={t(`requests.status.${request.status}`)} tone={STATUS_TONES[request.status]} />
         </View>
 
+        {request.relativeWarning && (
+          <Notice tone="warning" message={t('requests.relativeWarning')} />
+        )}
+
         {!!request.message && (
           <View className="rounded-xl bg-surface-alt p-3 dark:bg-surface-alt-dark">
             <Text variant="bodySmall">{request.message}</Text>
@@ -95,7 +94,9 @@ export function RequestCard({ request, direction }: RequestCardProps) {
                 title={t('requests.declineAction')}
                 variant="outline"
                 fullWidth
-                onPress={() => handleRespond('declined')}
+                onPress={() =>
+                  run(() => respond.mutateAsync({ id: request.id, status: 'declined' }))
+                }
                 loading={respond.isPending}
               />
             </View>
@@ -103,28 +104,39 @@ export function RequestCard({ request, direction }: RequestCardProps) {
               <Button
                 title={t('requests.acceptAction')}
                 fullWidth
-                onPress={() => handleRespond('accepted')}
+                onPress={() =>
+                  run(() => respond.mutateAsync({ id: request.id, status: 'accepted' }))
+                }
                 loading={respond.isPending}
               />
             </View>
           </View>
         )}
 
+        {request.status === 'new' && direction === 'sent' && (
+          <Button
+            title={t('requests.cancelAction')}
+            variant="outline"
+            fullWidth
+            onPress={() => run(() => cancel.mutateAsync(request.id))}
+            loading={cancel.isPending}
+          />
+        )}
+
+        {isContactVisible && contact && (
+          <Text variant="bodySmall" color="secondary">
+            {t('requests.contactRevealedLabel', { name: contact.name, phone: contact.phone })}
+          </Text>
+        )}
+
         {request.status === 'accepted' && (
-          <View className="gap-2">
-            {counterpartOwner && (
-              <Text variant="bodySmall" color="secondary">
-                {t('requests.phoneRevealedLabel', { phone: counterpartOwner.phone })}
-              </Text>
-            )}
-            <Button
-              title={t('requests.completeAction')}
-              variant="secondary"
-              fullWidth
-              onPress={handleComplete}
-              loading={complete.isPending}
-            />
-          </View>
+          <Button
+            title={t('requests.completeAction')}
+            variant="secondary"
+            fullWidth
+            onPress={() => run(() => complete.mutateAsync(request.id))}
+            loading={complete.isPending}
+          />
         )}
 
         {request.status === 'completed' && !alreadyRated && counterpartOwner && (
@@ -147,7 +159,6 @@ export function RequestCard({ request, direction }: RequestCardProps) {
             visible={isRateDialogOpen}
             onDismiss={() => setIsRateDialogOpen(false)}
             matchRequestId={request.id}
-            ratedUserId={counterpartOwner.id}
             ratedUserName={counterpartOwner.name}
           />
         )}
