@@ -163,7 +163,10 @@
     "statePlaceholder": "उदा. महाराष्ट्र",
     "pincodeLabel": "पिनकोड",
     "pincodePlaceholder": "६ अंकी",
-    "addressNotFound": "हा पत्ता सापडला नाही. शहर, राज्य आणि पिनकोड तपासा किंवा तुमचे सध्याचे स्थान वापरा."
+    "addressNotFound": "हा पत्ता सापडला नाही. शहर, राज्य आणि पिनकोड तपासा किंवा तुमचे सध्याचे स्थान वापरा.",
+    "breedSelectPlaceholder": "जात निवडा",
+    "breedOther": "इतर (जात टाका)",
+    "breedCustomLabel": "जात टाका"
   },
   "profile": {
     "title": "प्रोफाइल",

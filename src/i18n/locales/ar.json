@@ -162,7 +162,10 @@
     "statePlaceholder": "مثال: Maharashtra",
     "pincodeLabel": "الرمز البريدي",
     "pincodePlaceholder": "6 أرقام",
-    "addressNotFound": "تعذر العثور على هذا العنوان. تحقق من المدينة والولاية والرمز البريدي، أو استخدم موقعك الحالي."
+    "addressNotFound": "تعذر العثور على هذا العنوان. تحقق من المدينة والولاية والرمز البريدي، أو استخدم موقعك الحالي.",
+    "breedSelectPlaceholder": "اختر السلالة",
+    "breedOther": "أخرى (أدخل السلالة)",
+    "breedCustomLabel": "أدخل السلالة"
   },
   "profile": {
     "title": "الملف الشخصي",

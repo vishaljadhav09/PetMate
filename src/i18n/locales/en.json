@@ -163,7 +163,10 @@
     "statePlaceholder": "e.g. Maharashtra",
     "pincodeLabel": "Pincode",
     "pincodePlaceholder": "6 digits",
-    "addressNotFound": "We couldn't find that address. Check the city, state and pincode, or use your current location."
+    "addressNotFound": "We couldn't find that address. Check the city, state and pincode, or use your current location.",
+    "breedSelectPlaceholder": "Choose a breed",
+    "breedOther": "Other (enter breed)",
+    "breedCustomLabel": "Enter breed"
   },
   "profile": {
     "title": "Profile",

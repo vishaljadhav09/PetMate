@@ -24,6 +24,7 @@ import { petSchema } from '../../schemas/petSchema';
 import type { PetFormData } from '../../schemas/petSchema';
 import { pickImage, uploadCertificate } from '../../services/photoService';
 import type { CreatePetData, PetGender, PetSpecies, StudTermsType } from '../../types';
+import { BreedField } from '../BreedField';
 import { PhotoPicker } from '../PhotoPicker';
 
 const SPECIES_OPTIONS: PetSpecies[] = ['dog', 'cat', 'bird', 'rabbit', 'horse', 'other'];
@@ -81,12 +82,14 @@ export function PetForm({
     control,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = useForm<PetFormData>({
     resolver: zodResolver(petSchema),
     defaultValues: { ...EMPTY_DEFAULTS, ...defaultValues },
   });
 
+  const species = watch('species');
   const pedigreeCertified = watch('pedigreeCertified');
   const studTermsType = watch('studTermsType');
   const availableForMatching = watch('availableForMatching');
@@ -232,7 +235,12 @@ export function PetForm({
               <Select
                 label={t('petForm.speciesLabel')}
                 value={value}
-                onChange={(next) => onChange(next as PetSpecies)}
+                onChange={(next) => {
+                  if (next === value) return;
+                  onChange(next as PetSpecies);
+                  // A breed from the previous species no longer applies.
+                  setValue('breed', '');
+                }}
                 options={SPECIES_OPTIONS.map((option) => ({
                   label: t(`pets.species.${option}`),
                   value: option,
@@ -265,9 +273,7 @@ export function PetForm({
         </View>
       </View>
 
-      <FormField name="breed" control={control} label={t('petForm.breedLabel')}>
-        <Input placeholder={t('petForm.breedPlaceholder')} />
-      </FormField>
+      <BreedField key={species} control={control} species={species} />
 
       <FormField name="dateOfBirth" control={control} label={t('petForm.dobLabel')}>
         <Input placeholder={t('petForm.dobPlaceholder')} helperText={t('petForm.dobHelperText')} />
