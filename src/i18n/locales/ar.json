@@ -32,7 +32,16 @@
     "noEligiblePetsMessage": "تعتمد صفحة الاكتشاف على أحد حيواناتك المؤهلة — أضف واحدًا لبدء التصفح.",
     "matchingForLabel": "المطابقة مع",
     "searchPlaceholder": "ابحث عن سلالة",
-    "verifiedOnlyLabel": "الملفات الموثّقة فقط"
+    "verifiedOnlyLabel": "الملفات الموثّقة فقط",
+    "radiusLabel": "نطاق البحث",
+    "radiusOption": "{{km}} كم",
+    "vaccinatedOnlyLabel": "المُلقَّحة فقط",
+    "approximateNote": "المواقع تقريبية (نحو 500 م) لحماية خصوصية المالكين.",
+    "locationDenied": "الوصول إلى الموقع متوقف. أدخل مدينتك للعثور على حيوانات قريبة، أو اسمح بالموقع من الإعدادات.",
+    "locationUnavailable": "تعذر الحصول على موقعك. أدخل مدينتك بدلًا من ذلك.",
+    "cityPlaceholder": "مدينتك، مثل Pune",
+    "searchCityAction": "ابحث في هذه المدينة",
+    "retryLocationAction": "استخدم موقعي الحالي"
   },
   "pets": {
     "species": {
@@ -228,7 +237,10 @@
       "detailsPlaceholder": "أي شيء يساعد فريقنا في مراجعة هذا البلاغ.",
       "submit": "إرسال البلاغ",
       "success": "تم إرسال البلاغ. يراجع فريقنا كل بلاغ قبل اتخاذ أي إجراء."
-    }
+    },
+    "approximate": "تقريبي",
+    "lastVetCheckup": "آخر فحص بيطري",
+    "hipScore": "درجة الورك"
   },
   "errorBoundary": {
     "title": "حدث خطأ ما",

@@ -1,12 +1,15 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useAuthStore } from '@/providers/auth/authStore';
 import {
   createPet,
+  fetchNearbyPets,
   fetchPetById,
   fetchPetOwner,
   fetchPets,
+  NEARBY_PAGE_SIZE,
   updatePet,
 } from '../services/petsService';
+import type { NearbyArgs } from '../services/petsService';
 import type { CreatePetData, Pet, PetFilters, UpdatePetData } from '../types';
 
 export const PETS_KEYS = {
@@ -64,5 +67,16 @@ export function useUpdatePet() {
       queryClient.invalidateQueries({ queryKey: PETS_KEYS.all });
       queryClient.invalidateQueries({ queryKey: PETS_KEYS.detail(updated.id) });
     },
+  });
+}
+
+export function useNearbyPets(args: Omit<NearbyArgs, 'page'> | undefined) {
+  return useInfiniteQuery({
+    queryKey: [...PETS_KEYS.all, 'nearby', args] as const,
+    queryFn: ({ pageParam }) => fetchNearbyPets({ ...(args as NearbyArgs), page: pageParam }),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, _pages, lastPageParam) =>
+      lastPage.length === NEARBY_PAGE_SIZE ? lastPageParam + 1 : undefined,
+    enabled: !!args,
   });
 }

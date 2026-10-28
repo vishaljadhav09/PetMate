@@ -37,5 +37,26 @@ export function useCurrentLocation() {
     }
   }, []);
 
-  return { coordinates, status, request };
+  /** Fallback when permission is denied: resolve a typed city name to coordinates. */
+  const setFromCity = useCallback(async (city: string): Promise<Coordinates | null> => {
+    const query = city.trim();
+    if (!query) return null;
+    setStatus('loading');
+    try {
+      const [match] = await Location.geocodeAsync(query);
+      if (!match) {
+        setStatus('error');
+        return null;
+      }
+      const next = { lat: match.latitude, lng: match.longitude };
+      setCoordinates(next);
+      setStatus('granted');
+      return next;
+    } catch {
+      setStatus('error');
+      return null;
+    }
+  }, []);
+
+  return { coordinates, status, request, setFromCity };
 }

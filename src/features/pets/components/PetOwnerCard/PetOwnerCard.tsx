@@ -1,20 +1,17 @@
 import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
 import { Card, Tag, Text } from '@/common/components';
-import type { PetOwner, Rating } from '../../types';
-import { getRatingSummary } from '../../utils/ratingSummary';
+import type { PetOwner } from '../../types';
 import { OwnerAvatar } from '../OwnerAvatar';
 import { RatingStars } from '../RatingStars';
 
 export interface PetOwnerCardProps {
   owner: PetOwner;
-  ratings: Rating[];
 }
 
 /** No phone number here by design — it's only revealed once a match request is accepted. */
-export function PetOwnerCard({ owner, ratings }: PetOwnerCardProps) {
+export function PetOwnerCard({ owner }: PetOwnerCardProps) {
   const { t } = useTranslation();
-  const summary = getRatingSummary(ratings);
 
   return (
     <Card variant="surface">
@@ -29,12 +26,12 @@ export function PetOwnerCard({ owner, ratings }: PetOwnerCardProps) {
             {owner.city}
           </Text>
           <View className="flex-row items-center gap-2">
-            <RatingStars value={summary.average} size={14} />
+            <RatingStars value={owner.ratingAverage} size={14} />
             <Text variant="caption" color="muted">
-              {summary.count > 0
+              {owner.ratingCount > 0
                 ? t('petDetail.ratingSummary', {
-                    average: summary.average.toFixed(1),
-                    count: summary.count,
+                    average: owner.ratingAverage.toFixed(1),
+                    count: owner.ratingCount,
                   })
                 : t('petDetail.noRatingsYet')}
             </Text>

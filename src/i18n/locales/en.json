@@ -32,7 +32,16 @@
     "noEligiblePetsMessage": "Discover is matched against one of your own eligible pets — add one to start browsing.",
     "matchingForLabel": "Matching for",
     "searchPlaceholder": "Search breed",
-    "verifiedOnlyLabel": "Verified profiles only"
+    "verifiedOnlyLabel": "Verified profiles only",
+    "radiusLabel": "Search radius",
+    "radiusOption": "{{km}} km",
+    "vaccinatedOnlyLabel": "Vaccinated only",
+    "approximateNote": "Locations are approximate (about 500 m) to protect owners’ privacy.",
+    "locationDenied": "Location access is off. Enter your city to find pets nearby, or allow location in Settings.",
+    "locationUnavailable": "We could not get your location. Enter your city instead.",
+    "cityPlaceholder": "Your city, e.g. Pune",
+    "searchCityAction": "Search this city",
+    "retryLocationAction": "Use my current location"
   },
   "pets": {
     "species": {
@@ -228,7 +237,10 @@
       "detailsPlaceholder": "Anything that will help our team review this.",
       "submit": "Submit report",
       "success": "Report submitted. Our team reviews every report before any action is taken."
-    }
+    },
+    "approximate": "approximate",
+    "lastVetCheckup": "Last vet checkup",
+    "hipScore": "Hip score"
   },
   "errorBoundary": {
     "title": "Something went wrong",

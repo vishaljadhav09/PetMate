@@ -5,4 +5,6 @@ export interface PetOwner {
   phone: string;
   city: string;
   verifiedOwner: boolean;
+  ratingAverage: number;
+  ratingCount: number;
 }

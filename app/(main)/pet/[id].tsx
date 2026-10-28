@@ -20,7 +20,6 @@ import { PetOwnerCard } from '@/features/pets/components/PetOwnerCard';
 import { ReportPetDialog } from '@/features/pets/components/ReportPetDialog';
 import { SendMatchRequestForm } from '@/features/pets/components/SendMatchRequestForm';
 import { useMyPets, usePet, usePetOwner } from '@/features/pets/hooks/usePets';
-import { useRatingsForUser } from '@/features/pets/hooks/useRatings';
 import { ageLabel, isBreedingEligible } from '@/features/pets/utils/breedingEligibility';
 import { getMatchIncompatibilityReason } from '@/features/pets/utils/matchCompatibility';
 
@@ -31,7 +30,6 @@ export default function PetDetailScreen() {
   const { data: pet, isLoading: isPetLoading } = usePet(id);
   const ownerId = pet?.ownerId ?? '';
   const { data: owner } = usePetOwner(ownerId);
-  const { data: ownerRatings } = useRatingsForUser(ownerId);
   const { data: myPets } = useMyPets();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isReportOpen, setIsReportOpen] = useState(false);
@@ -68,8 +66,8 @@ export default function PetDetailScreen() {
 
   const locationValue =
     pet.distanceKm !== undefined
-      ? `${pet.city} · ${t('discover.distanceAway', { distance: pet.distanceKm })}`
-      : pet.city;
+      ? `${pet.city} · ${t('discover.distanceAway', { distance: pet.distanceKm })} · ${t('petDetail.approximate')}`
+      : `${pet.city} · ${t('petDetail.approximate')}`;
 
   let requestSection = (
     <Notice tone="warning" message={t(`pets.matchIncompatibility.${incompatibilityReason}`)} />
@@ -166,12 +164,18 @@ export default function PetDetailScreen() {
             }
             divider
           />
+          {pet.lastVetCheckup && (
+            <DetailRow label={t('petDetail.lastVetCheckup')} value={pet.lastVetCheckup} divider />
+          )}
+          {pet.hipScore && (
+            <DetailRow label={t('petDetail.hipScore')} value={pet.hipScore} divider />
+          )}
           <DetailRow label={t('petDetail.pedigreeLabel')} value={pedigreeValue} divider />
           <DetailRow label={t('petDetail.studTermsTitle')} value={studTermsLabel} divider />
           <DetailRow label={t('petDetail.locationLabel')} value={locationValue} />
         </Card>
 
-        {owner && <PetOwnerCard owner={owner} ratings={ownerRatings ?? []} />}
+        {owner && <PetOwnerCard owner={owner} />}
 
         {requestSection}
       </View>

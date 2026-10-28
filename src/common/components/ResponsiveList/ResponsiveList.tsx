@@ -24,6 +24,8 @@ export function ResponsiveList<T>({
   keyExtractor,
   emptyComponent,
   withTabBar = true,
+  onEndReached,
+  footerComponent,
 }: ResponsiveListProps<T>) {
   const columns = useResponsiveColumns();
   const tabBarPadding = useBottomPadding();
@@ -42,6 +44,9 @@ export function ResponsiveList<T>({
       contentContainerStyle={withTabBar ? { paddingBottom: tabBarPadding } : undefined}
       showsVerticalScrollIndicator={false}
       ListEmptyComponent={emptyComponent}
+      ListFooterComponent={footerComponent}
+      onEndReached={onEndReached}
+      onEndReachedThreshold={0.4}
     />
   );
 }

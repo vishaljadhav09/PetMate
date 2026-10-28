@@ -15,4 +15,8 @@ export interface ResponsiveListProps<T> {
    * Defaults to `true`; set `false` for lists on pushed (non-tab) screens.
    */
   withTabBar?: boolean;
+  /** Called when the end of the list is reached, e.g. to load the next page. */
+  onEndReached?: () => void;
+  /** Rendered after the last item, e.g. a loading indicator. */
+  footerComponent?: ReactElement;
 }

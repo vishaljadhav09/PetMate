@@ -49,11 +49,12 @@ Legend: `[x]` done in repo, `[ ]` to do. Nothing has been run against a real Sup
 
 ## Phase 5: Discover [12.8]
 
-- [ ] T5.1 GPS permission + manual city fallback
-- [ ] T5.2 `nearby_pets` service with radius slider, filters, pagination
-- [ ] T5.3 Pick "which of my pets" (`myPetId`) selector
-- [ ] T5.4 Map markers, "approximate location" label, real `distance_m`
-- [ ] T5.5 Pet detail with owner trust info
+- [x] T5.1 GPS permission + manual city fallback
+- [x] T5.2 `nearby_pets` service with radius slider, filters, pagination
+- [x] T5.3 Pick "which of my pets" (`myPetId`) selector
+- [x] T5.4a Real `distance_m` and "approximate location" label
+- [ ] T5.4b Map markers (needs react-native-maps, a Google Maps API key and a new dev build)
+- [x] T5.5 Pet detail with owner trust info
 
 ## Phase 6: Requests, ratings, reports, favorites [12.6, 12.7]
 

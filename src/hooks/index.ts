@@ -1,4 +1,5 @@
 export { useBottomPadding } from './useBottomPadding';
+export { useDebouncedValue } from './useDebouncedValue';
 export { useNetworkStatus } from './useNetworkStatus';
 export { useResponsiveColumns } from './useResponsiveColumns';
 export { useScreenDimensions } from './useScreenDimensions';
