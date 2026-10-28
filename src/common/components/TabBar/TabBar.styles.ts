@@ -38,7 +38,7 @@ export const styles = StyleSheet.create((theme) => ({
   },
   label: {
     fontSize: theme.metrics.fontSize.xxs,
-    fontWeight: '600',
+    fontFamily: theme.fonts.semiBold,
   },
   labelActive: {
     color: theme.colors.text.inverse,

@@ -1,13 +1,15 @@
 import { View, ScrollView } from 'react-native';
+import { useBottomPadding } from '@/hooks/useBottomPadding';
 import { styles } from './ScreenContainer.styles';
 import type { ScreenContainerProps } from './ScreenContainer.types';
 
 /**
  * A safe-area-aware screen wrapper that supports both static and scrollable layouts.
+ * Content is centered with a maximum width so it stays readable on tablets and web.
  *
  * @example
  * ```tsx
- * <ScreenContainer scrollable padded edges={['top', 'bottom']}>
+ * <ScreenContainer scrollable withTabBar>
  *   <Text>Screen content</Text>
  * </ScreenContainer>
  * ```
@@ -17,10 +19,16 @@ export function ScreenContainer({
   scrollable = false,
   padded = true,
   edges = ['top'],
+  contentWidth = 'narrow',
+  withTabBar = false,
   style,
 }: ScreenContainerProps) {
+  const tabBarPadding = useBottomPadding();
   const hasTop = edges.includes('top');
   const hasBottom = edges.includes('bottom');
+  const bottomStyle = withTabBar ? { paddingBottom: tabBarPadding } : undefined;
+
+  styles.useVariants({ width: contentWidth, fill: !scrollable });
 
   if (scrollable) {
     return (
@@ -30,12 +38,13 @@ export function ScreenContainer({
           hasTop && styles.edgeTop,
           hasBottom && styles.edgeBottom,
           padded && styles.padded,
+          bottomStyle,
           style,
         ]}
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
       >
-        {children}
+        <View style={styles.content}>{children}</View>
       </ScrollView>
     );
   }
@@ -50,7 +59,7 @@ export function ScreenContainer({
         style,
       ]}
     >
-      {children}
+      <View style={styles.content}>{children}</View>
     </View>
   );
 }

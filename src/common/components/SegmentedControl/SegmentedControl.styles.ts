@@ -50,10 +50,10 @@ export const styles = StyleSheet.create((theme) => ({
     marginRight: theme.metrics.spacing.p4,
   },
   segmentTextSelected: {
-    fontWeight: '600' as const,
+    fontFamily: theme.fonts.semiBold,
   },
   segmentText: {
-    fontWeight: '400' as const,
+    fontFamily: theme.fonts.regular,
     textAlign: 'center' as const,
     variants: {
       size: {

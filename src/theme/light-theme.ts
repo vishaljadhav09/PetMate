@@ -3,97 +3,100 @@ import type { ThemeColors } from './types';
 /**
  * Light Theme
  *
- * A clean, professional light theme with a modern color palette.
+ * Warm, earthy palette taken from the PetMate prototype.
  *
  * Color Philosophy:
- * - Primary: Indigo (#6366F1) - trustworthy, modern
- * - Secondary: Deep Slate (#1E293B) - strong readable headings
- * - Tertiary: Teal (#14B8A6) - fresh, versatile accent
+ * - Primary: Forest (#24402F) - calm, trustworthy, natural
+ * - Secondary: Deep Forest (#16281C) - strong readable headings
+ * - Tertiary: Marigold (#E8A33D) - warm accent for highlights and actions
+ * - Error: Clay (#B24A2C) - warm red that fits the cream background
  */
 export const lightColors: ThemeColors = {
   mode: 'light',
 
+  avatar: ['#24402F', '#B24A2C', '#B9791E', '#5C7A63', '#8C5A3C', '#3C5A46'],
+
   brand: {
-    primary: '#6366F1',
-    secondary: '#1E293B',
-    tertiary: '#14B8A6',
-    primaryVariant: '#4F46E5',
-    secondaryVariant: '#334155',
+    primary: '#24402F',
+    secondary: '#16281C',
+    tertiary: '#E8A33D',
+    primaryVariant: '#16281C',
+    secondaryVariant: '#3C5A46',
   },
 
   background: {
-    app: '#F8FAFC',
+    app: '#FAF6EC',
     surface: '#FFFFFF',
-    surfaceAlt: '#F1F5F9',
-    section: '#EEF2FF',
-    elevated: '#F8FAFF',
-    input: '#F1F5F9',
-    disabled: '#E2E8F0',
-    modal: '#FFFFFF',
+    surfaceAlt: '#F0EADA',
+    section: '#E4ECE3',
+    elevated: '#FFFFFF',
+    input: '#FFFFFF',
+    disabled: '#E4DCC8',
+    modal: '#FAF6EC',
   },
 
   text: {
-    primary: '#0F172A',
-    secondary: '#334155',
-    tertiary: '#64748B',
-    muted: '#94A3B8',
+    primary: '#221F1A',
+    secondary: '#6B6459',
+    tertiary: '#8A8273',
+    muted: '#A79E8C',
     inverse: '#FFFFFF',
-    accent: '#14B8A6',
-    link: '#6366F1',
-    linkHover: '#4F46E5',
+    accent: '#B9791E',
+    link: '#24402F',
+    linkHover: '#16281C',
   },
 
   border: {
-    default: '#E2E8F0',
-    subtle: '#F1F5F9',
-    strong: '#CBD5E1',
-    focus: '#6366F1',
-    disabled: '#E2E8F0',
+    default: '#E4DCC8',
+    subtle: '#EFE8D6',
+    strong: '#CFC5AB',
+    focus: '#24402F',
+    disabled: '#E4DCC8',
   },
 
   icon: {
-    primary: '#6366F1',
-    secondary: '#1E293B',
-    tertiary: '#94A3B8',
-    muted: '#CBD5E1',
+    primary: '#24402F',
+    secondary: '#16281C',
+    tertiary: '#A79E8C',
+    muted: '#CFC5AB',
     inverse: '#FFFFFF',
-    accent: '#14B8A6',
+    accent: '#E8A33D',
   },
 
   state: {
-    success: '#10B981',
-    successBg: '#ECFDF5',
-    warning: '#F59E0B',
-    warningBg: 'rgba(245, 158, 11, 0.12)',
-    error: '#EF4444',
-    errorBg: 'rgba(239, 68, 68, 0.12)',
-    info: '#3B82F6',
-    infoBg: 'rgba(59, 130, 246, 0.12)',
-    disabled: '#CBD5E1',
+    success: '#24402F',
+    successBg: '#E4ECE3',
+    warning: '#B9791E',
+    warningBg: '#FBEDD3',
+    error: '#B24A2C',
+    errorBg: '#F5DFD4',
+    info: '#3C5A46',
+    infoBg: '#E4ECE3',
+    disabled: '#CFC5AB',
   },
 
   overlay: {
-    modal: 'rgba(0, 0, 0, 0.5)',
-    pressed: 'rgba(99, 102, 241, 0.12)',
-    hover: 'rgba(99, 102, 241, 0.08)',
-    focus: 'rgba(99, 102, 241, 0.15)',
+    modal: 'rgba(22, 20, 15, 0.42)',
+    pressed: 'rgba(36, 64, 47, 0.12)',
+    hover: 'rgba(36, 64, 47, 0.08)',
+    focus: 'rgba(36, 64, 47, 0.15)',
     ripple: 'rgba(255, 255, 255, 0.25)',
-    shadow: 'rgba(0, 0, 0, 0.1)',
+    shadow: 'rgba(34, 31, 26, 0.1)',
   },
 
   gradient: {
-    primary: ['#4F46E5', '#6366F1'],
-    secondary: ['#6366F1', '#818CF8'],
-    accent: ['#0D9488', '#14B8A6'],
-    success: ['#059669', '#34D399'],
-    highlight: ['#7C3AED', '#A78BFA'],
+    primary: ['#16281C', '#24402F'],
+    secondary: ['#24402F', '#3C5A46'],
+    accent: ['#B9791E', '#E8A33D'],
+    success: ['#24402F', '#5C7A63'],
+    highlight: ['#E8A33D', '#F2C374'],
   },
 
   shadow: {
-    color: 'rgba(0, 0, 0, 0.1)',
-    elevation: 4,
-    elevationSmall: 2,
-    elevationMedium: 4,
+    color: 'rgba(34, 31, 26, 0.18)',
+    elevation: 3,
+    elevationSmall: 1,
+    elevationMedium: 3,
     elevationLarge: 8,
   },
 };

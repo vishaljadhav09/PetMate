@@ -7,7 +7,7 @@ export const styles = StyleSheet.create((theme, rt) => ({
   },
   padded: {
     paddingHorizontal: {
-      xs: theme.metrics.spacing.p12,
+      xs: theme.metrics.spacing.p16,
       sm: theme.metrics.spacing.p16,
       md: theme.metrics.spacing.p24,
       lg: theme.metrics.spacing.p32,
@@ -18,6 +18,20 @@ export const styles = StyleSheet.create((theme, rt) => ({
   },
   edgeBottom: {
     paddingBottom: rt.insets.bottom,
+  },
+  // Centers content and stops it stretching edge-to-edge on tablets/web.
+  content: {
+    width: '100%',
+    alignSelf: 'center' as const,
+    variants: {
+      width: {
+        narrow: { maxWidth: theme.metrics.contentMaxWidth.narrow },
+        wide: { maxWidth: theme.metrics.contentMaxWidth.wide },
+      },
+      fill: {
+        true: { flex: 1 },
+      },
+    },
   },
 }));
 

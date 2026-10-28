@@ -15,9 +15,17 @@ import type { AvatarProps } from './Avatar.types';
  * <Avatar initials="JD" size="md" />
  * ```
  */
-export function Avatar({ source, initials, icon, size = 'md', accessibilityLabel }: AvatarProps) {
+export function Avatar({
+  source,
+  initials,
+  icon,
+  size = 'md',
+  color,
+  accessibilityLabel,
+}: AvatarProps) {
   const dimension = AVATAR_SIZES[size];
   const fontSize = dimension * 0.4;
+  const containerStyle = color ? [styles.container, { backgroundColor: color }] : styles.container;
 
   styles.useVariants({ size });
 
@@ -36,7 +44,7 @@ export function Avatar({ source, initials, icon, size = 'md', accessibilityLabel
   if (initials) {
     return (
       <View
-        style={styles.container}
+        style={containerStyle}
         accessibilityRole="image"
         accessibilityLabel={accessibilityLabel}
       >
@@ -50,7 +58,7 @@ export function Avatar({ source, initials, icon, size = 'md', accessibilityLabel
   if (icon) {
     return (
       <View
-        style={styles.container}
+        style={containerStyle}
         accessibilityRole="image"
         accessibilityLabel={accessibilityLabel}
       >
@@ -61,7 +69,7 @@ export function Avatar({ source, initials, icon, size = 'md', accessibilityLabel
 
   return (
     <View
-      style={styles.container}
+      style={containerStyle}
       accessibilityRole="image"
       accessibilityLabel={accessibilityLabel ?? 'User avatar'}
     >

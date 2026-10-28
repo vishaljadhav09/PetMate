@@ -1,5 +1,12 @@
 import '../global.css';
 
+// Import each weight from its own entry point: the package root would bundle every weight.
+import { Fraunces_600SemiBold } from '@expo-google-fonts/fraunces/600SemiBold';
+import { Fraunces_700Bold } from '@expo-google-fonts/fraunces/700Bold';
+import { WorkSans_400Regular } from '@expo-google-fonts/work-sans/400Regular';
+import { WorkSans_500Medium } from '@expo-google-fonts/work-sans/500Medium';
+import { WorkSans_600SemiBold } from '@expo-google-fonts/work-sans/600SemiBold';
+import { WorkSans_700Bold } from '@expo-google-fonts/work-sans/700Bold';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
@@ -64,10 +71,12 @@ function AppContent() {
 
 export default function RootLayout() {
   const [fontsLoaded, fontError] = useFonts({
-    'Inter-Regular': require('../assets/fonts/Inter-Regular.ttf'),
-    'Inter-Medium': require('../assets/fonts/Inter-Medium.ttf'),
-    'Inter-SemiBold': require('../assets/fonts/Inter-SemiBold.ttf'),
-    'Inter-Bold': require('../assets/fonts/Inter-Bold.ttf'),
+    Fraunces_600SemiBold,
+    Fraunces_700Bold,
+    WorkSans_400Regular,
+    WorkSans_500Medium,
+    WorkSans_600SemiBold,
+    WorkSans_700Bold,
   });
 
   const onLayoutRootView = useCallback(async () => {

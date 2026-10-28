@@ -3,90 +3,94 @@ import type { ThemeColors } from './types';
 /**
  * Dark Theme
  *
- * A deep, comfortable dark theme optimized for reduced eye strain.
+ * Night version of the PetMate palette: the same forest, marigold and clay
+ * hues, lightened so they stay readable on a warm near-black background.
  *
  * Color Philosophy:
- * - Primary: Bright Indigo (#818CF8) - vibrant in darkness
- * - Secondary: Light Slate (#CBD5E1) - soft readable accents
- * - Tertiary: Bright Teal (#2DD4BF) - lively accent against dark
+ * - Primary: Sage (#8DB596) - the forest green, lifted for dark surfaces
+ * - Secondary: Pale Sage (#C5D8C8) - soft readable accents
+ * - Tertiary: Marigold (#F0B55A) - warm accent that glows on dark
+ * - Error: Soft Clay (#E58A6B)
  */
 export const darkColors: ThemeColors = {
   mode: 'dark',
 
+  avatar: ['#5C7A63', '#C0644A', '#C98B2E', '#7A9A81', '#A9744F', '#4F7059'],
+
   brand: {
-    primary: '#818CF8',
-    secondary: '#CBD5E1',
-    tertiary: '#2DD4BF',
-    primaryVariant: '#A5B4FC',
-    secondaryVariant: '#E2E8F0',
+    primary: '#8DB596',
+    secondary: '#C5D8C8',
+    tertiary: '#F0B55A',
+    primaryVariant: '#A9CBB1',
+    secondaryVariant: '#DCE9DE',
   },
 
   background: {
-    app: '#0F172A',
-    surface: '#192236',
-    surfaceAlt: '#262F44',
-    section: '#1E293B',
-    elevated: '#253348',
-    input: '#1F2B3D',
-    disabled: '#172035',
-    modal: '#1E293B',
+    app: '#14130F',
+    surface: '#1E1C17',
+    surfaceAlt: '#29261F',
+    section: '#1F2B22',
+    elevated: '#26231D',
+    input: '#1E1C17',
+    disabled: '#1A1812',
+    modal: '#1E1C17',
   },
 
   text: {
-    primary: '#F1F5F9',
-    secondary: '#CBD5E1',
-    tertiary: '#94A3B8',
-    muted: '#64748B',
-    inverse: '#0F172A',
-    accent: '#2DD4BF',
-    link: '#818CF8',
-    linkHover: '#A5B4FC',
+    primary: '#F4EFE3',
+    secondary: '#C9C1B1',
+    tertiary: '#A39B8A',
+    muted: '#7D7666',
+    inverse: '#14130F',
+    accent: '#F0B55A',
+    link: '#8DB596',
+    linkHover: '#A9CBB1',
   },
 
   border: {
-    default: '#2C3548',
-    subtle: '#192236',
-    strong: '#3D4A5E',
-    focus: '#818CF8',
-    disabled: '#172035',
+    default: '#38342B',
+    subtle: '#26231D',
+    strong: '#4E4939',
+    focus: '#8DB596',
+    disabled: '#26231D',
   },
 
   icon: {
-    primary: '#818CF8',
-    secondary: '#CBD5E1',
-    tertiary: '#64748B',
-    muted: '#475569',
-    inverse: '#0F172A',
-    accent: '#2DD4BF',
+    primary: '#8DB596',
+    secondary: '#C5D8C8',
+    tertiary: '#7D7666',
+    muted: '#4E4939',
+    inverse: '#14130F',
+    accent: '#F0B55A',
   },
 
   state: {
-    success: 'rgba(52, 211, 153, 0.8)',
-    successBg: 'rgba(16, 185, 129, 0.15)',
-    warning: '#FBBF24',
-    warningBg: 'rgba(251, 191, 36, 0.2)',
-    error: '#F87171',
-    errorBg: 'rgba(248, 113, 113, 0.2)',
-    info: '#60A5FA',
-    infoBg: 'rgba(96, 165, 250, 0.2)',
-    disabled: '#475569',
+    success: '#8DB596',
+    successBg: 'rgba(141, 181, 150, 0.18)',
+    warning: '#F0B55A',
+    warningBg: 'rgba(240, 181, 90, 0.18)',
+    error: '#E58A6B',
+    errorBg: 'rgba(229, 138, 107, 0.18)',
+    info: '#A9CBB1',
+    infoBg: 'rgba(169, 203, 177, 0.16)',
+    disabled: '#4E4939',
   },
 
   overlay: {
     modal: 'rgba(0, 0, 0, 0.7)',
-    pressed: 'rgba(129, 140, 248, 0.15)',
-    hover: 'rgba(129, 140, 248, 0.08)',
-    focus: 'rgba(129, 140, 248, 0.2)',
+    pressed: 'rgba(141, 181, 150, 0.15)',
+    hover: 'rgba(141, 181, 150, 0.08)',
+    focus: 'rgba(141, 181, 150, 0.2)',
     ripple: 'rgba(255, 255, 255, 0.2)',
     shadow: 'rgba(0, 0, 0, 0.5)',
   },
 
   gradient: {
-    primary: ['#1E293B', '#818CF8'],
-    secondary: ['#818CF8', '#A5B4FC'],
-    accent: ['#0F766E', '#2DD4BF'],
-    success: ['#059669', '#34D399'],
-    highlight: ['#6D28D9', '#A78BFA'],
+    primary: ['#1F2B22', '#8DB596'],
+    secondary: ['#8DB596', '#A9CBB1'],
+    accent: ['#B9791E', '#F0B55A'],
+    success: ['#3C5A46', '#8DB596'],
+    highlight: ['#F0B55A', '#F7D08F'],
   },
 
   shadow: {

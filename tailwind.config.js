@@ -1,20 +1,21 @@
 /**
  * NativeWind (Tailwind) config.
  *
- * `theme.extend.colors` below is a STARTER set — only the tokens the current
- * NativeWind-styled screens/components actually use, ported directly from the
- * values in `src/theme/light-theme.ts` / `src/theme/dark-theme.ts` (light value
- * as the base, dark value as the `-dark` suffix). It intentionally does not yet
- * cover the full `ThemeColors` palette (only `state.*` plus one text tone are
- * ported so far, alongside overlay/gradient/shadow, etc.) —
- * that full port, plus migrating the existing `react-native-unistyles`-based
- * common components onto these classes, is tracked as the larger NativeWind
- * cutover described in the `build-feature` skill (Section 0), not done here.
+ * Every color below mirrors a token in `src/theme/light-theme.ts` (base value)
+ * and `src/theme/dark-theme.ts` (the `-dark` suffix). The two files must stay in
+ * sync — `src/theme/__tests__/tailwindParity.test.ts` fails if they drift.
+ *
+ * Class name -> theme token:
+ *   app           -> background.app          section   -> background.section
+ *   surface       -> background.surface      border    -> border.default
+ *   surface-alt   -> background.surfaceAlt   ink       -> text.primary
+ *   ink-secondary -> text.secondary          ink-muted -> text.muted
+ *   brand-*       -> brand.*                 state-*   -> state.*
  *
  * `darkMode: 'media'` follows the OS color scheme automatically for now. It is
  * NOT yet wired to this app's existing manual light/dark toggle
  * (`src/theme/themeManager.ts`, still unistyles-driven) — that reconciliation
- * also belongs to the full cutover.
+ * belongs to the full NativeWind cutover described in the `build-feature` skill.
  */
 module.exports = {
   darkMode: 'media',
@@ -23,25 +24,37 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        app: { DEFAULT: '#F8FAFC', dark: '#0F172A' },
-        surface: { DEFAULT: '#FFFFFF', dark: '#192236' },
-        'surface-alt': { DEFAULT: '#F1F5F9', dark: '#262F44' },
-        border: { DEFAULT: '#E2E8F0', dark: '#2C3548' },
+        app: { DEFAULT: '#FAF6EC', dark: '#14130F' },
+        surface: { DEFAULT: '#FFFFFF', dark: '#1E1C17' },
+        'surface-alt': { DEFAULT: '#F0EADA', dark: '#29261F' },
+        section: { DEFAULT: '#E4ECE3', dark: '#1F2B22' },
+        border: { DEFAULT: '#E4DCC8', dark: '#38342B' },
         brand: {
-          primary: { DEFAULT: '#6366F1', dark: '#818CF8' },
-          tertiary: { DEFAULT: '#14B8A6', dark: '#2DD4BF' },
+          primary: { DEFAULT: '#24402F', dark: '#8DB596' },
+          secondary: { DEFAULT: '#16281C', dark: '#C5D8C8' },
+          tertiary: { DEFAULT: '#E8A33D', dark: '#F0B55A' },
         },
-        'ink-secondary': { DEFAULT: '#334155', dark: '#CBD5E1' },
+        ink: { DEFAULT: '#221F1A', dark: '#F4EFE3' },
+        'ink-secondary': { DEFAULT: '#6B6459', dark: '#C9C1B1' },
+        'ink-muted': { DEFAULT: '#A79E8C', dark: '#7D7666' },
         state: {
-          success: { DEFAULT: '#10B981', dark: 'rgba(52, 211, 153, 0.8)' },
-          'success-bg': { DEFAULT: '#ECFDF5', dark: 'rgba(16, 185, 129, 0.15)' },
-          warning: { DEFAULT: '#F59E0B', dark: '#FBBF24' },
-          'warning-bg': { DEFAULT: 'rgba(245, 158, 11, 0.12)', dark: 'rgba(251, 191, 36, 0.2)' },
-          error: { DEFAULT: '#EF4444', dark: '#F87171' },
-          'error-bg': { DEFAULT: 'rgba(239, 68, 68, 0.12)', dark: 'rgba(248, 113, 113, 0.2)' },
-          info: { DEFAULT: '#3B82F6', dark: '#60A5FA' },
-          'info-bg': { DEFAULT: 'rgba(59, 130, 246, 0.12)', dark: 'rgba(96, 165, 250, 0.2)' },
+          success: { DEFAULT: '#24402F', dark: '#8DB596' },
+          'success-bg': { DEFAULT: '#E4ECE3', dark: 'rgba(141, 181, 150, 0.18)' },
+          warning: { DEFAULT: '#B9791E', dark: '#F0B55A' },
+          'warning-bg': { DEFAULT: '#FBEDD3', dark: 'rgba(240, 181, 90, 0.18)' },
+          error: { DEFAULT: '#B24A2C', dark: '#E58A6B' },
+          'error-bg': { DEFAULT: '#F5DFD4', dark: 'rgba(229, 138, 107, 0.18)' },
+          info: { DEFAULT: '#3C5A46', dark: '#A9CBB1' },
+          'info-bg': { DEFAULT: '#E4ECE3', dark: 'rgba(169, 203, 177, 0.16)' },
         },
+      },
+      fontFamily: {
+        display: ['Fraunces_600SemiBold'],
+        'display-bold': ['Fraunces_700Bold'],
+        sans: ['WorkSans_400Regular'],
+        'sans-medium': ['WorkSans_500Medium'],
+        'sans-semibold': ['WorkSans_600SemiBold'],
+        'sans-bold': ['WorkSans_700Bold'],
       },
     },
   },

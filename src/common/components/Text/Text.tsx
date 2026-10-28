@@ -7,7 +7,7 @@ import type { TextProps } from './Text.types';
  *
  * @example
  * ```tsx
- * <Text variant="h2" weight="bold" color="primary">
+ * <Text variant="label" weight="bold" color="primary">
  *   Hello World
  * </Text>
  * ```

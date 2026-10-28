@@ -1,0 +1,18 @@
+import type { ReactElement } from 'react';
+
+/** Props for the {@link ResponsiveList} component. */
+export interface ResponsiveListProps<T> {
+  /** Items to render. */
+  data: readonly T[];
+  /** Renders one item. Called once per item regardless of column count. */
+  renderItem: (item: T, index: number) => ReactElement;
+  /** Returns a unique key for an item. */
+  keyExtractor: (item: T) => string;
+  /** Rendered when `data` is empty. */
+  emptyComponent?: ReactElement;
+  /**
+   * Adds bottom padding so the last row clears the floating tab bar.
+   * Defaults to `true`; set `false` for lists on pushed (non-tab) screens.
+   */
+  withTabBar?: boolean;
+}

@@ -51,7 +51,7 @@ export const styles = StyleSheet.create((theme) => ({
     },
   },
   label: {
-    fontWeight: '600',
+    fontFamily: theme.fonts.semiBold,
     variants: {
       variant: {
         primary: {

@@ -27,6 +27,11 @@ export const styles = StyleSheet.create((theme) => ({
           borderWidth: 1,
           borderColor: theme.colors.border.default,
         },
+        surface: {
+          backgroundColor: theme.colors.background.surface,
+          borderWidth: 1,
+          borderColor: theme.colors.border.default,
+        },
       },
     },
   },

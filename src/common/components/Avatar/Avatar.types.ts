@@ -14,6 +14,8 @@ export interface AvatarProps {
   icon?: React.ReactNode;
   /** Size of the avatar. Defaults to `'md'`. */
   size?: AvatarSize;
+  /** Background color override for the initials/icon fallbacks. Defaults to the brand color. */
+  color?: string;
   /** Accessibility label for screen readers. */
   accessibilityLabel?: string;
 }

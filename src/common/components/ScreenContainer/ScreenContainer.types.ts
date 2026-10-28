@@ -11,6 +11,16 @@ export interface ScreenContainerProps {
   padded?: boolean;
   /** Safe area edges to respect. Defaults to `['top']`. */
   edges?: ('top' | 'bottom')[];
+  /**
+   * Max width of the centered content on tablets/web. `'narrow'` (default) suits
+   * forms and detail pages; `'wide'` suits lists that show two columns.
+   */
+  contentWidth?: 'narrow' | 'wide';
+  /**
+   * Adds bottom padding so content is not hidden behind the floating tab bar.
+   * Set on screens that live inside the tab navigator. Defaults to `false`.
+   */
+  withTabBar?: boolean;
   /** Additional styles applied to the container or scroll content. */
   style?: ViewStyle;
 }

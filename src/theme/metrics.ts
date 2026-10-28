@@ -13,6 +13,17 @@ export const breakpoints = {
 const BASE_WIDTH = 390;
 const BASE_HEIGHT = 844;
 
+/**
+ * Scaling stops growing past these sizes. Without a cap, a 1024px tablet or
+ * web window would render every font and spacing ~2.6x larger than on a phone.
+ * Wider screens get more room (see `ScreenContainer`'s max width and the
+ * multi-column lists) instead of bigger controls.
+ */
+const MAX_SCALE_WIDTH = 480;
+const MAX_SCALE_HEIGHT = 960;
+const SCALE_WIDTH = Math.min(SCREEN_WIDTH, MAX_SCALE_WIDTH);
+const SCALE_HEIGHT = Math.min(SCREEN_HEIGHT, MAX_SCALE_HEIGHT);
+
 export interface Metrics {
   screenWidth: number;
   screenHeight: number;
@@ -36,17 +47,17 @@ const metrics: Metrics = {
 };
 
 export function rf(fontSize: number): number {
-  const scaleFactor = SCREEN_WIDTH / BASE_WIDTH;
+  const scaleFactor = SCALE_WIDTH / BASE_WIDTH;
   return Math.round(fontSize * scaleFactor);
 }
 
 export function hs(size: number): number {
-  const scaleFactor = SCREEN_WIDTH / BASE_WIDTH;
+  const scaleFactor = SCALE_WIDTH / BASE_WIDTH;
   return Math.round(size * scaleFactor);
 }
 
 export function vs(size: number): number {
-  const scaleFactor = SCREEN_HEIGHT / BASE_HEIGHT;
+  const scaleFactor = SCALE_HEIGHT / BASE_HEIGHT;
   return Math.round(size * scaleFactor);
 }
 
@@ -157,12 +168,20 @@ Dimensions.addEventListener('change', () => {
   metrics.isXl = width >= breakpoints.xl;
 });
 
+/** Maximum width of centered screen content on tablets and web. */
+export const contentMaxWidth = {
+  /** Forms, detail pages and other single-column reading layouts. */
+  narrow: 640,
+  /** Lists that may show two columns. */
+  wide: 960,
+};
+
 export const borderRadius = {
   xs: hs(4),
   sm: hs(6),
-  md: hs(8),
-  lg: hs(12),
-  xl: hs(16),
+  md: hs(10),
+  lg: hs(14),
+  xl: hs(18),
   full: 999,
 };
 
@@ -180,4 +199,5 @@ export default {
   fontSize,
   borderRadius,
   iconSize,
+  contentMaxWidth,
 };

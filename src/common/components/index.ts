@@ -13,8 +13,12 @@ export { Card } from './Card';
 export type { CardProps } from './Card';
 export { Chip } from './Chip';
 export type { ChipProps, ChipVariant, ChipSize } from './Chip';
+export { DetailRow } from './DetailRow';
+export type { DetailRowProps } from './DetailRow';
 export { ListItem } from './ListItem';
 export type { ListItemProps } from './ListItem';
+export { Tag } from './Tag';
+export type { TagProps, TagTone } from './Tag';
 
 // Disclosure
 export { Accordion } from './Accordion';
@@ -26,6 +30,8 @@ export type { EmptyStateProps } from './EmptyState';
 export { ErrorBoundary } from './ErrorBoundary';
 export { Loading } from './Loading';
 export type { LoadingProps } from './Loading';
+export { Notice } from './Notice';
+export type { NoticeProps, NoticeTone } from './Notice';
 export { ProgressBar } from './ProgressBar';
 export type { ProgressBarProps, ProgressBarSize } from './ProgressBar';
 export { Skeleton } from './Skeleton';
@@ -60,8 +66,12 @@ export type { TextAreaProps } from './TextArea';
 // Layout
 export { Divider } from './Divider';
 export type { DividerProps } from './Divider';
+export { ResponsiveList } from './ResponsiveList';
+export type { ResponsiveListProps } from './ResponsiveList';
 export { ScreenContainer } from './ScreenContainer';
 export type { ScreenContainerProps } from './ScreenContainer';
+export { ScreenHeader } from './ScreenHeader';
+export type { ScreenHeaderProps } from './ScreenHeader';
 
 // Overlay
 export { Dialog } from './Dialog';

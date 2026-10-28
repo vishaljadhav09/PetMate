@@ -82,8 +82,12 @@ export interface ShadowConfig {
   elevationLarge: number;
 }
 
+/** Fixed set of backgrounds used to give each owner/pet a stable identity color. */
+export type AvatarPalette = readonly string[];
+
 export interface ThemeColors {
   mode: 'light' | 'dark';
+  avatar: AvatarPalette;
   brand: BrandColors;
   background: BackgroundColors;
   text: TextColors;
