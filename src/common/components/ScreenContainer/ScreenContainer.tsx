@@ -28,7 +28,7 @@ export function ScreenContainer({
   const hasBottom = edges.includes('bottom');
   const bottomStyle = withTabBar ? { paddingBottom: tabBarPadding } : undefined;
 
-  styles.useVariants({ width: contentWidth, fill: !scrollable });
+  styles.useVariants({ width: contentWidth, fill: !scrollable, padded });
 
   if (scrollable) {
     return (

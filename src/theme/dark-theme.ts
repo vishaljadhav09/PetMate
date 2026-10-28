@@ -34,6 +34,7 @@ export const darkColors: ThemeColors = {
     input: '#1E1C17',
     disabled: '#1A1812',
     modal: '#1E1C17',
+    tabBar: 'rgba(20, 19, 15, 0.92)',
   },
 
   text: {
@@ -73,6 +74,7 @@ export const darkColors: ThemeColors = {
     errorBg: 'rgba(229, 138, 107, 0.18)',
     info: '#A9CBB1',
     infoBg: 'rgba(169, 203, 177, 0.16)',
+    mutedBg: 'rgba(167, 158, 140, 0.16)',
     disabled: '#4E4939',
   },
 

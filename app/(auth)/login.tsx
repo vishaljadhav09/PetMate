@@ -23,12 +23,14 @@ export default function LoginScreen() {
   return (
     <ScreenContainer edges={['top', 'bottom']}>
       <View className="flex-1 justify-between py-8">
-        <Text variant="h2" color="accent">
+        <Text variant="h1" color="accent" className="text-3xl">
           {`${t('auth.brandName')}.`}
         </Text>
 
         <View className="gap-3">
-          <Text variant="h1">{t('auth.welcomeTitle')}</Text>
+          <Text variant="h1" className="text-3xl">
+            {t('auth.welcomeTitle')}
+          </Text>
           <Text variant="body" color="secondary">
             {t('auth.welcomeSubtitle')}
           </Text>

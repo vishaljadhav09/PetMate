@@ -8,6 +8,8 @@ export interface ResponsiveListProps<T> {
   renderItem: (item: T, index: number) => ReactElement;
   /** Returns a unique key for an item. */
   keyExtractor: (item: T) => string;
+  /** Rendered above the first item and scrolled with the list (title, filters). */
+  headerComponent?: ReactElement;
   /** Rendered when `data` is empty. */
   emptyComponent?: ReactElement;
   /**

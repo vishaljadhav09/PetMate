@@ -41,30 +41,34 @@ export default function RequestsTab() {
     subtab === 'inbox' ? t('requests.emptyInboxMessage') : t('requests.emptySentMessage');
 
   return (
-    <ScreenContainer contentWidth="wide">
-      <ScreenHeader title={t('requests.title')} subtitle={t('requests.subtitle')} />
-
-      <View className="pb-4">
-        <SegmentedControl
-          value={subtab}
-          onChange={(value) => setSubtab(value as RequestsSubtab)}
-          options={[
-            { label: `${t('requests.tabs.inbox')} (${inbox.length})`, value: 'inbox' },
-            { label: `${t('requests.tabs.sent')} (${sent.length})`, value: 'sent' },
-          ]}
-        />
-      </View>
-
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <ResponsiveList
-          data={list}
-          keyExtractor={(request) => request.id}
-          renderItem={(request) => <RequestCard request={request} direction={subtab} />}
-          emptyComponent={<EmptyState title={emptyTitle} message={emptyMessage} />}
-        />
-      )}
+    <ScreenContainer contentWidth="wide" edges={[]}>
+      <ResponsiveList
+        data={isLoading ? [] : list}
+        keyExtractor={(request) => request.id}
+        headerComponent={
+          <View>
+            <ScreenHeader title={t('requests.title')} subtitle={t('requests.subtitle')} />
+            <View className="pb-3.5">
+              <SegmentedControl
+                value={subtab}
+                onChange={(value) => setSubtab(value as RequestsSubtab)}
+                options={[
+                  { label: t('requests.tabs.inbox'), value: 'inbox', count: inbox.length },
+                  { label: t('requests.tabs.sent'), value: 'sent', count: sent.length },
+                ]}
+              />
+            </View>
+          </View>
+        }
+        renderItem={(request) => <RequestCard request={request} direction={subtab} />}
+        emptyComponent={
+          isLoading ? (
+            <Loading />
+          ) : (
+            <EmptyState glyph="✉️" title={emptyTitle} message={emptyMessage} />
+          )
+        }
+      />
     </ScreenContainer>
   );
 }

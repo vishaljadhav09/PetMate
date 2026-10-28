@@ -9,11 +9,13 @@ import type { TagProps } from './Tag.types';
  *
  * @example
  * ```tsx
- * <Tag label="Verified" tone="success" />
+ * <Tag label="Vaccinated" tone="success" />
+ * <Tag label="✓ Verified" tone="success" size="badge" />
+ * <Tag label="Accepted" tone="success" size="status" />
  * ```
  */
-export function Tag({ label, tone = 'neutral' }: TagProps) {
-  styles.useVariants({ tone });
+export function Tag({ label, tone = 'neutral', size = 'tag' }: TagProps) {
+  styles.useVariants({ tone, size });
 
   return (
     <View style={styles.container}>

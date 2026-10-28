@@ -1,15 +1,18 @@
 import { Tabs } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { TabBar } from '@/common/components/TabBar';
+import { useNewInboxCount } from '@/features/pets/hooks/useMatchRequests';
+import { TopBar } from '@/features/profile/components/TopBar';
 
 export default function TabLayout() {
   const { t } = useTranslation();
+  const newInboxCount = useNewInboxCount();
 
   return (
     <Tabs
-      tabBar={(props) => <TabBar {...props} />}
+      tabBar={(props) => <TabBar {...props} badges={{ requests: newInboxCount }} />}
       screenOptions={{
-        headerShown: false,
+        header: () => <TopBar />,
       }}
     >
       <Tabs.Screen

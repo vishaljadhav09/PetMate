@@ -3,12 +3,9 @@ import { hs } from '@/theme/metrics';
 
 export const styles = StyleSheet.create((theme) => ({
   card: {
-    borderRadius: theme.metrics.borderRadius.xl,
-    padding: {
-      xs: theme.metrics.spacing.p12,
-      sm: theme.metrics.spacing.p16,
-      lg: theme.metrics.spacing.p24,
-    },
+    // 14px padding and 16px radius, as in the prototype's .card.
+    borderRadius: hs(16),
+    padding: hs(14),
     variants: {
       variant: {
         filled: {

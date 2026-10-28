@@ -13,11 +13,13 @@ import type { ScreenHeaderProps } from './ScreenHeader.types';
  * @example
  * ```tsx
  * <ScreenHeader title={t('discover.title')} subtitle={t('discover.subtitle')} />
- * <ScreenHeader title={pet.name} onBack={router.back} right={<Menu ... />} />
+ * <ScreenHeader title={pet.name} onBack={router.back} right={<IconButton ... />} />
  * ```
  */
 export function ScreenHeader({ title, subtitle, onBack, right }: ScreenHeaderProps) {
   const { t } = useTranslation();
+
+  styles.useVariants({ hasSubtitle: !!subtitle });
 
   if (onBack) {
     return (
@@ -25,11 +27,17 @@ export function ScreenHeader({ title, subtitle, onBack, right }: ScreenHeaderPro
         <View style={styles.backLeft}>
           <IconButton
             icon="chevron-back"
+            size="sm"
             accessibilityLabel={t('common.back')}
             variant="ghost"
             onPress={onBack}
           />
-          <Text variant="h2" numberOfLines={1} style={styles.backTitle} accessibilityRole="header">
+          <Text
+            variant="body"
+            numberOfLines={1}
+            style={styles.backTitle}
+            accessibilityRole="header"
+          >
             {title}
           </Text>
         </View>
@@ -40,11 +48,11 @@ export function ScreenHeader({ title, subtitle, onBack, right }: ScreenHeaderPro
 
   return (
     <View style={styles.root}>
-      <Text variant="h1" accessibilityRole="header">
+      <Text variant="h1" style={styles.title} accessibilityRole="header">
         {title}
       </Text>
       {!!subtitle && (
-        <Text variant="body" color="secondary">
+        <Text variant="body" style={styles.subtitle}>
           {subtitle}
         </Text>
       )}

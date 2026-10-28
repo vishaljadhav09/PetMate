@@ -38,7 +38,7 @@ export function DeleteAccountDialog({ visible, onDismiss }: DeleteAccountDialogP
       dismissOnBackdropPress={!isDeleting}
       actions={[
         { label: t('common.cancel'), onPress: handleDismiss },
-        { label: t('common.delete'), onPress: handleDelete, variant: 'primary' },
+        { label: t('common.delete'), onPress: handleDelete, variant: 'decline' },
       ]}
     />
   );

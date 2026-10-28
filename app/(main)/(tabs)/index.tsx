@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
 import {
   Button,
-  Chip,
   EmptyState,
   Input,
   Loading,
@@ -15,6 +14,7 @@ import {
   SearchBar,
   SegmentedControl,
   Select,
+  Switch,
   Text,
 } from '@/common/components';
 import { PetCard } from '@/features/pets/components/PetCard';
@@ -72,7 +72,7 @@ export default function DiscoverTab() {
 
   if (isMyPetsLoading) {
     return (
-      <ScreenContainer contentWidth="wide">
+      <ScreenContainer contentWidth="wide" edges={[]}>
         {header}
         <Loading />
       </ScreenContainer>
@@ -81,9 +81,10 @@ export default function DiscoverTab() {
 
   if (!matchingForPet) {
     return (
-      <ScreenContainer contentWidth="wide">
+      <ScreenContainer contentWidth="wide" edges={[]}>
         {header}
         <EmptyState
+          glyph="🐕"
           title={t('discover.noEligiblePetsTitle')}
           message={t('discover.noEligiblePetsMessage')}
           actionLabel={t('myPets.addPet')}
@@ -96,7 +97,7 @@ export default function DiscoverTab() {
   const needsLocation = !location.coordinates && location.status !== 'loading';
   if (needsLocation) {
     return (
-      <ScreenContainer contentWidth="wide">
+      <ScreenContainer contentWidth="wide" edges={[]}>
         {header}
         <View className="gap-3">
           <Notice
@@ -130,15 +131,15 @@ export default function DiscoverTab() {
     );
   }
 
-  return (
-    <ScreenContainer contentWidth="wide">
+  const isLoading = nearby.isLoading || location.status === 'loading';
+
+  const listHeader = (
+    <View>
       {header}
 
-      <View className="gap-2 pb-3">
-        <Text variant="label" color="secondary">
-          {t('discover.matchingForLabel')}
-        </Text>
+      <View className="gap-3 pb-3.5">
         <Select
+          label={t('discover.matchingForLabel')}
           value={matchingForPet.id}
           onChange={setMatchingForPetId}
           options={eligibleOwnPets.map((pet) => ({
@@ -146,23 +147,21 @@ export default function DiscoverTab() {
             value: pet.id,
           }))}
         />
-      </View>
 
-      <View className="gap-2 pb-3">
-        <Text variant="label" color="secondary">
-          {t('discover.radiusLabel')}
-        </Text>
-        <SegmentedControl
-          value={String(radiusKm)}
-          onChange={(next) => setRadiusKm(Number(next))}
-          options={RADIUS_OPTIONS_KM.map((km) => ({
-            label: t('discover.radiusOption', { km }),
-            value: String(km),
-          }))}
-        />
-      </View>
+        <View className="gap-1.5">
+          <Text variant="label" color="secondary">
+            {t('discover.radiusLabel')}
+          </Text>
+          <SegmentedControl
+            value={String(radiusKm)}
+            onChange={(next) => setRadiusKm(Number(next))}
+            options={RADIUS_OPTIONS_KM.map((km) => ({
+              label: t('discover.radiusOption', { km }),
+              value: String(km),
+            }))}
+          />
+        </View>
 
-      <View className="pb-3">
         <SearchBar
           value={breedQuery}
           onChangeText={setBreedQuery}
@@ -170,16 +169,16 @@ export default function DiscoverTab() {
         />
       </View>
 
-      <View className="flex-row flex-wrap gap-2 pb-2">
-        <Chip
+      <View className="pb-2">
+        <Switch
           label={t('discover.verifiedOnlyLabel')}
-          selected={verifiedOnly}
-          onPress={() => setVerifiedOnly((prev) => !prev)}
+          value={verifiedOnly}
+          onValueChange={setVerifiedOnly}
         />
-        <Chip
+        <Switch
           label={t('discover.vaccinatedOnlyLabel')}
-          selected={vaccinatedOnly}
-          onPress={() => setVaccinatedOnly((prev) => !prev)}
+          value={vaccinatedOnly}
+          onValueChange={setVaccinatedOnly}
         />
       </View>
 
@@ -187,34 +186,53 @@ export default function DiscoverTab() {
         {t('discover.approximateNote')}
       </Text>
 
-      {nearby.isError && <Notice tone="error" message={t('errors.generic')} />}
-
-      {nearby.isLoading || location.status === 'loading' ? (
-        <Loading />
-      ) : (
-        <ResponsiveList
-          data={results}
-          keyExtractor={(pet) => pet.id}
-          renderItem={(pet) => (
-            <PetCard
-              pet={pet}
-              onPress={() =>
-                router.push({
-                  pathname: '/pet/[id]',
-                  params: { id: pet.id, senderPetId: matchingForPet.id },
-                })
-              }
-            />
-          )}
-          onEndReached={() => {
-            if (nearby.hasNextPage && !nearby.isFetchingNextPage) nearby.fetchNextPage();
-          }}
-          footerComponent={nearby.isFetchingNextPage ? <Loading /> : undefined}
-          emptyComponent={
-            <EmptyState title={t('discover.emptyTitle')} message={t('discover.emptyMessage')} />
-          }
-        />
+      {nearby.isError && (
+        <View className="pb-3">
+          <Notice tone="error" message={t('errors.generic')} />
+        </View>
       )}
+
+      {!isLoading && results.length > 0 && (
+        <Text variant="bodySmall" color="secondary" className="pb-3">
+          {t('discover.resultCount', { count: results.length })}
+        </Text>
+      )}
+    </View>
+  );
+
+  return (
+    <ScreenContainer contentWidth="wide" edges={[]}>
+      <ResponsiveList
+        data={isLoading ? [] : results}
+        keyExtractor={(pet) => pet.id}
+        headerComponent={listHeader}
+        renderItem={(pet) => (
+          <PetCard
+            pet={pet}
+            onPress={() =>
+              router.push({
+                pathname: '/pet/[id]',
+                params: { id: pet.id, senderPetId: matchingForPet.id },
+              })
+            }
+          />
+        )}
+        onEndReached={() => {
+          if (nearby.hasNextPage && !nearby.isFetchingNextPage) nearby.fetchNextPage();
+        }}
+        footerComponent={nearby.isFetchingNextPage ? <Loading /> : undefined}
+        emptyComponent={
+          isLoading ? (
+            <Loading />
+          ) : (
+            <EmptyState
+              glyph="🔍"
+              title={t('discover.emptyTitle')}
+              message={t('discover.emptyMessage')}
+            />
+          )
+        }
+      />
     </ScreenContainer>
   );
 }

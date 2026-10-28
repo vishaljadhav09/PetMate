@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import type { ViewStyle } from 'react-native';
 import {
   useSharedValue,
   useAnimatedStyle,
@@ -12,7 +13,7 @@ interface UseAnimatedPressOptions {
 }
 
 interface UseAnimatedPressReturn {
-  animatedStyle: ReturnType<typeof useAnimatedStyle>;
+  animatedStyle: ReturnType<typeof useAnimatedStyle<ViewStyle>>;
   pressed: SharedValue<boolean>;
   onPressIn: () => void;
   onPressOut: () => void;
@@ -24,7 +25,7 @@ export function useAnimatedPress({
 }: UseAnimatedPressOptions = {}): UseAnimatedPressReturn {
   const pressed = useSharedValue(false);
 
-  const animatedStyle = useAnimatedStyle(() => ({
+  const animatedStyle = useAnimatedStyle<ViewStyle>(() => ({
     transform: [{ scale: withTiming(pressed.value ? scale : 1, { duration }) }],
   }));
 

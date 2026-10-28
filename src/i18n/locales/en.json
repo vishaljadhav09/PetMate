@@ -18,14 +18,16 @@
   },
   "tabs": {
     "discover": "Discover",
-    "myPets": "My Pets",
+    "myPets": "My pets",
     "requests": "Requests",
     "profile": "Profile"
   },
   "discover": {
     "title": "Discover",
-    "subtitle": "Compatible pets near you",
+    "subtitle": "Compatible pets near you, filtered by species and opposite gender.",
     "distanceAway": "{{distance}} km away",
+    "resultCount_one": "{{count}} compatible pet nearby",
+    "resultCount_other": "{{count}} compatible pets nearby",
     "emptyTitle": "No pets nearby yet",
     "emptyMessage": "Check back soon as more owners join PetMate.",
     "noEligiblePetsTitle": "Add a breeding-age pet to browse",
@@ -94,11 +96,11 @@
     },
     "pendingApproval": "Pending approval",
     "hiddenListing": "Hidden",
-    "verifiedPet": "Verified"
+    "verifiedPet": "verified"
   },
   "myPets": {
-    "title": "My Pets",
-    "subtitle": "Manage the pets you've listed",
+    "title": "My pets",
+    "subtitle": "Profiles you manage. Breeding eligibility is checked automatically by age.",
     "emptyTitle": "You haven't added a pet yet",
     "emptyMessage": "Add your pet's profile to start finding compatible matches.",
     "addPet": "Add Pet"
@@ -158,6 +160,9 @@
   "profile": {
     "title": "Profile",
     "notVerifiedLabel": "Not yet verified",
+    "ownerStatusLabel": "Owner status",
+    "verifiedOwnerValue": "✓ Verified owner",
+    "safetyNotice": "Species and gender compatibility are enforced automatically on every match request. Health and vaccination details are self-reported by owners unless marked verified.",
     "ratingSummaryTitle": "Trust rating",
     "phoneLabel": "Phone",
     "petsListedLabel": "Pets listed",
@@ -173,7 +178,9 @@
     "deleteAccountTitle": "Delete your account?",
     "deleteAccountMessage": "This permanently deletes your profile, pets, requests and ratings. This cannot be undone.",
     "deleteAccountFailed": "Could not delete your account. Please try again.",
-    "savedPetsAction": "Saved pets"
+    "savedPetsAction": "Saved pets",
+    "languageTitle": "Language",
+    "languageRestartNote": "Restart the app to apply the layout direction."
   },
   "requests": {
     "title": "Requests",
@@ -187,11 +194,11 @@
     "emptySentTitle": "You haven't sent any requests",
     "emptySentMessage": "Browse Discover to find a compatible pet and send one.",
     "status": {
-      "new": "New",
-      "accepted": "Accepted",
-      "declined": "Declined",
-      "completed": "Completed",
-      "cancelled": "Cancelled"
+      "new": "new",
+      "accepted": "accepted",
+      "declined": "declined",
+      "completed": "completed",
+      "cancelled": "cancelled"
     },
     "acceptAction": "Accept",
     "declineAction": "Decline",
@@ -208,14 +215,20 @@
     },
     "cancelAction": "Cancel request",
     "contactRevealedLabel": "Contact {{name}}: {{phone}}",
+    "contactLine": "📞 {{name}}: {{phone}}",
+    "fromYourPet": "from your {{pet}}",
+    "sentOn": "sent {{date}}",
+    "ownedBy": "(owned by {{name}})",
     "relativeWarning": "These pets may be close relatives (same litter reference). Check before you meet."
   },
   "petDetail": {
+    "title": "Pet profile",
     "healthTitle": "Vaccinations",
     "pedigreeLabel": "Pedigree",
     "studTermsTitle": "Stud terms",
     "locationLabel": "Location",
-    "ratingSummary": "{{average}} from {{count}} review(s)",
+    "ratingSummary_one": "{{average}} from {{count}} review",
+    "ratingSummary_other": "{{average}} from {{count}} reviews",
     "noRatingsYet": "No ratings yet",
     "noOwnPetTitle": "Add a pet to send a request",
     "noOwnPetMessage": "You'll need one of your own pets before you can send a match request.",
@@ -245,7 +258,10 @@
     },
     "approximate": "approximate",
     "lastVetCheckup": "Last vet checkup",
-    "hipScore": "Hip score"
+    "hipScore": "Hip score",
+    "requestFor": "Request for {{name}}",
+    "messageTo": "Message to {{name}}",
+    "sendRequestAction": "Send match request"
   },
   "errorBoundary": {
     "title": "Something went wrong",

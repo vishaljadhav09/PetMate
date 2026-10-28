@@ -1,47 +1,60 @@
-import { StyleSheet, type UnistylesVariants } from 'react-native-unistyles';
+import { StyleSheet } from 'react-native-unistyles';
+import { hs, rf, vs } from '@/theme/metrics';
 
+// A bottom sheet over a dimmed backdrop, as in the prototype's .modal-overlay / .modal-sheet.
 export const styles = StyleSheet.create((theme) => ({
   backdrop: {
     flex: 1,
-    justifyContent: 'center' as const,
-    alignItems: 'center' as const,
+    justifyContent: 'flex-end' as const,
     backgroundColor: theme.colors.overlay.modal,
-    padding: theme.metrics.spacing.p16,
   },
-  card: {
+  keyboardAvoider: {
+    justifyContent: 'flex-end' as const,
+  },
+  sheet: {
+    width: '100%',
+    maxWidth: theme.metrics.contentMaxWidth.narrow,
+    maxHeight: '88%',
+    alignSelf: 'center' as const,
     backgroundColor: theme.colors.background.modal,
-    borderRadius: theme.metrics.borderRadius.xl,
-    padding: theme.metrics.spacing.p24,
-    gap: theme.metrics.spacingV.p12,
-    variants: {
-      size: {
-        sm: {
-          width: '75%',
-          padding: theme.metrics.spacing.p16,
-        },
-        md: {
-          width: '85%',
-          padding: theme.metrics.spacing.p24,
-        },
-        lg: {
-          width: '95%',
-          padding: theme.metrics.spacing.p32,
-        },
-      },
-    },
+    borderTopLeftRadius: hs(22),
+    borderTopRightRadius: hs(22),
+  },
+  sheetContent: {
+    paddingTop: vs(18),
+    paddingHorizontal: hs(18),
+    paddingBottom: vs(22),
+  },
+  head: {
+    flexDirection: 'row' as const,
+    alignItems: 'center' as const,
+    justifyContent: 'space-between' as const,
+    marginBottom: vs(14),
   },
   title: {
+    flex: 1,
+    fontSize: rf(18),
     color: theme.colors.text.primary,
+  },
+  close: {
+    padding: hs(4),
+  },
+  closeGlyph: {
+    fontSize: rf(20),
+    color: theme.colors.text.secondary,
   },
   message: {
     color: theme.colors.text.secondary,
+    fontSize: rf(13.5),
+    lineHeight: rf(13.5 * 1.55),
+    marginBottom: vs(14),
   },
   actions: {
     flexDirection: 'row' as const,
-    justifyContent: 'flex-end' as const,
-    gap: theme.metrics.spacing.p8,
-    marginTop: theme.metrics.spacingV.p8,
+    gap: hs(8),
+    marginTop: vs(14),
+  },
+  action: {
+    flex: 1,
   },
 }));
-
-export type DialogStyleVariants = UnistylesVariants<typeof styles>;

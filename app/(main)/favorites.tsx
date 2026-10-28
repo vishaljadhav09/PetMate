@@ -44,7 +44,11 @@ export default function FavoritesScreen() {
           )}
           withTabBar={false}
           emptyComponent={
-            <EmptyState title={t('favorites.emptyTitle')} message={t('favorites.emptyMessage')} />
+            <EmptyState
+              glyph="🤍"
+              title={t('favorites.emptyTitle')}
+              message={t('favorites.emptyMessage')}
+            />
           }
         />
       )}

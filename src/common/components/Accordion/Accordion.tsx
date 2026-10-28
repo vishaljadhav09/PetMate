@@ -43,16 +43,17 @@ function AccordionSection({
       <Pressable
         onPress={handleToggle}
         disabled={item.disabled}
-        style={styles.header}
         accessibilityRole="button"
         accessibilityState={{ expanded: isExpanded, disabled: item.disabled }}
       >
-        <Text variant="body" weight="medium" style={styles.title}>
-          {item.title}
-        </Text>
-        <Animated.View style={chevronStyle}>
-          <Icon name="chevron-down" sizeVariant="lg" variant="secondary" />
-        </Animated.View>
+        <View style={styles.header}>
+          <Text variant="body" weight="medium" style={styles.title}>
+            {item.title}
+          </Text>
+          <Animated.View style={chevronStyle}>
+            <Icon name="chevron-down" sizeVariant="lg" variant="secondary" />
+          </Animated.View>
+        </View>
       </Pressable>
       <Animated.View style={[styles.content, contentStyle]}>{item.content}</Animated.View>
     </View>

@@ -1,69 +1,26 @@
-import Ionicons from '@expo/vector-icons/Ionicons';
-import { useEffect } from 'react';
-import { Pressable, Text, View, type LayoutChangeEvent } from 'react-native';
-import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
+import { Pressable, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useUnistyles } from 'react-native-unistyles';
-import { useAnimatedTheme } from 'react-native-unistyles/reanimated';
 import { vs } from '@/theme/metrics';
 import { styles } from './TabBar.styles';
 import type { TabBarProps } from './TabBar.types';
 
-type IoniconsName = React.ComponentProps<typeof Ionicons>['name'];
-
-const TAB_ICONS: Record<string, { active: IoniconsName; inactive: IoniconsName }> = {
-  index: { active: 'compass', inactive: 'compass-outline' },
-  'my-pets': { active: 'paw', inactive: 'paw-outline' },
-  requests: { active: 'mail', inactive: 'mail-outline' },
-  profile: { active: 'person', inactive: 'person-outline' },
+/** Emoji glyph shown above each tab label. */
+const TAB_GLYPHS: Record<string, string> = {
+  index: '🐾',
+  'my-pets': '🏡',
+  requests: '✉️',
+  profile: '👤',
 };
 
-const SPRING_CONFIG = {
-  damping: 18,
-  stiffness: 180,
-  mass: 0.6,
-};
+const MIN_BOTTOM_PADDING = vs(12);
 
-export function TabBar({ state, descriptors, navigation }: TabBarProps) {
+export function TabBar({ state, descriptors, navigation, badges }: TabBarProps) {
   const insets = useSafeAreaInsets();
-  const { theme } = useUnistyles();
-  const animatedTheme = useAnimatedTheme();
-
-  const tabCount = state.routes.length;
-  const containerWidth = useSharedValue(0);
-  const activeIndex = useSharedValue(state.index);
-
-  const padding = theme.metrics.spacing.p8;
-
-  useEffect(() => {
-    activeIndex.value = state.index;
-  }, [state.index, activeIndex]);
-
-  const handleContainerLayout = (e: LayoutChangeEvent) => {
-    containerWidth.value = e.nativeEvent.layout.width;
-  };
-
-  const indicatorAnimatedStyle = useAnimatedStyle(() => {
-    if (containerWidth.value === 0) return { width: 0, opacity: 0 };
-    const innerWidth = containerWidth.value - padding * 2;
-    const singleTabWidth = innerWidth / tabCount;
-    return {
-      width: singleTabWidth,
-      left: withSpring(padding + activeIndex.value * singleTabWidth, SPRING_CONFIG),
-      opacity: 1,
-      backgroundColor: animatedTheme.value.colors.brand.primary,
-    };
-  });
 
   return (
     <View
-      style={[styles.container, { marginBottom: insets.bottom + vs(12) }]}
-      onLayout={handleContainerLayout}
+      style={[styles.container, { paddingBottom: Math.max(insets.bottom, MIN_BOTTOM_PADDING) }]}
     >
-      {/* Animated sliding indicator — only animated props, no unistyles spread */}
-      <Animated.View style={[styles.indicator, indicatorAnimatedStyle]} />
-
-      {/* Tab items — plain Pressable, no AnimatedPressable */}
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const isFocused = state.index === index;
@@ -87,29 +44,34 @@ export function TabBar({ state, descriptors, navigation }: TabBarProps) {
           });
         };
 
-        const icons = TAB_ICONS[route.name] ?? { active: 'ellipse', inactive: 'ellipse-outline' };
-        const iconName = isFocused ? icons.active : icons.inactive;
-        const iconColor = isFocused ? theme.colors.text.inverse : theme.colors.icon.tertiary;
         const label =
           typeof options.tabBarLabel === 'string'
             ? options.tabBarLabel
             : (options.title ?? route.name);
+        const badgeCount = badges?.[route.name] ?? 0;
 
         return (
-          <Pressable
-            key={route.key}
-            onPress={onPress}
-            onLongPress={onLongPress}
-            accessibilityRole="tab"
-            accessibilityState={{ selected: isFocused }}
-            accessibilityLabel={options.tabBarAccessibilityLabel}
-            style={styles.tab}
-          >
-            <Ionicons name={iconName} size={20} color={iconColor} />
-            <Text style={[styles.label, isFocused ? styles.labelActive : styles.labelInactive]}>
-              {label}
-            </Text>
-          </Pressable>
+          <View key={route.key} style={styles.tabCell}>
+            <Pressable
+              onPress={onPress}
+              onLongPress={onLongPress}
+              accessibilityRole="tab"
+              accessibilityState={{ selected: isFocused }}
+              accessibilityLabel={options.tabBarAccessibilityLabel}
+            >
+              <View style={styles.tab}>
+                {badgeCount > 0 && (
+                  <View style={styles.badge}>
+                    <Text style={styles.badgeText}>{badgeCount}</Text>
+                  </View>
+                )}
+                <Text style={styles.glyph}>{TAB_GLYPHS[route.name] ?? '•'}</Text>
+                <Text style={[styles.label, isFocused ? styles.labelActive : styles.labelInactive]}>
+                  {label}
+                </Text>
+              </View>
+            </Pressable>
+          </View>
         );
       })}
     </View>

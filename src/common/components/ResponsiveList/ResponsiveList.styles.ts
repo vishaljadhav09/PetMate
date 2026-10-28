@@ -16,4 +16,8 @@ export const styles = StyleSheet.create((theme) => ({
   gutterReset: {
     marginHorizontal: -theme.metrics.spacing.p8,
   },
+  // The header is not a cell, so it gets back the gutter the list reset removed.
+  headerGutter: {
+    paddingHorizontal: theme.metrics.spacing.p8,
+  },
 }));

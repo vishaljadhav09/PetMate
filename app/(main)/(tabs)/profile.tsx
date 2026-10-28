@@ -7,15 +7,16 @@ import {
   Card,
   DetailRow,
   Loading,
+  Notice,
   ScreenContainer,
   ScreenHeader,
-  Tag,
   Text,
 } from '@/common/components';
 import { signOut } from '@/features/auth/services/authService';
 import { OwnerAvatar } from '@/features/pets/components/OwnerAvatar';
 import { useMyPets } from '@/features/pets/hooks/usePets';
 import { DeleteAccountDialog } from '@/features/profile/components/DeleteAccountDialog';
+import { LanguageSelector } from '@/features/profile/components/LanguageSelector';
 import { ProfileForm } from '@/features/profile/components/ProfileForm';
 import { useMyProfile } from '@/features/profile/hooks/useProfile';
 
@@ -28,50 +29,58 @@ export default function ProfileTab() {
 
   if (isProfileLoading || !profile) {
     return (
-      <ScreenContainer>
+      <ScreenContainer edges={[]}>
         <Loading fullScreen />
       </ScreenContainer>
     );
   }
 
   return (
-    <ScreenContainer scrollable withTabBar>
+    <ScreenContainer scrollable withTabBar edges={[]}>
       <ScreenHeader title={t('profile.title')} />
 
-      <View className="gap-4">
+      <View className="gap-3">
         <Card variant="surface">
-          <View className="flex-row items-center gap-3">
+          <View className="flex-row items-center gap-3.5">
             <OwnerAvatar ownerId={profile.id} name={profile.name} size="lg" />
-            <View className="flex-1 gap-1">
+            <View className="flex-1">
               <Text variant="title">{profile.name}</Text>
-              <Text variant="bodySmall" color="secondary">
+              <Text variant="bodySmall" color="secondary" className="mt-0.5">
                 {profile.city}
               </Text>
-              <Tag
-                label={
-                  profile.verifiedOwner ? t('pets.verifiedOwner') : t('profile.notVerifiedLabel')
-                }
-                tone={profile.verifiedOwner ? 'success' : 'neutral'}
-              />
             </View>
           </View>
         </Card>
 
         <Card variant="surface">
+          <DetailRow label={t('profile.phoneLabel')} value={profile.phone || '—'} divider />
+          <DetailRow
+            label={t('profile.ownerStatusLabel')}
+            value={
+              profile.verifiedOwner
+                ? t('profile.verifiedOwnerValue')
+                : t('profile.notVerifiedLabel')
+            }
+            divider
+          />
           <DetailRow
             label={t('profile.ratingSummaryTitle')}
             value={
               profile.ratingCount > 0
-                ? t('petDetail.ratingSummary', {
+                ? `★ ${t('petDetail.ratingSummary', {
                     average: profile.ratingAvg.toFixed(1),
                     count: profile.ratingCount,
-                  })
+                  })}`
                 : t('petDetail.noRatingsYet')
             }
             divider
           />
           <DetailRow label={t('profile.petsListedLabel')} value={`${myPets?.length ?? 0}`} />
         </Card>
+
+        <Notice glyph="🛡️" message={t('profile.safetyNotice')} />
+
+        <LanguageSelector />
 
         <Card variant="surface">
           <View className="gap-3">
@@ -88,26 +97,18 @@ export default function ProfileTab() {
         />
 
         <Button
-          title={t('profile.viewMyPetsAction')}
+          title={t('profile.signOutAction')}
           variant="secondary"
           fullWidth
-          onPress={() => router.push('/my-pets')}
+          onPress={signOut}
         />
 
-        <View className="gap-3 pb-4">
-          <Button
-            title={t('profile.signOutAction')}
-            variant="outline"
-            fullWidth
-            onPress={signOut}
-          />
-          <Button
-            title={t('profile.deleteAccountAction')}
-            variant="ghost"
-            fullWidth
-            onPress={() => setIsDeleteDialogVisible(true)}
-          />
-        </View>
+        <Button
+          title={t('profile.deleteAccountAction')}
+          variant="decline"
+          fullWidth
+          onPress={() => setIsDeleteDialogVisible(true)}
+        />
       </View>
 
       <DeleteAccountDialog

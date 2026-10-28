@@ -31,8 +31,8 @@ export function ProfileForm({ profile }: ProfileFormProps) {
   });
 
   return (
-    <View className="gap-4">
-      <FormField name="name" control={control} label={t('profile.nameLabel')} required>
+    <View className="gap-3">
+      <FormField name="name" control={control} label={t('profile.nameLabel')}>
         <Input autoCapitalize="words" />
       </FormField>
 

@@ -84,14 +84,15 @@ export class ErrorBoundary extends Component<Props, State> {
             </Text>
           )}
           <Pressable
-            style={styles.button}
             onPress={this.handleReset}
             accessibilityRole="button"
             accessibilityLabel={FALLBACK_TEXT.retry}
           >
-            <Text variant="body" weight="semibold" style={styles.buttonText}>
-              {FALLBACK_TEXT.retry}
-            </Text>
+            <View style={styles.button}>
+              <Text variant="body" weight="semibold" style={styles.buttonText}>
+                {FALLBACK_TEXT.retry}
+              </Text>
+            </View>
           </Pressable>
         </View>
       );

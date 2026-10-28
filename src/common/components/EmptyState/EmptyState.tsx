@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import { Text as RNText, View } from 'react-native';
 import { Button } from '@/common/components/Button';
 import { Text } from '@/common/components/Text';
 import { styles } from './EmptyState.styles';
@@ -10,6 +10,7 @@ import type { EmptyStateProps } from './EmptyState.types';
  * @example
  * ```tsx
  * <EmptyState
+ *   glyph="🔍"
  *   title="No results"
  *   message="Try a different search term."
  *   actionLabel="Clear filters"
@@ -20,6 +21,7 @@ import type { EmptyStateProps } from './EmptyState.types';
 export function EmptyState({
   title,
   message,
+  glyph,
   icon,
   actionLabel,
   onAction,
@@ -29,17 +31,14 @@ export function EmptyState({
 
   return (
     <View style={styles.container} accessibilityRole="alert">
-      {icon && <View style={styles.iconContainer}>{icon}</View>}
-      <Text variant="h3" align="center">
-        {title}
-      </Text>
-      {message && (
-        <Text variant="bodySmall" align="center" style={styles.message}>
-          {message}
-        </Text>
-      )}
+      {!!glyph && <RNText style={styles.glyph}>{glyph}</RNText>}
+      {!glyph && icon && <View style={styles.iconContainer}>{icon}</View>}
+      <Text style={styles.title}>{title}</Text>
+      {message && <Text style={styles.message}>{message}</Text>}
       {actionLabel && onAction && (
-        <Button title={actionLabel} variant="outline" size="sm" onPress={onAction} />
+        <View style={styles.action}>
+          <Button title={actionLabel} fullWidth onPress={onAction} />
+        </View>
       )}
     </View>
   );

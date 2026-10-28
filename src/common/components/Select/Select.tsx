@@ -1,15 +1,16 @@
-import { BottomSheetBackdrop, BottomSheetFlatList, BottomSheetModal } from '@gorhom/bottom-sheet';
-import type { BottomSheetBackdropProps } from '@gorhom/bottom-sheet';
-import { useCallback, useMemo, useRef } from 'react';
-import { Pressable, View } from 'react-native';
-import type { ListRenderItem } from 'react-native';
+import { useCallback, useState } from 'react';
+import { Modal, Pressable, ScrollView, StyleSheet as RNStyleSheet, View } from 'react-native';
+import Animated, { FadeIn, SlideInDown } from 'react-native-reanimated';
 import { Icon } from '@/common/components/Icon';
 import { Text } from '@/common/components/Text';
 import { styles } from './Select.styles';
-import type { SelectOption, SelectProps } from './Select.types';
+import type { SelectProps } from './Select.types';
+
+const ENTER_DURATION_MS = 180;
 
 /**
- * A select dropdown using a bottom sheet modal to display options.
+ * A select field that lists its options in a bottom sheet. The sheet is a plain
+ * `Modal`, so the field also works inside a `Dialog`.
  *
  * @example
  * ```tsx
@@ -35,8 +36,7 @@ export function Select({
   disabled = false,
   size = 'md',
 }: SelectProps) {
-  const bottomSheetRef = useRef<BottomSheetModal>(null);
-  const snapPoints = useMemo(() => ['40%', '60%'], []);
+  const [open, setOpen] = useState(false);
 
   styles.useVariants({ size, error: !!error, disabled });
 
@@ -44,50 +44,17 @@ export function Select({
   const displayText = selectedOption?.label ?? placeholder ?? '';
 
   const handleOpen = useCallback(() => {
-    if (!disabled) {
-      bottomSheetRef.current?.present();
-    }
+    if (!disabled) setOpen(true);
   }, [disabled]);
+
+  const handleClose = useCallback(() => setOpen(false), []);
 
   const handleSelect = useCallback(
     (optionValue: string) => {
-      bottomSheetRef.current?.dismiss();
-      requestAnimationFrame(() => onChange(optionValue));
+      setOpen(false);
+      onChange(optionValue);
     },
     [onChange]
-  );
-
-  const renderBackdrop = useCallback(
-    (props: BottomSheetBackdropProps) => (
-      <BottomSheetBackdrop
-        {...props}
-        appearsOnIndex={0}
-        disappearsOnIndex={-1}
-        pressBehavior="close"
-      />
-    ),
-    []
-  );
-
-  const renderItem: ListRenderItem<SelectOption> = useCallback(
-    ({ item }) => (
-      <Pressable
-        onPress={() => handleSelect(item.value)}
-        disabled={item.disabled}
-        style={styles.option}
-        accessibilityRole="radio"
-        accessibilityState={{ selected: item.value === value, disabled: item.disabled }}
-      >
-        <Text
-          variant="body"
-          style={[styles.optionText, item.value === value && styles.optionTextSelected]}
-        >
-          {item.label}
-        </Text>
-        {item.value === value && <Icon name="checkmark" sizeVariant="lg" variant="primary" />}
-      </Pressable>
-    ),
-    [handleSelect, value]
   );
 
   return (
@@ -101,34 +68,69 @@ export function Select({
         onPress={handleOpen}
         disabled={disabled}
         accessibilityRole="combobox"
-        accessibilityState={{ expanded: false, disabled }}
-        style={styles.trigger}
+        accessibilityLabel={label}
+        accessibilityState={{ expanded: open, disabled }}
       >
-        <Text variant="body" style={selectedOption ? styles.selectedText : styles.placeholderText}>
-          {displayText}
-        </Text>
-        <Icon name="chevron-down" sizeVariant="md" variant="muted" />
+        <View style={styles.trigger}>
+          <Text
+            variant="body"
+            numberOfLines={1}
+            style={[
+              styles.triggerText,
+              selectedOption ? styles.selectedText : styles.placeholderText,
+            ]}
+          >
+            {displayText}
+          </Text>
+          <Icon name="chevron-down" size={12} variant="tertiary" />
+        </View>
       </Pressable>
       {error && (
         <Text variant="caption" style={styles.errorText}>
           {error}
         </Text>
       )}
-      <BottomSheetModal
-        ref={bottomSheetRef}
-        snapPoints={snapPoints}
-        enablePanDownToClose
-        backdropComponent={renderBackdrop}
-        backgroundStyle={styles.sheetBackground}
-        handleIndicatorStyle={styles.sheetHandle}
+      <Modal
+        visible={open}
+        transparent
+        animationType="none"
+        onRequestClose={handleClose}
+        statusBarTranslucent
       >
-        <BottomSheetFlatList
-          data={options}
-          keyExtractor={(item: SelectOption) => item.value}
-          renderItem={renderItem}
-          contentContainerStyle={styles.listContent}
-        />
-      </BottomSheetModal>
+        <Animated.View entering={FadeIn.duration(ENTER_DURATION_MS)} style={styles.backdrop}>
+          <Pressable style={RNStyleSheet.absoluteFill} onPress={handleClose} />
+          <Animated.View entering={SlideInDown.duration(ENTER_DURATION_MS)} style={styles.sheet}>
+            <ScrollView
+              contentContainerStyle={styles.listContent}
+              showsVerticalScrollIndicator={false}
+              bounces={false}
+            >
+              {options.map((item) => {
+                const selected = item.value === value;
+                return (
+                  <Pressable
+                    key={item.value}
+                    onPress={() => handleSelect(item.value)}
+                    disabled={item.disabled}
+                    accessibilityRole="radio"
+                    accessibilityState={{ selected, disabled: item.disabled }}
+                  >
+                    <View style={styles.option}>
+                      <Text
+                        variant="body"
+                        style={[styles.optionText, selected && styles.optionTextSelected]}
+                      >
+                        {item.label}
+                      </Text>
+                      {selected && <Icon name="checkmark" size={18} variant="primary" />}
+                    </View>
+                  </Pressable>
+                );
+              })}
+            </ScrollView>
+          </Animated.View>
+        </Animated.View>
+      </Modal>
     </View>
   );
 }

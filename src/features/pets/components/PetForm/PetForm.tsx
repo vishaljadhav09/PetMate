@@ -9,7 +9,6 @@ import {
   FormField,
   Input,
   Notice,
-  SegmentedControl,
   Select,
   Switch,
   Text,
@@ -27,6 +26,7 @@ import type { CreatePetData, PetGender, PetSpecies, StudTermsType } from '../../
 import { PhotoPicker } from '../PhotoPicker';
 
 const SPECIES_OPTIONS: PetSpecies[] = ['dog', 'cat', 'bird', 'rabbit', 'horse', 'other'];
+const GENDER_OPTIONS: PetGender[] = ['male', 'female'];
 const STUD_TERMS_OPTIONS: StudTermsType[] = ['fixedFee', 'negotiable', 'pickOfLitter', 'free'];
 
 const EMPTY_DEFAULTS: PetFormData = {
@@ -160,8 +160,26 @@ export function PetForm({
     }
   });
 
+  const studTermsField = (
+    <Controller
+      name="studTermsType"
+      control={control}
+      render={({ field: { value, onChange } }) => (
+        <Select
+          label={t('petForm.studTermsTypeLabel')}
+          value={value}
+          onChange={(next) => onChange(next as StudTermsType)}
+          options={STUD_TERMS_OPTIONS.map((option) => ({
+            label: t(`pets.studTerms.${option}`),
+            value: option,
+          }))}
+        />
+      )}
+    />
+  );
+
   return (
-    <View className="gap-4">
+    <View className="gap-3">
       <Controller
         name="photos"
         control={control}
@@ -170,79 +188,104 @@ export function PetForm({
         )}
       />
 
-      <FormField name="name" control={control} label={t('petForm.nameLabel')} required>
+      <FormField name="name" control={control} label={t('petForm.nameLabel')}>
         <Input placeholder={t('petForm.namePlaceholder')} />
       </FormField>
 
-      <View className="gap-2">
-        <Text variant="label">{`${t('petForm.speciesLabel')} *`}</Text>
-        <Controller
-          name="species"
-          control={control}
-          render={({ field: { value, onChange } }) => (
-            <Select
-              value={value}
-              onChange={(next) => onChange(next as PetSpecies)}
-              options={SPECIES_OPTIONS.map((option) => ({
-                label: t(`pets.species.${option}`),
-                value: option,
-              }))}
-              error={
-                errors.species?.message ? translateDynamicKey(t, errors.species.message) : undefined
-              }
-            />
-          )}
-        />
+      <View className="flex-row gap-2.5">
+        <View className="flex-1">
+          <Controller
+            name="species"
+            control={control}
+            render={({ field: { value, onChange } }) => (
+              <Select
+                label={t('petForm.speciesLabel')}
+                value={value}
+                onChange={(next) => onChange(next as PetSpecies)}
+                options={SPECIES_OPTIONS.map((option) => ({
+                  label: t(`pets.species.${option}`),
+                  value: option,
+                }))}
+                error={
+                  errors.species?.message
+                    ? translateDynamicKey(t, errors.species.message)
+                    : undefined
+                }
+              />
+            )}
+          />
+        </View>
+        <View className="flex-1">
+          <Controller
+            name="gender"
+            control={control}
+            render={({ field: { value, onChange } }) => (
+              <Select
+                label={t('petForm.genderLabel')}
+                value={value}
+                onChange={(next) => onChange(next as PetGender)}
+                options={GENDER_OPTIONS.map((option) => ({
+                  label: t(`pets.gender.${option}`),
+                  value: option,
+                }))}
+              />
+            )}
+          />
+        </View>
       </View>
 
-      <FormField name="breed" control={control} label={t('petForm.breedLabel')} required>
+      <FormField name="breed" control={control} label={t('petForm.breedLabel')}>
         <Input placeholder={t('petForm.breedPlaceholder')} />
       </FormField>
 
-      <View className="gap-2">
-        <Text variant="label">{`${t('petForm.genderLabel')} *`}</Text>
-        <Controller
-          name="gender"
-          control={control}
-          render={({ field: { value, onChange } }) => (
-            <SegmentedControl
-              value={value}
-              onChange={(next) => onChange(next as PetGender)}
-              options={[
-                { label: t('pets.gender.male'), value: 'male' },
-                { label: t('pets.gender.female'), value: 'female' },
-              ]}
-            />
-          )}
-        />
-      </View>
-
-      <FormField name="dateOfBirth" control={control} label={t('petForm.dobLabel')} required>
+      <FormField name="dateOfBirth" control={control} label={t('petForm.dobLabel')}>
         <Input placeholder={t('petForm.dobPlaceholder')} helperText={t('petForm.dobHelperText')} />
       </FormField>
 
-      <Controller
-        name="vaccinationUpToDate"
-        control={control}
-        render={({ field: { value, onChange } }) => (
-          <Switch label={t('petForm.vaccinationLabel')} value={value} onValueChange={onChange} />
-        )}
-      />
+      {studTermsType === 'fixedFee' ? (
+        <View className="flex-row gap-2.5">
+          <View className="flex-1">{studTermsField}</View>
+          <View className="flex-1">
+            <FormField
+              name="studFeeAmount"
+              control={control}
+              label={t('petForm.studFeeAmountLabel')}
+            >
+              <Input placeholder={t('petForm.studFeeAmountPlaceholder')} keyboardType="numeric" />
+            </FormField>
+          </View>
+        </View>
+      ) : (
+        studTermsField
+      )}
 
-      <Controller
-        name="pedigreeCertified"
-        control={control}
-        render={({ field: { value, onChange } }) => (
-          <Switch label={t('petForm.pedigreeLabel')} value={value} onValueChange={onChange} />
-        )}
-      />
+      <FormField name="description" control={control} label={t('petForm.descriptionLabel')}>
+        <TextArea placeholder={t('petForm.descriptionPlaceholder')} />
+      </FormField>
+
+      <View>
+        <Controller
+          name="vaccinationUpToDate"
+          control={control}
+          render={({ field: { value, onChange } }) => (
+            <Switch label={t('petForm.vaccinationLabel')} value={value} onValueChange={onChange} />
+          )}
+        />
+
+        <Controller
+          name="pedigreeCertified"
+          control={control}
+          render={({ field: { value, onChange } }) => (
+            <Switch label={t('petForm.pedigreeLabel')} value={value} onValueChange={onChange} />
+          )}
+        />
+      </View>
 
       {pedigreeCertified && (
         <FormField
           name="registrationNumber"
           control={control}
           label={t('petForm.registrationNumberLabel')}
-          required
         >
           <Input placeholder={t('petForm.registrationNumberPlaceholder')} />
         </FormField>
@@ -263,8 +306,10 @@ export function PetForm({
         />
       </FormField>
 
-      <View className="gap-2">
-        <Text variant="label">{t('petForm.certificateLabel')}</Text>
+      <View className="gap-1.5">
+        <Text variant="label" color="secondary">
+          {t('petForm.certificateLabel')}
+        </Text>
         <Text variant="caption" color="secondary">
           {t('petForm.certificateHelp')}
         </Text>
@@ -274,51 +319,21 @@ export function PetForm({
               ? t('petForm.certificateReplace')
               : t('petForm.certificateAdd')
           }
-          variant="outline"
+          variant="secondary"
+          size="sm"
           onPress={handlePickCertificate}
         />
         {certificateUri && <Notice message={t('petForm.certificateSelected')} tone="success" />}
       </View>
 
-      <FormField name="description" control={control} label={t('petForm.descriptionLabel')}>
-        <TextArea placeholder={t('petForm.descriptionPlaceholder')} />
-      </FormField>
-
-      <View className="gap-2">
-        <Text variant="label">{`${t('petForm.studTermsTypeLabel')} *`}</Text>
-        <Controller
-          name="studTermsType"
-          control={control}
-          render={({ field: { value, onChange } }) => (
-            <Select
-              value={value}
-              onChange={(next) => onChange(next as StudTermsType)}
-              options={STUD_TERMS_OPTIONS.map((option) => ({
-                label: t(`pets.studTerms.${option}`),
-                value: option,
-              }))}
-            />
-          )}
-        />
-      </View>
-
-      {studTermsType === 'fixedFee' && (
-        <FormField
-          name="studFeeAmount"
-          control={control}
-          label={t('petForm.studFeeAmountLabel')}
-          required
-        >
-          <Input placeholder={t('petForm.studFeeAmountPlaceholder')} keyboardType="numeric" />
-        </FormField>
-      )}
-
-      <FormField name="city" control={control} label={t('petForm.cityLabel')} required>
+      <FormField name="city" control={control} label={t('petForm.cityLabel')}>
         <Input placeholder={t('petForm.cityPlaceholder')} />
       </FormField>
 
-      <View className="gap-2">
-        <Text variant="label">{t('petForm.locationLabel')}</Text>
+      <View className="gap-1.5">
+        <Text variant="label" color="secondary">
+          {t('petForm.locationLabel')}
+        </Text>
         <Text variant="caption" color="secondary">
           {t('petForm.locationHelp')}
         </Text>
@@ -328,7 +343,8 @@ export function PetForm({
               ? t('petForm.locationCaptured')
               : t('petForm.locationUseCurrent')
           }
-          variant="outline"
+          variant="secondary"
+          size="sm"
           loading={location.status === 'loading'}
           onPress={() => location.request()}
         />
@@ -337,32 +353,34 @@ export function PetForm({
         )}
       </View>
 
-      <Controller
-        name="availableForMatching"
-        control={control}
-        render={({ field: { value, onChange } }) => (
-          <Switch
-            label={t('petForm.availableForMatchingLabel')}
-            value={value}
-            onValueChange={onChange}
-          />
-        )}
-      />
-
-      {availableForMatching && (
+      <View>
         <Controller
-          name="ownerAttestsBreedingReady"
+          name="availableForMatching"
           control={control}
-          render={({ field: { value, onChange }, fieldState: { error } }) => (
-            <View className="gap-1">
-              <Switch label={t('petForm.attestLabel')} value={value} onValueChange={onChange} />
-              {error?.message && (
-                <Notice tone="error" message={translateDynamicKey(t, error.message)} />
-              )}
-            </View>
+          render={({ field: { value, onChange } }) => (
+            <Switch
+              label={t('petForm.availableForMatchingLabel')}
+              value={value}
+              onValueChange={onChange}
+            />
           )}
         />
-      )}
+
+        {availableForMatching && (
+          <Controller
+            name="ownerAttestsBreedingReady"
+            control={control}
+            render={({ field: { value, onChange }, fieldState: { error } }) => (
+              <View className="gap-1">
+                <Switch label={t('petForm.attestLabel')} value={value} onValueChange={onChange} />
+                {error?.message && (
+                  <Notice tone="error" message={translateDynamicKey(t, error.message)} />
+                )}
+              </View>
+            )}
+          />
+        )}
+      </View>
 
       <Button
         title={mode === 'create' ? t('petForm.submit') : t('petForm.submitEdit')}

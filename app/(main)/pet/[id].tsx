@@ -3,12 +3,12 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
 import {
+  Button,
   Card,
+  Dialog,
   DetailRow,
-  EmptyState,
   IconButton,
   Loading,
-  Menu,
   Notice,
   ScreenContainer,
   ScreenHeader,
@@ -34,7 +34,7 @@ export default function PetDetailScreen() {
   const { data: myPets } = useMyPets();
   const { data: favoriteIds } = useFavoritePetIds();
   const toggleFavorite = useToggleFavorite();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isRequestOpen, setIsRequestOpen] = useState(false);
   const [isReportOpen, setIsReportOpen] = useState(false);
 
   if (isPetLoading || !pet) {
@@ -73,124 +73,123 @@ export default function PetDetailScreen() {
       ? `${pet.city} · ${t('discover.distanceAway', { distance: pet.distanceKm })} · ${t('petDetail.approximate')}`
       : `${pet.city} · ${t('petDetail.approximate')}`;
 
-  let requestSection = (
-    <Notice tone="warning" message={t(`pets.matchIncompatibility.${incompatibilityReason}`)} />
-  );
-  if (!myPets || myPets.length === 0) {
-    requestSection = (
-      <EmptyState
-        title={t('petDetail.noOwnPetTitle')}
-        message={t('petDetail.noOwnPetMessage')}
-        actionLabel={t('myPets.addPet')}
-        onAction={() => router.push('/pet/new')}
-      />
-    );
-  } else if (eligibleSenderPets.length > 0) {
-    requestSection = (
-      <SendMatchRequestForm
-        recipientPet={pet}
-        eligibleSenderPets={eligibleSenderPets}
-        defaultSenderPetId={senderPetId}
-        onSuccess={() => router.back()}
-      />
-    );
+  const hasOwnPets = !!myPets && myPets.length > 0;
+  const canSendRequest = hasOwnPets && eligible && eligibleSenderPets.length > 0;
+  let blockedReason: string | null = null;
+  if (!hasOwnPets) {
+    blockedReason = t('petDetail.noOwnPetMessage');
+  } else if (eligibleSenderPets.length === 0) {
+    blockedReason = t(`pets.matchIncompatibility.${incompatibilityReason}`);
   }
 
   return (
-    <ScreenContainer scrollable>
+    <ScreenContainer scrollable edges={['top', 'bottom']}>
       <ScreenHeader
-        title={pet.name}
+        title={t('petDetail.title')}
         onBack={() => router.back()}
         right={
-          <View className="flex-row items-center">
-            <IconButton
-              icon={isFavorite ? 'heart' : 'heart-outline'}
-              accessibilityLabel={isFavorite ? t('favorites.remove') : t('favorites.add')}
-              variant="ghost"
-              onPress={() => toggleFavorite.mutate({ petId: pet.id, isFavorite })}
-            />
-            <Menu
-              visible={isMenuOpen}
-              onDismiss={() => setIsMenuOpen(false)}
-              anchor={
-                <IconButton
-                  icon="ellipsis-vertical"
-                  accessibilityLabel={t('petDetail.report.menuLabel')}
-                  variant="ghost"
-                  onPress={() => setIsMenuOpen(true)}
-                />
-              }
-              items={[
-                {
-                  label: t('petDetail.report.menuLabel'),
-                  icon: 'flag-outline',
-                  destructive: true,
-                  onPress: () => setIsReportOpen(true),
-                },
-              ]}
-            />
-          </View>
+          <IconButton
+            icon={isFavorite ? 'heart' : 'heart-outline'}
+            accessibilityLabel={isFavorite ? t('favorites.remove') : t('favorites.add')}
+            variant="ghost"
+            onPress={() => toggleFavorite.mutate({ petId: pet.id, isFavorite })}
+          />
         }
       />
+
+      <View className="flex-row items-center gap-3.5 pb-3.5">
+        <PetAvatar petId={pet.id} species={pet.species} size="xl" photoUrl={pet.photos[0]} />
+        <View className="flex-1">
+          <View className="flex-row flex-wrap items-center gap-1.5">
+            <Text variant="h2">{pet.name}</Text>
+            {pet.verified && (
+              <Tag label={`✓ ${t('pets.verifiedPet')}`} tone="success" size="badge" />
+            )}
+          </View>
+          <Text variant="body" color="secondary" className="mt-0.5">
+            {`${pet.breed} · ${t(`pets.gender.${pet.gender}`)} · ${t('pets.age', {
+              years: age.years,
+              months: age.months,
+            })}`}
+          </Text>
+        </View>
+      </View>
+
+      {!eligible && (
+        <View className="pb-3.5">
+          <Notice tone="error" message={t('pets.breedingIneligible')} />
+        </View>
+      )}
+
+      {!!pet.description && (
+        <Text variant="body" className="pb-3.5 leading-[21px]">
+          {pet.description}
+        </Text>
+      )}
+
+      <Card variant="surface">
+        <DetailRow
+          label={t('petDetail.healthTitle')}
+          value={
+            pet.vaccinationUpToDate
+              ? t('pets.vaccinationValue.upToDate')
+              : t('pets.vaccinationValue.notConfirmed')
+          }
+          divider
+        />
+        {pet.lastVetCheckup && (
+          <DetailRow label={t('petDetail.lastVetCheckup')} value={pet.lastVetCheckup} divider />
+        )}
+        {pet.hipScore && <DetailRow label={t('petDetail.hipScore')} value={pet.hipScore} divider />}
+        <DetailRow label={t('petDetail.pedigreeLabel')} value={pedigreeValue} divider />
+        <DetailRow label={t('petDetail.studTermsTitle')} value={studTermsLabel} divider />
+        <DetailRow label={t('petDetail.locationLabel')} value={locationValue} />
+      </Card>
+
+      {owner && <PetOwnerCard owner={owner} />}
+
+      {blockedReason && (
+        <View className="pb-3.5">
+          <Notice tone="warning" message={blockedReason} />
+        </View>
+      )}
+
+      <Button
+        title={hasOwnPets ? t('petDetail.sendRequestAction') : t('myPets.addPet')}
+        fullWidth
+        disabled={hasOwnPets && !canSendRequest}
+        onPress={() => (hasOwnPets ? setIsRequestOpen(true) : router.push('/pet/new'))}
+      />
+      <View className="pt-2">
+        <Button
+          title={t('petDetail.report.menuLabel')}
+          variant="secondary"
+          fullWidth
+          onPress={() => setIsReportOpen(true)}
+        />
+      </View>
+
+      <Dialog
+        visible={isRequestOpen}
+        onDismiss={() => setIsRequestOpen(false)}
+        title={t('petDetail.requestFor', { name: pet.name })}
+      >
+        <SendMatchRequestForm
+          recipientPet={pet}
+          eligibleSenderPets={eligibleSenderPets}
+          defaultSenderPetId={senderPetId}
+          onSuccess={() => {
+            setIsRequestOpen(false);
+            router.back();
+          }}
+        />
+      </Dialog>
 
       <ReportPetDialog
         visible={isReportOpen}
         onDismiss={() => setIsReportOpen(false)}
         petId={pet.id}
       />
-
-      <View className="gap-4 pb-8">
-        <View className="flex-row items-center gap-4">
-          <PetAvatar petId={pet.id} species={pet.species} size="xl" photoUrl={pet.photos[0]} />
-          <View className="flex-1 gap-2">
-            <Text variant="bodySmall" color="secondary">
-              {`${pet.breed} · ${t(`pets.gender.${pet.gender}`)} · ${t('pets.age', {
-                years: age.years,
-                months: age.months,
-              })}`}
-            </Text>
-            <View className="flex-row flex-wrap gap-2">
-              {pet.verified && <Tag label={t('pets.verifiedPet')} tone="success" />}
-              {owner?.verifiedOwner && <Tag label={t('pets.verifiedOwner')} tone="success" />}
-              <Tag
-                label={
-                  pet.vaccinationUpToDate ? t('pets.vaccinatedShort') : t('pets.vaccinationUnclear')
-                }
-                tone={pet.vaccinationUpToDate ? 'success' : 'warning'}
-              />
-            </View>
-          </View>
-        </View>
-
-        {!eligible && <Notice tone="error" message={t('pets.breedingIneligible')} />}
-
-        {!!pet.description && <Text variant="body">{pet.description}</Text>}
-
-        <Card variant="surface">
-          <DetailRow
-            label={t('petDetail.healthTitle')}
-            value={
-              pet.vaccinationUpToDate
-                ? t('pets.vaccinationValue.upToDate')
-                : t('pets.vaccinationValue.notConfirmed')
-            }
-            divider
-          />
-          {pet.lastVetCheckup && (
-            <DetailRow label={t('petDetail.lastVetCheckup')} value={pet.lastVetCheckup} divider />
-          )}
-          {pet.hipScore && (
-            <DetailRow label={t('petDetail.hipScore')} value={pet.hipScore} divider />
-          )}
-          <DetailRow label={t('petDetail.pedigreeLabel')} value={pedigreeValue} divider />
-          <DetailRow label={t('petDetail.studTermsTitle')} value={studTermsLabel} divider />
-          <DetailRow label={t('petDetail.locationLabel')} value={locationValue} />
-        </Card>
-
-        {owner && <PetOwnerCard owner={owner} />}
-
-        {requestSection}
-      </View>
     </ScreenContainer>
   );
 }

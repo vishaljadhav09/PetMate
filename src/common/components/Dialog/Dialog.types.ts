@@ -1,6 +1,5 @@
 import type { ReactNode } from 'react';
 import type { ButtonVariant } from '@/common/components/Button';
-import type { ComponentSize } from '@/common/components/shared.types';
 
 /** Describes a single action button rendered in the Dialog footer. */
 export interface DialogAction {
@@ -8,7 +7,7 @@ export interface DialogAction {
   label: string;
   /** Callback invoked when the action button is pressed. */
   onPress: () => void;
-  /** Button visual variant. Defaults to `'ghost'` when rendered. */
+  /** Button visual variant. Defaults to `'outline'` when rendered. */
   variant?: ButtonVariant;
 }
 
@@ -26,8 +25,6 @@ export interface DialogProps {
   actions?: DialogAction[];
   /** Custom content rendered between the message and actions. */
   children?: ReactNode;
-  /** Size of the dialog card. Defaults to `'md'`. */
-  size?: ComponentSize;
   /** Whether pressing the backdrop dismisses the dialog. Defaults to `true`. */
   dismissOnBackdropPress?: boolean;
 }

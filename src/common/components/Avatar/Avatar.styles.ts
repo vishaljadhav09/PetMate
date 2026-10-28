@@ -10,9 +10,9 @@ export const styles = StyleSheet.create((theme) => ({
     variants: {
       size: {
         xs: {
-          width: hs(24),
-          height: hs(24),
-          borderRadius: hs(12),
+          width: hs(26),
+          height: hs(26),
+          borderRadius: hs(13),
         },
         sm: {
           width: hs(32),
@@ -25,9 +25,9 @@ export const styles = StyleSheet.create((theme) => ({
           borderRadius: hs(20),
         },
         lg: {
-          width: hs(56),
-          height: hs(56),
-          borderRadius: hs(28),
+          width: hs(52),
+          height: hs(52),
+          borderRadius: hs(26),
         },
         xl: {
           width: hs(80),
@@ -39,6 +39,7 @@ export const styles = StyleSheet.create((theme) => ({
   },
   initials: {
     color: theme.colors.text.inverse,
+    fontFamily: theme.fonts.display,
   },
 }));
 

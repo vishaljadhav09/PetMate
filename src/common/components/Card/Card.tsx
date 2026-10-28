@@ -4,8 +4,6 @@ import { useAnimatedPress } from '@/hooks/useAnimatedPress';
 import { styles } from './Card.styles';
 import type { CardProps } from './Card.types';
 
-const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
-
 /**
  * Container component with filled, elevated, or outlined variants and optional press support.
  *
@@ -57,15 +55,16 @@ function PressableCard({
   const { animatedStyle, onPressIn, onPressOut } = useAnimatedPress({ scale: 0.98 });
 
   return (
-    <AnimatedPressable
-      onPress={onPress}
-      onPressIn={onPressIn}
-      onPressOut={onPressOut}
-      style={[styles.card, animatedStyle, style]}
-      accessibilityRole="button"
-      {...rest}
-    >
-      {children}
-    </AnimatedPressable>
+    <Animated.View style={animatedStyle}>
+      <Pressable
+        onPress={onPress}
+        onPressIn={onPressIn}
+        onPressOut={onPressOut}
+        accessibilityRole="button"
+        {...rest}
+      >
+        <View style={[styles.card, style]}>{children}</View>
+      </Pressable>
+    </Animated.View>
   );
 }

@@ -1,24 +1,26 @@
 import { StyleSheet, type UnistylesVariants } from 'react-native-unistyles';
+import { hs, rf, vs } from '@/theme/metrics';
 
+// Looks exactly like a text input (the prototype's breed search has no icon).
 export const styles = StyleSheet.create((theme) => ({
   container: {
     flexDirection: 'row' as const,
     alignItems: 'center' as const,
     backgroundColor: theme.colors.background.input,
-    borderRadius: theme.metrics.borderRadius.lg,
+    borderRadius: hs(10),
     borderWidth: 1,
     borderColor: theme.colors.border.default,
-    gap: theme.metrics.spacing.p8,
+    gap: hs(8),
     variants: {
       size: {
         sm: {
-          paddingHorizontal: theme.metrics.spacing.p8,
+          paddingHorizontal: hs(9),
         },
         md: {
-          paddingHorizontal: theme.metrics.spacing.p12,
+          paddingHorizontal: hs(11),
         },
         lg: {
-          paddingHorizontal: theme.metrics.spacing.p16,
+          paddingHorizontal: hs(14),
         },
       },
       focused: {
@@ -31,19 +33,20 @@ export const styles = StyleSheet.create((theme) => ({
   input: {
     flex: 1,
     color: theme.colors.text.primary,
+    fontFamily: theme.fonts.regular,
     variants: {
       size: {
         sm: {
-          paddingVertical: theme.metrics.spacingV.p8,
-          fontSize: theme.fonts.size.sm,
+          paddingVertical: vs(7),
+          fontSize: rf(12.5),
         },
         md: {
-          paddingVertical: theme.metrics.spacingV.p12,
-          fontSize: theme.fonts.size.md,
+          paddingVertical: vs(9),
+          fontSize: rf(13.5),
         },
         lg: {
-          paddingVertical: theme.metrics.spacingV.p16,
-          fontSize: theme.fonts.size.lg,
+          paddingVertical: vs(12),
+          fontSize: rf(15),
         },
       },
     },

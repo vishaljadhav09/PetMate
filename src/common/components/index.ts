@@ -1,6 +1,8 @@
 // Action
 export { Button } from './Button';
 export type { ButtonProps, ButtonVariant, ButtonSize } from './Button';
+export { FloatingActionButton } from './FloatingActionButton';
+export type { FloatingActionButtonProps } from './FloatingActionButton';
 export { IconButton } from './IconButton';
 export type { IconButtonProps, IconButtonVariant, IconButtonSize } from './IconButton';
 
@@ -18,7 +20,7 @@ export type { DetailRowProps } from './DetailRow';
 export { ListItem } from './ListItem';
 export type { ListItemProps } from './ListItem';
 export { Tag } from './Tag';
-export type { TagProps, TagTone } from './Tag';
+export type { TagProps, TagTone, TagSize } from './Tag';
 
 // Disclosure
 export { Accordion } from './Accordion';

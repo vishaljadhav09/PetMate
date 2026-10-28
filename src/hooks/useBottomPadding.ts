@@ -1,13 +1,11 @@
-import { Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { vs } from '@/theme/metrics';
 
-const TAB_BAR_HEIGHT = vs(60);
-const ANDROID_EXTRA = vs(8);
+/** The prototype keeps 90px of clear space under scrollable content for its tab bar. */
+const TAB_BAR_CLEARANCE = vs(90);
 
 export function useBottomPadding() {
   const { bottom } = useSafeAreaInsets();
-  const base = TAB_BAR_HEIGHT + bottom;
 
-  return Platform.OS === 'android' ? base + ANDROID_EXTRA : base;
+  return TAB_BAR_CLEARANCE + bottom;
 }

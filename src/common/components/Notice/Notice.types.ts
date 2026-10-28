@@ -1,5 +1,3 @@
-import type { IconProps } from '@/common/components/Icon';
-
 /** Semantic color of a {@link Notice}. */
 export type NoticeTone = 'info' | 'success' | 'warning' | 'error';
 
@@ -9,6 +7,6 @@ export interface NoticeProps {
   message: string;
   /** Semantic color. Defaults to `'info'`. */
   tone?: NoticeTone;
-  /** Leading icon. Defaults to an icon matching the tone. */
-  icon?: IconProps['name'];
+  /** Leading emoji. Defaults to one matching the tone. */
+  glyph?: string;
 }

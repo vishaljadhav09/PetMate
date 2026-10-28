@@ -22,6 +22,7 @@ export function ResponsiveList<T>({
   data,
   renderItem,
   keyExtractor,
+  headerComponent,
   emptyComponent,
   withTabBar = true,
   onEndReached,
@@ -43,6 +44,11 @@ export function ResponsiveList<T>({
       )}
       contentContainerStyle={withTabBar ? { paddingBottom: tabBarPadding } : undefined}
       showsVerticalScrollIndicator={false}
+      ListHeaderComponent={
+        headerComponent ? (
+          <View style={columns > 1 && styles.headerGutter}>{headerComponent}</View>
+        ) : undefined
+      }
       ListEmptyComponent={emptyComponent}
       ListFooterComponent={footerComponent}
       onEndReached={onEndReached}

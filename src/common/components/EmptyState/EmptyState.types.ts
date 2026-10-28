@@ -7,6 +7,8 @@ export interface EmptyStateProps {
   title: string;
   /** Optional descriptive message displayed below the title. */
   message?: string;
+  /** Optional emoji shown large above the title. Takes priority over `icon`. */
+  glyph?: string;
   /** Optional icon element rendered above the title. */
   icon?: ReactNode;
   /** Label for the optional call-to-action button. */

@@ -15,6 +15,8 @@ export interface BackgroundColors {
   input: string;
   disabled: string;
   modal: string;
+  /** Translucent bar behind the bottom tabs, so scrolled content shows faintly through. */
+  tabBar: string;
 }
 
 export interface TextColors {
@@ -54,6 +56,8 @@ export interface StateColors {
   errorBg: string;
   info: string;
   infoBg: string;
+  /** Quiet pill background for settled states (e.g. a declined request). */
+  mutedBg: string;
   disabled: string;
 }
 

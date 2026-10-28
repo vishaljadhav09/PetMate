@@ -14,6 +14,7 @@ export const FONTS = {
   semiBold: 'WorkSans_600SemiBold',
   bold: 'WorkSans_700Bold',
   light: 'WorkSans_400Regular',
+  displayRegular: 'Fraunces_400Regular',
   display: 'Fraunces_600SemiBold',
   displayBold: 'Fraunces_700Bold',
 };

@@ -47,22 +47,23 @@ export function Checkbox({
       accessibilityRole="checkbox"
       accessibilityLabel={label}
       accessibilityState={{ checked: indeterminate ? 'mixed' : checked, disabled }}
-      style={styles.container}
     >
-      <View style={styles.box}>
-        <Animated.View style={checkAnimatedStyle}>
-          {indeterminate ? (
-            <View style={styles.indeterminateDash} />
-          ) : (
-            checked && <Icon name="checkmark" size={ICON_SIZES[size] ?? 14} variant="inverse" />
-          )}
-        </Animated.View>
+      <View style={styles.container}>
+        <View style={styles.box}>
+          <Animated.View style={checkAnimatedStyle}>
+            {indeterminate ? (
+              <View style={styles.indeterminateDash} />
+            ) : (
+              checked && <Icon name="checkmark" size={ICON_SIZES[size] ?? 14} variant="inverse" />
+            )}
+          </Animated.View>
+        </View>
+        {label && (
+          <Text variant="body" style={styles.label}>
+            {label}
+          </Text>
+        )}
       </View>
-      {label && (
-        <Text variant="body" style={styles.label}>
-          {label}
-        </Text>
-      )}
     </Pressable>
   );
 }

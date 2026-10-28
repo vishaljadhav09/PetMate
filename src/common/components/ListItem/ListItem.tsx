@@ -6,8 +6,6 @@ import { useAnimatedPress } from '@/hooks/useAnimatedPress';
 import { styles } from './ListItem.styles';
 import type { ListItemProps } from './ListItem.types';
 
-const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
-
 /**
  * A versatile list item supporting optional press interaction, left/right slots, and a divider.
  *
@@ -52,17 +50,18 @@ export function ListItem({
   return (
     <>
       {onPress ? (
-        <AnimatedPressable
-          onPress={onPress}
-          onPressIn={onPressIn}
-          onPressOut={onPressOut}
-          disabled={disabled}
-          accessibilityRole="button"
-          accessibilityState={{ disabled }}
-          style={[styles.container, animatedStyle]}
-        >
-          {content}
-        </AnimatedPressable>
+        <Animated.View style={animatedStyle}>
+          <Pressable
+            onPress={onPress}
+            onPressIn={onPressIn}
+            onPressOut={onPressOut}
+            disabled={disabled}
+            accessibilityRole="button"
+            accessibilityState={{ disabled }}
+          >
+            <View style={styles.container}>{content}</View>
+          </Pressable>
+        </Animated.View>
       ) : (
         <View style={styles.container}>{content}</View>
       )}

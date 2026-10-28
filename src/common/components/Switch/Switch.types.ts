@@ -12,4 +12,6 @@ export interface SwitchProps {
   size?: ComponentSize;
   /** Optional text label displayed beside the switch. */
   label?: string;
+  /** Optional smaller line of explanation under the label. */
+  description?: string;
 }

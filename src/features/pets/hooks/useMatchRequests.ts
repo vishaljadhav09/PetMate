@@ -26,6 +26,13 @@ export function useMatchRequests() {
   });
 }
 
+/** Requests sent to me that I have not answered yet; drives the Requests tab badge. */
+export function useNewInboxCount() {
+  const userId = useAuthStore((s) => s.user?.id);
+  const { data } = useMatchRequests();
+  return (data ?? []).filter((r) => r.recipientOwnerId === userId && r.status === 'new').length;
+}
+
 /** Only call for accepted or completed requests: the server refuses earlier. */
 export function useMatchContact(requestId: string, enabled: boolean) {
   return useQuery({

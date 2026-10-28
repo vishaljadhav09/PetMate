@@ -1,5 +1,5 @@
-import { Pressable, View } from 'react-native';
-import { Icon } from '@/common/components';
+import { Pressable, Text, View } from 'react-native';
+import { styles } from './RatingStars.styles';
 
 export interface RatingStarsProps {
   value: number;
@@ -8,19 +8,26 @@ export interface RatingStarsProps {
 }
 
 const STAR_VALUES = [1, 2, 3, 4, 5] as const;
+const STAR_GLYPH = '★';
 
 /** Interactive when `onChange` is given, a read-only display otherwise. */
-export function RatingStars({ value, onChange, size = 18 }: RatingStarsProps) {
+export function RatingStars({ value, onChange, size = 22 }: RatingStarsProps) {
   return (
-    <View className="flex-row gap-1">
+    <View style={styles.row}>
       {STAR_VALUES.map((starValue) => {
-        const filled = starValue <= Math.round(value);
-        const icon = filled ? 'star' : 'star-outline';
-        const variant = filled ? 'accent' : 'muted';
+        const star = (
+          <Text
+            style={[
+              styles.star,
+              styles.size(size),
+              starValue <= Math.round(value) && styles.filled,
+            ]}
+          >
+            {STAR_GLYPH}
+          </Text>
+        );
 
-        if (!onChange) {
-          return <Icon key={starValue} name={icon} size={size} variant={variant} />;
-        }
+        if (!onChange) return <View key={starValue}>{star}</View>;
 
         return (
           <Pressable
@@ -29,7 +36,7 @@ export function RatingStars({ value, onChange, size = 18 }: RatingStarsProps) {
             accessibilityRole="button"
             accessibilityLabel={`${starValue}`}
           >
-            <Icon name={icon} size={size} variant={variant} />
+            {star}
           </Pressable>
         );
       })}

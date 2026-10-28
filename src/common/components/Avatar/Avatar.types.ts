@@ -1,5 +1,5 @@
 import type { ImageSource } from 'expo-image';
-import { hs } from '@/theme/metrics';
+import { hs, rf } from '@/theme/metrics';
 
 /** Available avatar size options, ranging from extra-small to extra-large. */
 export type AvatarSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
@@ -22,9 +22,18 @@ export interface AvatarProps {
 
 /** Mapping of avatar size tokens to their pixel dimensions (horizontally scaled). */
 export const AVATAR_SIZES: Record<AvatarSize, number> = {
-  xs: hs(24),
+  xs: hs(26),
   sm: hs(32),
   md: hs(40),
-  lg: hs(56),
+  lg: hs(52),
   xl: hs(80),
+};
+
+/** Initials font size per avatar size (the prototype uses 12px at 26px and 18px at 52px). */
+export const AVATAR_FONT_SIZES: Record<AvatarSize, number> = {
+  xs: rf(12),
+  sm: rf(13),
+  md: rf(15),
+  lg: rf(18),
+  xl: rf(28),
 };

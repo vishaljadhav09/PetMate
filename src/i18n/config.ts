@@ -4,6 +4,7 @@ import { initReactI18next } from 'react-i18next';
 import { getItem, STORAGE_KEYS } from '@/utils/storage';
 import ar from './locales/ar.json';
 import en from './locales/en.json';
+import mr from './locales/mr.json';
 
 declare module 'i18next' {
   interface CustomTypeOptions {
@@ -21,8 +22,8 @@ if (savedLang.success && savedLang.data) {
   initialLang = savedLang.data;
 } else {
   const deviceLocale = getLocales()[0]?.languageCode;
-  if (deviceLocale === 'ar') {
-    initialLang = 'ar';
+  if (deviceLocale === 'ar' || deviceLocale === 'mr') {
+    initialLang = deviceLocale;
   }
 }
 
@@ -31,6 +32,7 @@ i18n.use(initReactI18next).init({
   resources: {
     en: { translation: en },
     ar: { translation: ar },
+    mr: { translation: mr },
   },
   lng: initialLang,
   fallbackLng: 'en',

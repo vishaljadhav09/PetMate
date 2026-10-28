@@ -38,7 +38,6 @@ export function SearchBar({
 
   return (
     <View style={styles.container}>
-      <Icon name="search" sizeVariant="md" variant="muted" />
       <UniTextInput
         style={styles.input}
         value={value}
@@ -66,7 +65,7 @@ export function SearchBar({
             accessibilityRole="button"
             accessibilityLabel="Clear search"
           >
-            <Icon name="close-circle" sizeVariant="md" variant="muted" />
+            <Icon name="close-circle" size={16} variant="tertiary" />
           </Pressable>
         )
       )}

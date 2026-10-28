@@ -6,6 +6,8 @@ export interface SegmentOption {
   value: string;
   /** Optional icon rendered beside the label. */
   icon?: React.ReactNode;
+  /** Optional small count shown after the label (e.g. number of requests). */
+  count?: number;
 }
 
 /** Available sizes for the segmented control. */

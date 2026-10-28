@@ -46,9 +46,10 @@ const metrics: Metrics = {
   pixelDensity: PixelRatio.get(),
 };
 
+/** Keeps one decimal so half-pixel sizes from the design (13.5, 12.5) survive scaling. */
 export function rf(fontSize: number): number {
   const scaleFactor = SCALE_WIDTH / BASE_WIDTH;
-  return Math.round(fontSize * scaleFactor);
+  return Math.round(fontSize * scaleFactor * 10) / 10;
 }
 
 export function hs(size: number): number {

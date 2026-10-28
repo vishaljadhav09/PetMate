@@ -1,22 +1,17 @@
 import { StyleSheet, type UnistylesVariants } from 'react-native-unistyles';
-import { hs } from '@/theme/metrics';
+import { hs, rf, vs } from '@/theme/metrics';
 
+export const SEGMENT_PADDING = hs(3);
+
+// A cream track with a raised white pill under the active segment (.segmented in the prototype).
 export const styles = StyleSheet.create((theme) => ({
   container: {
     flexDirection: 'row' as const,
     backgroundColor: theme.colors.background.surfaceAlt,
-    borderRadius: theme.metrics.borderRadius.md,
+    borderRadius: hs(11),
+    padding: SEGMENT_PADDING,
     position: 'relative' as const,
-    overflow: 'hidden' as const,
     variants: {
-      size: {
-        sm: {
-          padding: hs(2),
-        },
-        md: {
-          padding: hs(3),
-        },
-      },
       disabled: {
         true: {
           opacity: 0.5,
@@ -26,45 +21,61 @@ export const styles = StyleSheet.create((theme) => ({
   },
   indicator: {
     position: 'absolute' as const,
-    top: hs(3),
-    bottom: hs(3),
-    backgroundColor: theme.colors.brand.primary,
-    borderRadius: theme.metrics.borderRadius.md,
+    top: SEGMENT_PADDING,
+    bottom: SEGMENT_PADDING,
+    left: SEGMENT_PADDING,
+    backgroundColor: theme.colors.background.surface,
+    borderRadius: hs(9),
     elevation: 1,
     shadowColor: theme.colors.shadow.color,
-    shadowOffset: { width: 0, height: hs(1) },
-    shadowOpacity: 0.1,
-    shadowRadius: hs(2),
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.35,
+    shadowRadius: 2,
   },
+  // The cell shares the row equally and sits above the indicator.
   segment: {
     flex: 1,
+    zIndex: 1,
+  },
+  segmentContent: {
     flexDirection: 'row' as const,
     alignItems: 'center' as const,
     justifyContent: 'center' as const,
-    paddingVertical: theme.metrics.spacingV.p8,
-    paddingHorizontal: theme.metrics.spacing.p12,
-    gap: theme.metrics.spacing.p4,
-    zIndex: 1,
+    paddingVertical: vs(8),
+    paddingHorizontal: hs(6),
+    variants: {
+      size: {
+        sm: {
+          paddingVertical: vs(6),
+        },
+        md: {
+          paddingVertical: vs(8),
+        },
+      },
+    },
   },
   segmentIcon: {
-    marginRight: theme.metrics.spacing.p4,
-  },
-  segmentTextSelected: {
-    fontFamily: theme.fonts.semiBold,
+    marginRight: hs(4),
   },
   segmentText: {
-    fontFamily: theme.fonts.regular,
+    fontFamily: theme.fonts.semiBold,
     textAlign: 'center' as const,
     variants: {
       size: {
         sm: {
-          fontSize: theme.fonts.size.xs,
+          fontSize: rf(11.5),
         },
         md: {
-          fontSize: theme.fonts.size.sm,
+          fontSize: rf(12.5),
         },
       },
     },
+  },
+  count: {
+    marginLeft: hs(3),
+    fontFamily: theme.fonts.regular,
+    fontSize: rf(10),
+    color: theme.colors.text.muted,
   },
 }));
 

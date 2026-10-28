@@ -26,6 +26,7 @@
     "title": "اكتشف",
     "subtitle": "حيوانات أليفة متوافقة بالقرب منك",
     "distanceAway": "على بعد {{distance}} كم",
+    "resultCount": "{{count}} حيوان متوافق بالقرب منك",
     "emptyTitle": "لا توجد حيوانات أليفة قريبة بعد",
     "emptyMessage": "تحقق مرة أخرى قريبًا مع انضمام المزيد من الملاك إلى PetMate.",
     "noEligiblePetsTitle": "أضف حيوانًا في سن التزاوج للتصفح",
@@ -158,6 +159,9 @@
   "profile": {
     "title": "الملف الشخصي",
     "notVerifiedLabel": "غير موثّق بعد",
+    "ownerStatusLabel": "حالة المالك",
+    "verifiedOwnerValue": "✓ مالك موثّق",
+    "safetyNotice": "يتم فرض توافق النوع والجنس تلقائيًا على كل طلب مطابقة. تفاصيل الصحة والتطعيم يُبلّغ عنها المالكون بأنفسهم ما لم تكن موثّقة.",
     "ratingSummaryTitle": "تقييم الثقة",
     "phoneLabel": "الهاتف",
     "petsListedLabel": "الحيوانات المُدرَجة",
@@ -173,7 +177,9 @@
     "deleteAccountTitle": "حذف حسابك؟",
     "deleteAccountMessage": "سيؤدي هذا إلى حذف ملفك الشخصي وحيواناتك وطلباتك وتقييماتك نهائيًا. لا يمكن التراجع عن ذلك.",
     "deleteAccountFailed": "تعذر حذف حسابك. يرجى المحاولة مرة أخرى.",
-    "savedPetsAction": "الحيوانات المحفوظة"
+    "savedPetsAction": "الحيوانات المحفوظة",
+    "languageTitle": "اللغة",
+    "languageRestartNote": "أعد تشغيل التطبيق لتطبيق اتجاه التخطيط."
   },
   "requests": {
     "title": "الطلبات",
@@ -208,9 +214,14 @@
     },
     "cancelAction": "إلغاء الطلب",
     "contactRevealedLabel": "تواصل مع {{name}}: {{phone}}",
+    "contactLine": "📞 {{name}}: {{phone}}",
+    "fromYourPet": "من {{pet}} الخاص بك",
+    "sentOn": "أُرسل {{date}}",
+    "ownedBy": "(يملكه {{name}})",
     "relativeWarning": "قد يكون هذان الحيوانان من الأقارب (المرجع نفسه). تحقق قبل اللقاء."
   },
   "petDetail": {
+    "title": "ملف الحيوان",
     "healthTitle": "التطعيمات",
     "pedigreeLabel": "النسب",
     "studTermsTitle": "شروط التزاوج",
@@ -245,7 +256,10 @@
     },
     "approximate": "تقريبي",
     "lastVetCheckup": "آخر فحص بيطري",
-    "hipScore": "درجة الورك"
+    "hipScore": "درجة الورك",
+    "requestFor": "طلب بخصوص {{name}}",
+    "messageTo": "رسالة إلى {{name}}",
+    "sendRequestAction": "إرسال طلب مطابقة"
   },
   "errorBoundary": {
     "title": "حدث خطأ ما",

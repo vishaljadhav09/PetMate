@@ -69,18 +69,15 @@ function RadioItem({
       accessibilityRole="radio"
       accessibilityLabel={label}
       accessibilityState={{ checked: selected, disabled }}
-      style={({ pressed }) => [
-        styles.option,
-        disabled && styles.optionDisabled,
-        pressed && { opacity: 0.7 },
-      ]}
     >
-      <View style={[styles.radio, selected && styles.radioSelected]}>
-        <Animated.View style={[styles.radioDot, dotAnimatedStyle]} />
+      <View style={[styles.option, disabled && styles.optionDisabled]}>
+        <View style={[styles.radio, selected && styles.radioSelected]}>
+          <Animated.View style={[styles.radioDot, dotAnimatedStyle]} />
+        </View>
+        <Text variant="body" style={styles.label}>
+          {label}
+        </Text>
       </View>
-      <Text variant="body" style={styles.label}>
-        {label}
-      </Text>
     </Pressable>
   );
 }

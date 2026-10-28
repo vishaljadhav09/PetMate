@@ -33,6 +33,7 @@ export const lightColors: ThemeColors = {
     input: '#FFFFFF',
     disabled: '#E4DCC8',
     modal: '#FAF6EC',
+    tabBar: 'rgba(250, 246, 236, 0.92)',
   },
 
   text: {
@@ -72,6 +73,7 @@ export const lightColors: ThemeColors = {
     errorBg: '#F5DFD4',
     info: '#3C5A46',
     infoBg: '#E4ECE3',
+    mutedBg: '#F1E7E0',
     disabled: '#CFC5AB',
   },
 

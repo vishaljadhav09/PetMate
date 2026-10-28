@@ -1,7 +1,7 @@
 import type { PressableProps } from 'react-native';
 
 /** Visual style variant for the Button component. */
-export type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost';
+export type ButtonVariant = 'primary' | 'accept' | 'decline' | 'secondary' | 'outline' | 'ghost';
 
 /** Size options for the Button component. */
 export type ButtonSize = 'sm' | 'md' | 'lg';

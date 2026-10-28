@@ -1,14 +1,16 @@
 import { StyleSheet, type UnistylesVariants } from 'react-native-unistyles';
+import { hs, vs } from '@/theme/metrics';
 
 export const styles = StyleSheet.create((theme, rt) => ({
   container: {
     flex: 1,
     backgroundColor: theme.colors.background.app,
   },
+  // 18px side gutters on phones, as in the prototype's .screen.
   padded: {
     paddingHorizontal: {
-      xs: theme.metrics.spacing.p16,
-      sm: theme.metrics.spacing.p16,
+      xs: hs(18),
+      sm: hs(18),
       md: theme.metrics.spacing.p24,
       lg: theme.metrics.spacing.p32,
     },
@@ -17,7 +19,7 @@ export const styles = StyleSheet.create((theme, rt) => ({
     paddingTop: rt.insets.top,
   },
   edgeBottom: {
-    paddingBottom: rt.insets.bottom,
+    paddingBottom: rt.insets.bottom + vs(22),
   },
   // Centers content and stops it stretching edge-to-edge on tablets/web.
   content: {
@@ -30,6 +32,9 @@ export const styles = StyleSheet.create((theme, rt) => ({
       },
       fill: {
         true: { flex: 1 },
+      },
+      padded: {
+        true: { paddingTop: vs(16) },
       },
     },
   },

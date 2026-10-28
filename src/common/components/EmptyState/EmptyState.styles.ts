@@ -1,30 +1,52 @@
 import { StyleSheet, type UnistylesVariants } from 'react-native-unistyles';
+import { hs, rf, vs } from '@/theme/metrics';
 
 export const styles = StyleSheet.create((theme) => ({
   container: {
-    flex: 1,
     alignItems: 'center' as const,
-    justifyContent: 'center' as const,
-    gap: theme.metrics.spacingV.p12,
     variants: {
       size: {
         sm: {
-          padding: theme.metrics.spacing.p16,
+          paddingTop: vs(24),
+          paddingBottom: vs(16),
+          paddingHorizontal: hs(20),
         },
         md: {
-          padding: theme.metrics.spacing.p32,
+          paddingTop: vs(50),
+          paddingBottom: vs(30),
+          paddingHorizontal: hs(20),
         },
         lg: {
-          padding: theme.metrics.spacing.p48,
+          paddingTop: vs(64),
+          paddingBottom: vs(40),
+          paddingHorizontal: hs(20),
         },
       },
     },
   },
+  glyph: {
+    fontSize: rf(34),
+    marginBottom: vs(10),
+  },
   iconContainer: {
-    marginBottom: theme.metrics.spacingV.p4,
+    marginBottom: vs(10),
+  },
+  title: {
+    fontFamily: theme.fonts.displayRegular,
+    fontSize: rf(16),
+    color: theme.colors.text.primary,
+    marginBottom: vs(6),
+    textAlign: 'center' as const,
   },
   message: {
+    fontSize: rf(12.5),
+    lineHeight: rf(12.5 * 1.5),
     color: theme.colors.text.secondary,
+    textAlign: 'center' as const,
+  },
+  action: {
+    alignSelf: 'stretch' as const,
+    marginTop: vs(16),
   },
 }));
 

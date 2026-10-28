@@ -1,13 +1,13 @@
 import { StyleSheet } from 'react-native-unistyles';
 import { hs } from '@/theme/metrics';
 
-const THUMB_SIZE = hs(76);
+const THUMB_SIZE = hs(62);
 
 export const styles = StyleSheet.create((theme) => ({
   thumb: {
     width: THUMB_SIZE,
     height: THUMB_SIZE,
-    borderRadius: hs(12),
+    borderRadius: hs(14),
     overflow: 'hidden' as const,
     backgroundColor: theme.colors.background.surfaceAlt,
   },
@@ -18,7 +18,7 @@ export const styles = StyleSheet.create((theme) => ({
   addTile: {
     width: THUMB_SIZE,
     height: THUMB_SIZE,
-    borderRadius: hs(12),
+    borderRadius: hs(14),
     borderWidth: 1,
     borderStyle: 'dashed' as const,
     borderColor: theme.colors.border.strong,

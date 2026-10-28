@@ -1,8 +1,9 @@
 import { StyleSheet, type UnistylesVariants } from 'react-native-unistyles';
+import { hs, rf, vs } from '@/theme/metrics';
 
 export const styles = StyleSheet.create((theme) => ({
   wrapper: {
-    gap: theme.metrics.spacingV.p4,
+    gap: vs(5),
   },
   label: {
     color: theme.colors.text.secondary,
@@ -11,23 +12,24 @@ export const styles = StyleSheet.create((theme) => ({
     flexDirection: 'row' as const,
     alignItems: 'center' as const,
     justifyContent: 'space-between' as const,
+    gap: hs(8),
     backgroundColor: theme.colors.background.input,
-    borderRadius: theme.metrics.borderRadius.lg,
+    borderRadius: hs(10),
     borderWidth: 1,
     borderColor: theme.colors.border.default,
     variants: {
       size: {
         sm: {
-          paddingHorizontal: theme.metrics.spacing.p8,
-          paddingVertical: theme.metrics.spacingV.p8,
+          paddingHorizontal: hs(9),
+          paddingVertical: vs(7),
         },
         md: {
-          paddingHorizontal: theme.metrics.spacing.p12,
-          paddingVertical: theme.metrics.spacingV.p12,
+          paddingHorizontal: hs(11),
+          paddingVertical: vs(9),
         },
         lg: {
-          paddingHorizontal: theme.metrics.spacing.p16,
-          paddingVertical: theme.metrics.spacingV.p16,
+          paddingHorizontal: hs(14),
+          paddingVertical: vs(12),
         },
       },
       error: {
@@ -42,6 +44,11 @@ export const styles = StyleSheet.create((theme) => ({
       },
     },
   },
+  triggerText: {
+    flex: 1,
+    fontFamily: theme.fonts.regular,
+    fontSize: rf(13.5),
+  },
   selectedText: {
     color: theme.colors.text.primary,
   },
@@ -51,21 +58,30 @@ export const styles = StyleSheet.create((theme) => ({
   errorText: {
     color: theme.colors.state.error,
   },
-  sheetBackground: {
-    backgroundColor: theme.colors.background.surface,
+  backdrop: {
+    flex: 1,
+    justifyContent: 'flex-end' as const,
+    backgroundColor: theme.colors.overlay.modal,
   },
-  sheetHandle: {
-    backgroundColor: theme.colors.border.default,
+  sheet: {
+    width: '100%',
+    maxWidth: theme.metrics.contentMaxWidth.narrow,
+    maxHeight: '60%',
+    alignSelf: 'center' as const,
+    backgroundColor: theme.colors.background.modal,
+    borderTopLeftRadius: hs(22),
+    borderTopRightRadius: hs(22),
   },
   listContent: {
-    paddingVertical: theme.metrics.spacingV.p8,
+    paddingTop: vs(10),
+    paddingBottom: vs(22),
   },
   option: {
     flexDirection: 'row' as const,
     alignItems: 'center' as const,
     justifyContent: 'space-between' as const,
-    paddingVertical: theme.metrics.spacingV.p12,
-    paddingHorizontal: theme.metrics.spacing.p16,
+    paddingVertical: vs(12),
+    paddingHorizontal: hs(18),
     variants: {
       disabled: {
         true: {
@@ -79,6 +95,7 @@ export const styles = StyleSheet.create((theme) => ({
   },
   optionTextSelected: {
     color: theme.colors.brand.primary,
+    fontFamily: theme.fonts.semiBold,
   },
 }));
 

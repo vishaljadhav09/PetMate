@@ -37,33 +37,35 @@ export function PhotoPicker({ value, onChange }: PhotoPickerProps) {
   const handleRemove = (url: string) => onChange(value.filter((item) => item !== url));
 
   return (
-    <View className="gap-2">
-      <Text variant="label">
+    <View className="gap-1.5">
+      <Text variant="label" color="secondary">
         {t('petForm.photosLabel', { count: value.length, max: MAX_PET_PHOTOS })}
       </Text>
       <View className="flex-row flex-wrap gap-2">
         {value.map((url) => (
           <View key={url} style={styles.thumb}>
             <Image source={{ uri: url }} style={styles.image} contentFit="cover" />
-            <Pressable
-              style={styles.removeBadge}
-              onPress={() => handleRemove(url)}
-              accessibilityRole="button"
-              accessibilityLabel={t('petForm.removePhoto')}
-            >
-              <Icon name="close" size={14} />
-            </Pressable>
+            <View style={styles.removeBadge}>
+              <Pressable
+                onPress={() => handleRemove(url)}
+                accessibilityRole="button"
+                accessibilityLabel={t('petForm.removePhoto')}
+              >
+                <Icon name="close" size={14} />
+              </Pressable>
+            </View>
           </View>
         ))}
         {value.length < MAX_PET_PHOTOS && (
           <Pressable
-            style={styles.addTile}
             onPress={handleAdd}
             disabled={isUploading}
             accessibilityRole="button"
             accessibilityLabel={t('petForm.addPhoto')}
           >
-            {isUploading ? <ActivityIndicator /> : <Icon name="add" variant="secondary" />}
+            <View style={styles.addTile}>
+              {isUploading ? <ActivityIndicator /> : <Icon name="add" variant="secondary" />}
+            </View>
           </Pressable>
         )}
       </View>

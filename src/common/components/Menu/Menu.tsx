@@ -3,6 +3,7 @@ import {
   Dimensions,
   Modal,
   Pressable,
+  StyleSheet as RNStyleSheet,
   View,
   type LayoutChangeEvent,
   type ViewStyle,
@@ -86,21 +87,21 @@ export function Menu({ visible, onDismiss, anchor, items }: MenuProps) {
         onShow={handleModalShow}
         statusBarTranslucent
       >
-        <Pressable style={styles.backdrop} onPress={onDismiss}>
+        <View style={styles.backdrop}>
+          <Pressable style={RNStyleSheet.absoluteFill} onPress={onDismiss} />
           <View style={[styles.menu, menuPositionStyle]} onLayout={handleMenuLayout}>
-            <Pressable onPress={(e) => e.stopPropagation()}>
-              {items.map((item) => (
-                <Pressable
-                  key={item.label}
-                  onPress={() => {
-                    item.onPress();
-                    onDismiss();
-                  }}
-                  disabled={item.disabled}
-                  accessibilityRole="menuitem"
-                  accessibilityState={{ disabled: item.disabled }}
-                  style={[styles.item, item.disabled && styles.itemDisabled]}
-                >
+            {items.map((item) => (
+              <Pressable
+                key={item.label}
+                onPress={() => {
+                  item.onPress();
+                  onDismiss();
+                }}
+                disabled={item.disabled}
+                accessibilityRole="menuitem"
+                accessibilityState={{ disabled: item.disabled }}
+              >
+                <View style={[styles.item, item.disabled && styles.itemDisabled]}>
                   {item.icon && (
                     <Icon
                       name={item.icon}
@@ -115,11 +116,11 @@ export function Menu({ visible, onDismiss, anchor, items }: MenuProps) {
                   >
                     {item.label}
                   </Text>
-                </Pressable>
-              ))}
-            </Pressable>
+                </View>
+              </Pressable>
+            ))}
           </View>
-        </Pressable>
+        </View>
       </Modal>
     </View>
   );

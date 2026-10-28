@@ -1,6 +1,7 @@
 import '../global.css';
 
 // Import each weight from its own entry point: the package root would bundle every weight.
+import { Fraunces_400Regular } from '@expo-google-fonts/fraunces/400Regular';
 import { Fraunces_600SemiBold } from '@expo-google-fonts/fraunces/600SemiBold';
 import { Fraunces_700Bold } from '@expo-google-fonts/fraunces/700Bold';
 import { WorkSans_400Regular } from '@expo-google-fonts/work-sans/400Regular';
@@ -73,6 +74,7 @@ function AppContent() {
 
 export default function RootLayout() {
   const [fontsLoaded, fontError] = useFonts({
+    Fraunces_400Regular,
     Fraunces_600SemiBold,
     Fraunces_700Bold,
     WorkSans_400Regular,

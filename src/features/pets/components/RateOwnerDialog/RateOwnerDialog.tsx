@@ -56,17 +56,14 @@ export function RateOwnerDialog({
       onDismiss={onDismiss}
       title={t('requests.rate.title', { name: ratedUserName })}
       actions={[
-        { label: t('common.cancel'), onPress: onDismiss, variant: 'ghost' },
         { label: t('requests.rate.submit'), onPress: () => onSubmit(), variant: 'primary' },
       ]}
     >
-      <View className="gap-4">
+      <View className="gap-3">
         <Controller
           name="stars"
           control={control}
-          render={({ field: { onChange } }) => (
-            <RatingStars value={stars} onChange={onChange} size={28} />
-          )}
+          render={({ field: { onChange } }) => <RatingStars value={stars} onChange={onChange} />}
         />
         <FormField name="comment" control={control} label={t('requests.rate.commentLabel')}>
           <TextArea placeholder={t('requests.rate.commentPlaceholder')} />

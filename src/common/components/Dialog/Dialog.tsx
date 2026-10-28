@@ -1,11 +1,25 @@
-import { Modal, Pressable, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
+import {
+  KeyboardAvoidingView,
+  Modal,
+  Platform,
+  Pressable,
+  ScrollView,
+  StyleSheet as RNStyleSheet,
+  Text as RNText,
+  View,
+} from 'react-native';
+import Animated, { FadeIn, SlideInDown } from 'react-native-reanimated';
 import { Button } from '@/common/components/Button';
 import { Text } from '@/common/components/Text';
 import { styles } from './Dialog.styles';
 import type { DialogProps } from './Dialog.types';
 
+const ENTER_DURATION_MS = 180;
+const CLOSE_GLYPH = '✕';
+
 /**
- * A modal dialog overlay for confirmations, alerts, or custom content.
+ * A bottom sheet over a dimmed backdrop, for confirmations, forms or custom content.
  *
  * @example
  * ```tsx
@@ -14,7 +28,7 @@ import type { DialogProps } from './Dialog.types';
  *   onDismiss={() => setIsOpen(false)}
  *   title="Confirm"
  *   message="Are you sure?"
- *   actions={[{ label: 'OK', onPress: handleConfirm }]}
+ *   actions={[{ label: 'OK', onPress: handleConfirm, variant: 'primary' }]}
  * />
  * ```
  */
@@ -25,47 +39,70 @@ export function Dialog({
   message,
   actions = [],
   children,
-  size = 'md',
   dismissOnBackdropPress = true,
 }: DialogProps) {
-  styles.useVariants({ size });
+  const { t } = useTranslation();
 
   return (
     <Modal
       visible={visible}
       transparent
-      animationType="fade"
+      animationType="none"
       onRequestClose={onDismiss}
       statusBarTranslucent
     >
-      <Pressable style={styles.backdrop} onPress={dismissOnBackdropPress ? onDismiss : undefined}>
-        <Pressable style={styles.card} onPress={() => {}}>
-          {title && (
-            <Text variant="h3" style={styles.title}>
-              {title}
-            </Text>
-          )}
-          {message && (
-            <Text variant="body" style={styles.message}>
-              {message}
-            </Text>
-          )}
-          {children}
-          {actions.length > 0 && (
-            <View style={styles.actions}>
-              {actions.map((action) => (
-                <Button
-                  key={action.label}
-                  title={action.label}
-                  variant={action.variant ?? 'ghost'}
-                  size="sm"
-                  onPress={action.onPress}
-                />
-              ))}
-            </View>
-          )}
-        </Pressable>
-      </Pressable>
+      <Animated.View entering={FadeIn.duration(ENTER_DURATION_MS)} style={styles.backdrop}>
+        <Pressable
+          style={RNStyleSheet.absoluteFill}
+          onPress={dismissOnBackdropPress ? onDismiss : undefined}
+          accessibilityLabel={t('common.close')}
+        />
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+          style={styles.keyboardAvoider}
+        >
+          <Animated.View entering={SlideInDown.duration(ENTER_DURATION_MS)} style={styles.sheet}>
+            <ScrollView
+              contentContainerStyle={styles.sheetContent}
+              keyboardShouldPersistTaps="handled"
+              showsVerticalScrollIndicator={false}
+              bounces={false}
+            >
+              <View style={styles.head}>
+                <Text variant="body" style={styles.title} accessibilityRole="header">
+                  {title ?? ''}
+                </Text>
+                <Pressable
+                  onPress={onDismiss}
+                  hitSlop={8}
+                  accessibilityRole="button"
+                  accessibilityLabel={t('common.close')}
+                >
+                  <View style={styles.close}>
+                    <RNText style={styles.closeGlyph}>{CLOSE_GLYPH}</RNText>
+                  </View>
+                </Pressable>
+              </View>
+              {message && <Text style={styles.message}>{message}</Text>}
+              {children}
+              {actions.length > 0 && (
+                <View style={styles.actions}>
+                  {actions.map((action) => (
+                    <View key={action.label} style={styles.action}>
+                      <Button
+                        title={action.label}
+                        variant={action.variant ?? 'outline'}
+                        fullWidth
+                        onPress={action.onPress}
+                      />
+                    </View>
+                  ))}
+                </View>
+              )}
+            </ScrollView>
+          </Animated.View>
+        </KeyboardAvoidingView>
+      </Animated.View>
     </Modal>
   );
 }

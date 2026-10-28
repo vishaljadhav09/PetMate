@@ -1,5 +1,5 @@
 import { StyleSheet, type UnistylesVariants } from 'react-native-unistyles';
-import { hs } from '@/theme/metrics';
+import { hs, rf } from '@/theme/metrics';
 
 export const styles = StyleSheet.create((theme) => ({
   text: {
@@ -8,41 +8,42 @@ export const styles = StyleSheet.create((theme) => ({
     variants: {
       variant: {
         // Headings use the display serif (Fraunces); the rest use Work Sans.
+        // Sizes follow the prototype: h1 is its screen title, h2 the pet-detail name.
         h1: {
-          fontFamily: theme.fonts.displayBold,
-          fontSize: theme.fonts.size['3xl'],
-          letterSpacing: -0.3,
+          fontFamily: theme.fonts.display,
+          fontSize: rf(22),
+          letterSpacing: -0.22,
         },
         h2: {
-          fontFamily: theme.fonts.displayBold,
-          fontSize: theme.fonts.size['2xl'],
-          letterSpacing: -0.2,
+          fontFamily: theme.fonts.display,
+          fontSize: rf(21),
+          letterSpacing: -0.21,
         },
         h3: {
           fontFamily: theme.fonts.display,
-          fontSize: theme.fonts.size.xl,
-          letterSpacing: -0.1,
+          fontSize: rf(18),
+          letterSpacing: -0.18,
         },
         // Card/list-item title in the display serif (pet names, section titles).
         title: {
           fontFamily: theme.fonts.display,
-          fontSize: theme.fonts.size.lg,
+          fontSize: rf(16.5),
         },
         body: {
           fontFamily: theme.fonts.regular,
-          fontSize: theme.fonts.size.md,
+          fontSize: rf(13.5),
         },
         bodySmall: {
           fontFamily: theme.fonts.regular,
-          fontSize: theme.fonts.size.sm,
+          fontSize: rf(12.5),
         },
         caption: {
           fontFamily: theme.fonts.regular,
-          fontSize: theme.fonts.size.xs,
+          fontSize: rf(11.5),
         },
         label: {
-          fontFamily: theme.fonts.semiBold,
-          fontSize: theme.fonts.size.sm,
+          fontFamily: theme.fonts.medium,
+          fontSize: rf(12),
         },
         overline: {
           fontFamily: theme.fonts.semiBold,

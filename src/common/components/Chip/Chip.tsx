@@ -6,8 +6,6 @@ import { useAnimatedPress } from '@/hooks/useAnimatedPress';
 import { styles } from './Chip.styles';
 import type { ChipProps } from './Chip.types';
 
-const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
-
 /**
  * A compact element used for selections, filters, or tags.
  *
@@ -31,30 +29,37 @@ export function Chip({
   styles.useVariants({ variant, size, selected, disabled });
 
   return (
-    <AnimatedPressable
-      onPress={onPress}
-      onPressIn={onPressIn}
-      onPressOut={onPressOut}
-      disabled={disabled || !onPress}
-      accessibilityRole="button"
-      accessibilityLabel={label}
-      accessibilityState={{ selected, disabled }}
-      style={[styles.container, animatedStyle]}
-    >
-      {icon && <View style={styles.iconWrapper}>{icon}</View>}
-      <Text variant={size === 'sm' ? 'caption' : 'bodySmall'} weight="medium" style={styles.label}>
-        {label}
-      </Text>
-      {onClose && (
-        <Pressable
-          onPress={onClose}
-          hitSlop={4}
-          accessibilityRole="button"
-          accessibilityLabel={`Remove ${label}`}
-        >
-          <Icon name="close-circle" sizeVariant={size === 'sm' ? 'xs' : 'sm'} variant="muted" />
-        </Pressable>
-      )}
-    </AnimatedPressable>
+    <Animated.View style={[styles.cell, animatedStyle]}>
+      <Pressable
+        onPress={onPress}
+        onPressIn={onPressIn}
+        onPressOut={onPressOut}
+        disabled={disabled || !onPress}
+        accessibilityRole="button"
+        accessibilityLabel={label}
+        accessibilityState={{ selected, disabled }}
+      >
+        <View style={styles.container}>
+          {icon && <View style={styles.iconWrapper}>{icon}</View>}
+          <Text
+            variant={size === 'sm' ? 'caption' : 'bodySmall'}
+            weight="medium"
+            style={styles.label}
+          >
+            {label}
+          </Text>
+          {onClose && (
+            <Pressable
+              onPress={onClose}
+              hitSlop={4}
+              accessibilityRole="button"
+              accessibilityLabel={`Remove ${label}`}
+            >
+              <Icon name="close-circle" sizeVariant={size === 'sm' ? 'xs' : 'sm'} variant="muted" />
+            </Pressable>
+          )}
+        </View>
+      </Pressable>
+    </Animated.View>
   );
 }

@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { Pressable, View, type LayoutChangeEvent } from 'react-native';
+import { Pressable, Text, View, type LayoutChangeEvent } from 'react-native';
 import Animated, {
   cancelAnimation,
   interpolateColor,
@@ -9,7 +9,7 @@ import Animated, {
   type SharedValue,
 } from 'react-native-reanimated';
 import { useUnistyles } from 'react-native-unistyles';
-import { styles } from './SegmentedControl.styles';
+import { SEGMENT_PADDING, styles } from './SegmentedControl.styles';
 import type { SegmentedControlProps, SegmentOption } from './SegmentedControl.types';
 
 /**
@@ -48,7 +48,8 @@ export function SegmentedControl({
     onChange(optionValue);
   };
 
-  const segmentWidth = containerWidth > 0 ? containerWidth / options.length : 0;
+  const segmentWidth =
+    containerWidth > 0 ? (containerWidth - SEGMENT_PADDING * 2) / options.length : 0;
 
   const indicatorStyle = useAnimatedStyle(() => ({
     transform: [{ translateX: indicatorPosition.value * segmentWidth }],
@@ -73,8 +74,8 @@ export function SegmentedControl({
             isSelected={isSelected}
             disabled={disabled}
             indicatorPosition={indicatorPosition}
-            inverseColor={theme.colors.text.inverse}
-            secondaryColor={theme.colors.text.secondary}
+            activeColor={theme.colors.text.primary}
+            inactiveColor={theme.colors.text.secondary}
             onPress={() => handleSelect(option.value, index)}
           />
         );
@@ -89,8 +90,8 @@ function SegmentItem({
   isSelected,
   disabled,
   indicatorPosition,
-  inverseColor,
-  secondaryColor,
+  activeColor,
+  inactiveColor,
   onPress,
 }: {
   option: SegmentOption;
@@ -98,33 +99,33 @@ function SegmentItem({
   isSelected: boolean;
   disabled: boolean;
   indicatorPosition: SharedValue<number>;
-  inverseColor: string;
-  secondaryColor: string;
+  activeColor: string;
+  inactiveColor: string;
   onPress: () => void;
 }) {
   const textColorStyle = useAnimatedStyle(() => {
     const color = interpolateColor(
       indicatorPosition.value,
       [index - 1, index, index + 1],
-      [secondaryColor, inverseColor, secondaryColor]
+      [inactiveColor, activeColor, inactiveColor]
     );
     return { color };
   });
 
   return (
-    <Pressable
-      onPress={onPress}
-      disabled={disabled}
-      accessibilityRole="tab"
-      accessibilityState={{ selected: isSelected }}
-      style={styles.segment}
-    >
-      {option.icon && <View style={styles.segmentIcon}>{option.icon}</View>}
-      <Animated.Text
-        style={[styles.segmentText, isSelected && styles.segmentTextSelected, textColorStyle]}
+    <View style={styles.segment}>
+      <Pressable
+        onPress={onPress}
+        disabled={disabled}
+        accessibilityRole="tab"
+        accessibilityState={{ selected: isSelected }}
       >
-        {option.label}
-      </Animated.Text>
-    </Pressable>
+        <View style={styles.segmentContent}>
+          {option.icon && <View style={styles.segmentIcon}>{option.icon}</View>}
+          <Animated.Text style={[styles.segmentText, textColorStyle]}>{option.label}</Animated.Text>
+          {option.count !== undefined && <Text style={styles.count}>{option.count}</Text>}
+        </View>
+      </Pressable>
+    </View>
   );
 }

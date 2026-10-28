@@ -1,11 +1,13 @@
 import { StyleSheet, type UnistylesVariants } from 'react-native-unistyles';
 
 export const styles = StyleSheet.create((theme) => ({
+  cell: {
+    alignSelf: 'flex-start' as const,
+  },
   container: {
     flexDirection: 'row' as const,
     alignItems: 'center' as const,
     borderRadius: theme.metrics.borderRadius.full,
-    alignSelf: 'flex-start' as const,
     variants: {
       variant: {
         solid: {

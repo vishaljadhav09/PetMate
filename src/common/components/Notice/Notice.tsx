@@ -1,15 +1,13 @@
-import { View } from 'react-native';
-import { useUnistyles } from 'react-native-unistyles';
-import { Icon } from '@/common/components/Icon';
+import { Text as RNText, View } from 'react-native';
 import { Text } from '@/common/components/Text';
 import { styles } from './Notice.styles';
 import type { NoticeProps, NoticeTone } from './Notice.types';
 
-const DEFAULT_ICONS: Record<NoticeTone, NonNullable<NoticeProps['icon']>> = {
-  info: 'information-circle-outline',
-  success: 'checkmark-circle-outline',
-  warning: 'alert-circle-outline',
-  error: 'warning-outline',
+const DEFAULT_GLYPHS: Record<NoticeTone, string> = {
+  info: 'ℹ️',
+  success: '✅',
+  warning: '⚠️',
+  error: '⚠️',
 };
 
 /**
@@ -22,13 +20,12 @@ const DEFAULT_ICONS: Record<NoticeTone, NonNullable<NoticeProps['icon']>> = {
  * <Notice tone="warning" message="Requests are disabled until this pet is old enough." />
  * ```
  */
-export function Notice({ message, tone = 'info', icon }: NoticeProps) {
-  const { theme } = useUnistyles();
+export function Notice({ message, tone = 'info', glyph }: NoticeProps) {
   styles.useVariants({ tone });
 
   return (
     <View style={styles.container} accessibilityRole="alert">
-      <Icon name={icon ?? DEFAULT_ICONS[tone]} sizeVariant="lg" color={theme.colors.state[tone]} />
+      <RNText style={styles.glyph}>{glyph ?? DEFAULT_GLYPHS[tone]}</RNText>
       <Text variant="bodySmall" style={styles.message}>
         {message}
       </Text>

@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { Icon } from '@/common/components/Icon';
 import { Text } from '@/common/components/Text';
 import { styles } from './Avatar.styles';
-import { AVATAR_SIZES } from './Avatar.types';
+import { AVATAR_FONT_SIZES, AVATAR_SIZES } from './Avatar.types';
 import type { AvatarProps } from './Avatar.types';
 
 /**
@@ -24,7 +24,7 @@ export function Avatar({
   accessibilityLabel,
 }: AvatarProps) {
   const dimension = AVATAR_SIZES[size];
-  const fontSize = dimension * 0.4;
+  const fontSize = AVATAR_FONT_SIZES[size];
   const containerStyle = color ? [styles.container, { backgroundColor: color }] : styles.container;
 
   styles.useVariants({ size });
@@ -48,9 +48,7 @@ export function Avatar({
         accessibilityRole="image"
         accessibilityLabel={accessibilityLabel}
       >
-        <Text weight="semibold" style={[styles.initials, { fontSize }]}>
-          {initials.slice(0, 2).toUpperCase()}
-        </Text>
+        <Text style={[styles.initials, { fontSize }]}>{initials.slice(0, 2).toUpperCase()}</Text>
       </View>
     );
   }

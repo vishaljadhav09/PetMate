@@ -1,11 +1,9 @@
-import { Pressable } from 'react-native';
+import { Pressable, View } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { UniActivityIndicator, UniIonicons } from '@/common/components/uni';
 import { useAnimatedPress } from '@/hooks/useAnimatedPress';
 import { ICON_SIZES, styles } from './IconButton.styles';
 import type { IconButtonProps } from './IconButton.types';
-
-const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 /**
  * A pressable button that displays a single icon with animated press feedback.
@@ -47,26 +45,32 @@ export function IconButton({
   };
 
   return (
-    <AnimatedPressable
-      onPress={onPress}
-      onPressIn={onPressIn}
-      onPressOut={onPressOut}
-      disabled={disabled || loading}
-      accessibilityRole="button"
-      accessibilityLabel={accessibilityLabel}
-      accessibilityState={{ disabled: disabled || loading, busy: loading }}
-      style={[styles.container, animatedStyle]}
-    >
-      {loading ? (
-        <UniActivityIndicator size="small" uniProps={(theme) => ({ color: resolveColor(theme) })} />
-      ) : (
-        <UniIonicons
-          name={icon}
-          size={iconSize}
-          accessibilityRole="image"
-          uniProps={(theme) => ({ color: resolveColor(theme) })}
-        />
-      )}
-    </AnimatedPressable>
+    <Animated.View style={animatedStyle}>
+      <Pressable
+        onPress={onPress}
+        onPressIn={onPressIn}
+        onPressOut={onPressOut}
+        disabled={disabled || loading}
+        accessibilityRole="button"
+        accessibilityLabel={accessibilityLabel}
+        accessibilityState={{ disabled: disabled || loading, busy: loading }}
+      >
+        <View style={styles.container}>
+          {loading ? (
+            <UniActivityIndicator
+              size="small"
+              uniProps={(theme) => ({ color: resolveColor(theme) })}
+            />
+          ) : (
+            <UniIonicons
+              name={icon}
+              size={iconSize}
+              accessibilityRole="image"
+              uniProps={(theme) => ({ color: resolveColor(theme) })}
+            />
+          )}
+        </View>
+      </Pressable>
+    </Animated.View>
   );
 }
