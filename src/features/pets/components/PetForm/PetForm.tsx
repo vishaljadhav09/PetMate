@@ -15,10 +15,11 @@ import {
   TextArea,
 } from '@/common/components';
 import { useCurrentLocation } from '@/hooks/useCurrentLocation';
+import type { Coordinates } from '@/hooks/useCurrentLocation';
 import { translateDynamicKey } from '@/i18n/translateKey';
 import { useAuthStore } from '@/providers/auth/authStore';
 import { friendlyError } from '@/utils/friendlyError';
-import { useCreatePet, useUpdatePet } from '../../hooks/usePets';
+import { useCreatePet, useSavePetAddress, useUpdatePet } from '../../hooks/usePets';
 import { petSchema } from '../../schemas/petSchema';
 import type { PetFormData } from '../../schemas/petSchema';
 import { pickImage, uploadCertificate } from '../../services/photoService';
@@ -41,7 +42,10 @@ const EMPTY_DEFAULTS: PetFormData = {
   description: '',
   studTermsType: 'negotiable',
   studFeeAmount: '',
+  addressLine: '',
   city: '',
+  state: '',
+  pincode: '',
   photos: [],
   lastVetCheckup: '',
   hipScore: '',
@@ -72,6 +76,7 @@ export function PetForm({
   const [certificateUri, setCertificateUri] = useState<string | null>(null);
   const createPet = useCreatePet();
   const updatePet = useUpdatePet();
+  const savePetAddress = useSavePetAddress();
   const {
     control,
     handleSubmit,
@@ -85,7 +90,7 @@ export function PetForm({
   const pedigreeCertified = watch('pedigreeCertified');
   const studTermsType = watch('studTermsType');
   const availableForMatching = watch('availableForMatching');
-  const isSaving = createPet.isPending || updatePet.isPending;
+  const isSaving = createPet.isPending || updatePet.isPending || savePetAddress.isPending;
 
   const handlePickCertificate = async () => {
     const uri = await pickImage();
@@ -93,12 +98,28 @@ export function PetForm({
   };
 
   const onSubmit = handleSubmit(async (values) => {
-    // Edit mode keeps the stored location unless the owner refreshed it.
-    const coordinates =
-      location.coordinates ?? (mode === 'create' ? await location.request() : null);
-    if (mode === 'create' && !coordinates) {
-      Toast.show({ type: 'error', text1: t('petForm.locationRequired') });
-      return;
+    // The listing sits at the address the owner entered, not wherever their phone happens to be.
+    // Device GPS is only a fallback when the address can't be geocoded. Edit mode keeps the
+    // stored location unless the address changed.
+    const address = {
+      addressLine: values.addressLine.trim(),
+      city: values.city.trim(),
+      state: values.state.trim(),
+      pincode: values.pincode.trim(),
+    };
+    const addressChanged =
+      mode === 'create' ||
+      (['addressLine', 'city', 'state', 'pincode'] as const).some(
+        (field) => address[field] !== (defaultValues?.[field] ?? '').trim()
+      );
+    let coordinates: Coordinates | null = null;
+    if (addressChanged) {
+      const gpsFallback = location.coordinates;
+      coordinates = (await location.setFromAddress(address)) ?? gpsFallback;
+      if (!coordinates) {
+        Toast.show({ type: 'error', text1: t('petForm.addressNotFound') });
+        return;
+      }
     }
 
     const data: Omit<CreatePetData, 'location'> = {
@@ -117,7 +138,7 @@ export function PetForm({
         type: values.studTermsType,
         feeAmount: values.studTermsType === 'fixedFee' ? Number(values.studFeeAmount) : undefined,
       },
-      city: values.city,
+      city: address.city,
       photos: values.photos,
       lastVetCheckup: values.lastVetCheckup || undefined,
       hipScore: values.hipScore?.trim() || undefined,
@@ -135,6 +156,16 @@ export function PetForm({
         await updatePet.mutateAsync({
           id: petId,
           data: coordinates ? { ...data, location: coordinates } : data,
+        });
+      }
+      if (savedPetId && addressChanged) {
+        await savePetAddress.mutateAsync({
+          petId: savedPetId,
+          address: {
+            addressLine: address.addressLine,
+            state: address.state,
+            pincode: address.pincode,
+          },
         });
       }
 
@@ -326,9 +357,34 @@ export function PetForm({
         {certificateUri && <Notice message={t('petForm.certificateSelected')} tone="success" />}
       </View>
 
-      <FormField name="city" control={control} label={t('petForm.cityLabel')}>
-        <Input placeholder={t('petForm.cityPlaceholder')} />
+      <FormField name="addressLine" control={control} label={t('petForm.addressLineLabel')}>
+        <Input
+          placeholder={t('petForm.addressLinePlaceholder')}
+          helperText={t('petForm.addressHelp')}
+          autoCapitalize="words"
+        />
       </FormField>
+
+      <FormField name="city" control={control} label={t('petForm.cityLabel')}>
+        <Input placeholder={t('petForm.cityPlaceholder')} autoCapitalize="words" />
+      </FormField>
+
+      <View className="flex-row gap-2.5">
+        <View className="flex-1">
+          <FormField name="state" control={control} label={t('petForm.stateLabel')}>
+            <Input placeholder={t('petForm.statePlaceholder')} autoCapitalize="words" />
+          </FormField>
+        </View>
+        <View className="flex-1">
+          <FormField name="pincode" control={control} label={t('petForm.pincodeLabel')}>
+            <Input
+              placeholder={t('petForm.pincodePlaceholder')}
+              keyboardType="number-pad"
+              maxLength={6}
+            />
+          </FormField>
+        </View>
+      </View>
 
       <View className="gap-1.5">
         <Text variant="label" color="secondary">

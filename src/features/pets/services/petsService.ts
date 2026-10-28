@@ -1,5 +1,5 @@
 import { supabase } from '@/integrations/supabase';
-import type { CreatePetData, Pet, PetFilters, PetOwner, UpdatePetData } from '../types';
+import type { CreatePetData, Pet, PetAddress, PetFilters, PetOwner, UpdatePetData } from '../types';
 import { mapPetRow, toPetInsert, toPetUpdate } from '../utils/petMapper';
 
 function requireSupabase() {
@@ -56,6 +56,30 @@ export async function updatePet(id: string, data: UpdatePetData): Promise<Pet> {
     .single();
   if (error) throw error;
   return mapPetRow(row);
+}
+
+/** The private address of one of my pets. `null` for pets listed before addresses existed. */
+export async function fetchPetAddress(petId: string): Promise<PetAddress | null> {
+  const client = requireSupabase();
+  const { data, error } = await client
+    .from('pet_addresses')
+    .select('address_line, state, pincode')
+    .eq('pet_id', petId)
+    .maybeSingle();
+  if (error) throw error;
+  if (!data) return null;
+  return { addressLine: data.address_line, state: data.state, pincode: data.pincode };
+}
+
+export async function savePetAddress(petId: string, address: PetAddress): Promise<void> {
+  const client = requireSupabase();
+  const { error } = await client.from('pet_addresses').upsert({
+    pet_id: petId,
+    address_line: address.addressLine.trim(),
+    state: address.state.trim(),
+    pincode: address.pincode.trim(),
+  });
+  if (error) throw error;
 }
 
 /** Public owner info. The phone stays empty: it is only revealed after a request is accepted. */

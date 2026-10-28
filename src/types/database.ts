@@ -206,6 +206,38 @@ export type Database = {
           },
         ];
       };
+      pet_addresses: {
+        Row: {
+          address_line: string;
+          pet_id: string;
+          pincode: string;
+          state: string;
+          updated_at: string;
+        };
+        Insert: {
+          address_line: string;
+          pet_id: string;
+          pincode: string;
+          state: string;
+          updated_at?: string;
+        };
+        Update: {
+          address_line?: string;
+          pet_id?: string;
+          pincode?: string;
+          state?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'pet_addresses_pet_id_fkey';
+            columns: ['pet_id'];
+            isOneToOne: true;
+            referencedRelation: 'pets';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       pets: {
         Row: {
           approved: boolean;
@@ -315,23 +347,38 @@ export type Database = {
       };
       profile_private: {
         Row: {
+          address_line: string | null;
           email: string | null;
           id: string;
+          lat: number | null;
+          lng: number | null;
           phone: string | null;
+          pincode: string | null;
+          state: string | null;
           push_token: string | null;
           updated_at: string;
         };
         Insert: {
+          address_line?: string | null;
           email?: string | null;
           id: string;
+          lat?: number | null;
+          lng?: number | null;
           phone?: string | null;
+          pincode?: string | null;
+          state?: string | null;
           push_token?: string | null;
           updated_at?: string;
         };
         Update: {
+          address_line?: string | null;
           email?: string | null;
           id?: string;
+          lat?: number | null;
+          lng?: number | null;
           phone?: string | null;
+          pincode?: string | null;
+          state?: string | null;
           push_token?: string | null;
           updated_at?: string;
         };

@@ -1,4 +1,5 @@
 import { z } from 'zod/v4';
+import { PINCODE_PATTERN } from '@/utils/address';
 
 /**
  * `studFeeAmount` stays a plain optional string (what an `Input` actually
@@ -26,7 +27,14 @@ export const petSchema = z
     description: z.string().trim().max(500, 'validation.descriptionMax').optional(),
     studTermsType: z.enum(['fixedFee', 'negotiable', 'pickOfLitter', 'free']),
     studFeeAmount: z.string().optional(),
+    addressLine: z
+      .string()
+      .trim()
+      .min(3, 'validation.addressLineRequired')
+      .max(200, 'validation.addressLineMax'),
     city: z.string().trim().min(1, 'validation.required').max(60, 'validation.cityTooLong'),
+    state: z.string().trim().min(2, 'validation.required').max(60, 'validation.stateMax'),
+    pincode: z.string().trim().regex(PINCODE_PATTERN, 'validation.pincodeInvalid'),
     photos: z.array(z.string()).max(4, 'validation.photosMax'),
     lastVetCheckup: z.union([z.literal(''), z.iso.date('validation.dateInvalid')]).optional(),
     hipScore: z.string().trim().max(40, 'validation.hipScoreTooLong').optional(),

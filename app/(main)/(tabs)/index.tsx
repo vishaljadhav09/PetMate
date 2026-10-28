@@ -20,6 +20,7 @@ import {
 import { PetCard } from '@/features/pets/components/PetCard';
 import { useMyPets, useNearbyPets } from '@/features/pets/hooks/usePets';
 import { isBreedingEligible } from '@/features/pets/utils/breedingEligibility';
+import { useMyProfile } from '@/features/profile/hooks/useProfile';
 import { useCurrentLocation } from '@/hooks/useCurrentLocation';
 import { useDebouncedValue } from '@/hooks/useDebouncedValue';
 
@@ -31,6 +32,7 @@ export default function DiscoverTab() {
   const router = useRouter();
   const { data: myPets, isLoading: isMyPetsLoading } = useMyPets();
   const location = useCurrentLocation();
+  const { data: myProfile } = useMyProfile();
   const [matchingForPetId, setMatchingForPetId] = useState<string | undefined>(undefined);
   const [breedQuery, setBreedQuery] = useState('');
   const [verifiedOnly, setVerifiedOnly] = useState(false);
@@ -52,11 +54,16 @@ export default function DiscoverTab() {
   const matchingForPet =
     eligibleOwnPets.find((pet) => pet.id === matchingForPetId) ?? eligibleOwnPets[0];
 
+  // Device location wins; once it has failed or been denied, search from the saved home address.
+  const deviceLocationSettled = location.status !== 'idle' && location.status !== 'loading';
+  const origin =
+    location.coordinates ?? (deviceLocationSettled ? myProfile?.homeLocation : undefined);
+
   const nearby = useNearbyPets(
-    location.coordinates && matchingForPet
+    origin && matchingForPet
       ? {
-          lat: location.coordinates.lat,
-          lng: location.coordinates.lng,
+          lat: origin.lat,
+          lng: origin.lng,
           radiusKm,
           myPetId: matchingForPet.id,
           breed: debouncedBreed,
@@ -94,7 +101,7 @@ export default function DiscoverTab() {
     );
   }
 
-  const needsLocation = !location.coordinates && location.status !== 'loading';
+  const needsLocation = !origin && location.status !== 'loading';
   if (needsLocation) {
     return (
       <ScreenContainer contentWidth="wide" edges={[]}>

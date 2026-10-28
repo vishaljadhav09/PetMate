@@ -57,6 +57,13 @@ export interface Pet {
   createdAt: string;
 }
 
+/** Private street address of a pet. Only the owner (and admins) can read it; others see the city. */
+export interface PetAddress {
+  addressLine: string;
+  state: string;
+  pincode: string;
+}
+
 export type CreatePetData = Omit<
   Pet,
   'id' | 'ownerId' | 'createdAt' | 'distanceKm' | 'verified' | 'approved' | 'hidden' | 'lat' | 'lng'

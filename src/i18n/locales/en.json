@@ -150,12 +150,20 @@
     "certificateSelected": "Document selected. It uploads when you save.",
     "certificateUploadFailed": "Pet saved, but the document upload failed. Try again from Edit.",
     "locationLabel": "Location",
-    "locationHelp": "Shown to others only as an approximate area (about 500 m), never your exact address.",
+    "locationHelp": "Your pet is placed at the address you enter and shown to others only as an approximate area (about 500 m). Use your current location only if the address can't be found.",
     "locationUseCurrent": "Use my current location",
     "locationCaptured": "Location captured. Tap to refresh",
     "locationDenied": "Location permission was denied. Allow it in Settings to list your pet.",
     "locationRequired": "We need your location to list this pet.",
-    "attestLabel": "I confirm this pet is healthy and ready for breeding"
+    "attestLabel": "I confirm this pet is healthy and ready for breeding",
+    "addressLineLabel": "Address",
+    "addressLinePlaceholder": "House/flat no., street, area",
+    "addressHelp": "Only you can see the full address. Others see just the city and an approximate area.",
+    "stateLabel": "State",
+    "statePlaceholder": "e.g. Maharashtra",
+    "pincodeLabel": "Pincode",
+    "pincodePlaceholder": "6 digits",
+    "addressNotFound": "We couldn't find that address. Check the city, state and pincode, or use your current location."
   },
   "profile": {
     "title": "Profile",
@@ -180,7 +188,13 @@
     "deleteAccountFailed": "Could not delete your account. Please try again.",
     "savedPetsAction": "Saved pets",
     "languageTitle": "Language",
-    "languageRestartNote": "Restart the app to apply the layout direction."
+    "languageRestartNote": "Restart the app to apply the layout direction.",
+    "addressLineLabel": "Home address",
+    "addressLinePlaceholder": "House/flat no., street, area",
+    "addressHelp": "Private. Used only to find pets near your home when device location is off.",
+    "stateLabel": "State",
+    "pincodeLabel": "Pincode",
+    "addressNotFound": "Saved, but we couldn't locate this address, so nearby search will use your device location."
   },
   "requests": {
     "title": "Requests",
@@ -314,7 +328,11 @@
     "photosMax": "You can add up to 4 photos",
     "hipScoreTooLong": "Hip score must be at most 40 characters",
     "litterRefTooLong": "Litter reference must be at most 60 characters",
-    "attestRequired": "Confirm the pet is ready for breeding, or turn off matching"
+    "attestRequired": "Confirm the pet is ready for breeding, or turn off matching",
+    "addressLineRequired": "Please enter the full address",
+    "addressLineMax": "Address must be at most 200 characters",
+    "stateMax": "State must be at most 60 characters",
+    "pincodeInvalid": "Enter a valid 6-digit pincode"
   },
   "auth": {
     "brandName": "PetMate",

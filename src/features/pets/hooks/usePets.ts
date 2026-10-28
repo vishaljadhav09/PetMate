@@ -3,19 +3,22 @@ import { useAuthStore } from '@/providers/auth/authStore';
 import {
   createPet,
   fetchNearbyPets,
+  fetchPetAddress,
   fetchPetById,
   fetchPetOwner,
   fetchPets,
   NEARBY_PAGE_SIZE,
+  savePetAddress,
   updatePet,
 } from '../services/petsService';
 import type { NearbyArgs } from '../services/petsService';
-import type { CreatePetData, Pet, PetFilters, UpdatePetData } from '../types';
+import type { CreatePetData, Pet, PetAddress, PetFilters, UpdatePetData } from '../types';
 
 export const PETS_KEYS = {
   all: ['pets'] as const,
   list: (filters?: PetFilters) => [...PETS_KEYS.all, 'list', filters ?? {}] as const,
   detail: (id: string) => [...PETS_KEYS.all, 'detail', id] as const,
+  address: (id: string) => [...PETS_KEYS.all, 'address', id] as const,
   owners: ['petOwners'] as const,
   owner: (id: string) => [...PETS_KEYS.owners, id] as const,
 };
@@ -29,6 +32,25 @@ export function usePet(id: string) {
     queryKey: PETS_KEYS.detail(id),
     queryFn: () => fetchPetById(id),
     enabled: !!id,
+  });
+}
+
+export function usePetAddress(id: string) {
+  return useQuery({
+    queryKey: PETS_KEYS.address(id),
+    queryFn: () => fetchPetAddress(id),
+    enabled: !!id,
+  });
+}
+
+export function useSavePetAddress() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ petId, address }: { petId: string; address: PetAddress }) =>
+      savePetAddress(petId, address),
+    onSuccess: (_data, { petId }) => {
+      queryClient.invalidateQueries({ queryKey: PETS_KEYS.address(petId) });
+    },
   });
 }
 
