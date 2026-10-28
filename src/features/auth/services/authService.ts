@@ -1,6 +1,8 @@
 import { GoogleSignin, isSuccessResponse } from '@react-native-google-signin/google-signin';
 import { env } from '@/config/env';
+import { clearPushToken } from '@/features/notifications/services/pushService';
 import { supabase } from '@/integrations/supabase';
+import { useAuthStore } from '@/providers/auth/authStore';
 
 let isGoogleConfigured = false;
 
@@ -38,6 +40,8 @@ export async function signInWithGoogle(): Promise<boolean> {
 }
 
 export async function signOut(): Promise<void> {
+  const userId = useAuthStore.getState().user?.id;
+  if (userId) await clearPushToken(userId).catch(() => undefined);
   configureGoogle();
   await GoogleSignin.signOut().catch(() => undefined);
   if (supabase) await supabase.auth.signOut();

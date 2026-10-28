@@ -17,6 +17,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import Toast from 'react-native-toast-message';
 import { StyleSheet, useUnistyles } from 'react-native-unistyles';
 import { ErrorBoundary } from '@/common/components/ErrorBoundary';
+import { usePushNotifications } from '@/features/notifications/hooks/usePushNotifications';
 import { useProtectedRoute } from '@/hooks/useProtectedRoute';
 import i18n from '@/i18n/config';
 import { QueryProvider } from '@/providers';
@@ -60,6 +61,7 @@ function RootNavigator() {
 
 function AppContent() {
   useAuthInit();
+  usePushNotifications();
 
   return (
     <View style={styles.appContainer}>

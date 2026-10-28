@@ -26,7 +26,8 @@
         "monochromeImage": "./assets/android-icon-monochrome.png",
         "backgroundColor": "#0F172A"
       },
-      "package": "com.petmate.app"
+      "package": "com.petmate.app",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "output": "static",
@@ -86,7 +87,8 @@
         {
           "photosPermission": "PetMate needs access to your photos so you can add pictures of your pet."
         }
-      ]
+      ],
+      "expo-notifications"
     ],
     "experiments": {
       "typedRoutes": true,
