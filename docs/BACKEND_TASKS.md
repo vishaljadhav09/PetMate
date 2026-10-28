@@ -25,7 +25,7 @@ Legend: `[x]` done in repo, `[ ]` to do. Nothing has been run against a real Sup
 - [x] T2.1 `send-push`, `cloudinary-sign`, `delete-account` written
 - [x] T2.2 Keep-alive GitHub workflow written
 - [x] T2.3 Deploy the three functions to dev
-- [ ] T2.4 Create the `match_requests` database webhook (INSERT + UPDATE) with the `x-webhook-secret` header
+- [x] T2.4 Create the `match_requests` database webhook (INSERT + UPDATE) with the `x-webhook-secret` header
 - [ ] T2.5 Add GitHub secrets for the keep-alive workflow (prod only)
 
 ## Phase 3: Auth [6, 12.2, 12.3]
@@ -69,16 +69,16 @@ Legend: `[x]` done in repo, `[ ]` to do. Nothing has been run against a real Sup
 ## Phase 7: Push notifications [10.1, 12.10]
 
 - [ ] T7.1 FCM credentials in EAS
-- [ ] T7.2 `registerPushToken` after sign-in
-- [ ] T7.3 Notification tap opens Requests tab
+- [x] T7.2 `registerPushToken` after sign-in
+- [x] T7.3 Notification tap opens Requests tab
 - [ ] T7.4 Test on a real Android device
 
 ## Phase 8: Cleanup and release [15, 16, 20]
 
-- [ ] T8.1 Remove mock data layer (or keep behind `EXPO_PUBLIC_USE_MOCK` until done)
-- [ ] T8.2 `npm run validate` and tests pass
-- [ ] T8.3 Security checklist (guide section 16)
-- [ ] T8.4 Privacy policy, terms, Play data-safety form
-- [ ] T8.5 Production: link prod, backup, `db push`, deploy functions, webhook, OAuth, admin
-- [ ] T8.6 Play Store closed testing, then release
-- [ ] T8.7 Weekly backup routine; decide Free vs Pro
+- [x] T8.1 Mock data layer removed
+- [x] T8.2 `npm run validate` and `npm test` pass (31 tests)
+- [x] T8.3 Security checklist audited on dev; migration 0008 locks down function grants (re-run on prod, see `docs/RELEASE.md`)
+- [ ] T8.4 Privacy policy, terms and Play data-safety: drafts in `docs/legal/`, need your review, real details and public URLs
+- [ ] T8.5 Production setup: follow `docs/RELEASE.md` sections 1-6
+- [ ] T8.6 Play Store closed testing, then release (`docs/RELEASE.md` section 7)
+- [ ] T8.7 Backup routine and Free vs Pro decision (`docs/RELEASE.md` section 8)
