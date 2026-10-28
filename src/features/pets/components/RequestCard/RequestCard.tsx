@@ -2,22 +2,22 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
 import Toast from 'react-native-toast-message';
-import { Button, Text } from '@/common/components';
+import { Button, Card, Tag, Text } from '@/common/components';
+import type { TagTone } from '@/common/components';
 import { useCompleteMatchRequest, useRespondToMatchRequest } from '../../hooks/useMatchRequests';
 import { usePet, usePetOwner } from '../../hooks/usePets';
 import { useRatingsForMatchRequest } from '../../hooks/useRatings';
 import { MOCK_CURRENT_USER_ID } from '../../services/mockDb';
 import type { MatchRequest, MatchRequestStatus } from '../../types';
+import { OwnerAvatar } from '../OwnerAvatar';
 import { RateOwnerDialog } from '../RateOwnerDialog';
-import { StatusPill } from '../StatusPill';
-import type { StatusPillTone } from '../StatusPill';
 
 export interface RequestCardProps {
   request: MatchRequest;
   direction: 'inbox' | 'sent';
 }
 
-const STATUS_TONES: Record<MatchRequestStatus, StatusPillTone> = {
+const STATUS_TONES: Record<MatchRequestStatus, TagTone> = {
   new: 'info',
   accepted: 'success',
   declined: 'neutral',
@@ -65,91 +65,93 @@ export function RequestCard({ request, direction }: RequestCardProps) {
   };
 
   return (
-    <View className="gap-3 rounded-2xl border border-border bg-surface p-4 dark:border-border-dark dark:bg-surface-dark">
-      <View className="flex-row items-start justify-between gap-2">
-        <View className="flex-1 gap-0.5">
-          <Text variant="label" weight="semibold">
-            {counterpartOwner?.name ?? ''}
-          </Text>
-          <Text variant="bodySmall" color="secondary">
-            {myPet && counterpartPet ? `${myPet.name} × ${counterpartPet.name}` : ''}
-          </Text>
+    <Card variant="surface">
+      <View className="gap-3">
+        <View className="flex-row items-start justify-between gap-2">
+          <View className="flex-1 flex-row items-center gap-3">
+            {counterpartOwner && (
+              <OwnerAvatar ownerId={counterpartOwner.id} name={counterpartOwner.name} size="md" />
+            )}
+            <View className="flex-1 gap-0.5">
+              <Text variant="label">{counterpartOwner?.name ?? ''}</Text>
+              <Text variant="bodySmall" color="secondary">
+                {myPet && counterpartPet ? `${myPet.name} × ${counterpartPet.name}` : ''}
+              </Text>
+            </View>
+          </View>
+          <Tag label={t(`requests.status.${request.status}`)} tone={STATUS_TONES[request.status]} />
         </View>
-        <StatusPill
-          label={t(`requests.status.${request.status}`)}
-          tone={STATUS_TONES[request.status]}
-        />
-      </View>
 
-      {!!request.message && (
-        <View className="rounded-xl bg-surface-alt p-3 dark:bg-surface-alt-dark">
-          <Text variant="bodySmall">{request.message}</Text>
-        </View>
-      )}
+        {!!request.message && (
+          <View className="rounded-xl bg-surface-alt p-3 dark:bg-surface-alt-dark">
+            <Text variant="bodySmall">{request.message}</Text>
+          </View>
+        )}
 
-      {request.status === 'new' && direction === 'inbox' && (
-        <View className="flex-row gap-2">
-          <View className="flex-1">
+        {request.status === 'new' && direction === 'inbox' && (
+          <View className="flex-row gap-2">
+            <View className="flex-1">
+              <Button
+                title={t('requests.declineAction')}
+                variant="outline"
+                fullWidth
+                onPress={() => handleRespond('declined')}
+                loading={respond.isPending}
+              />
+            </View>
+            <View className="flex-1">
+              <Button
+                title={t('requests.acceptAction')}
+                fullWidth
+                onPress={() => handleRespond('accepted')}
+                loading={respond.isPending}
+              />
+            </View>
+          </View>
+        )}
+
+        {request.status === 'accepted' && (
+          <View className="gap-2">
+            {counterpartOwner && (
+              <Text variant="bodySmall" color="secondary">
+                {t('requests.phoneRevealedLabel', { phone: counterpartOwner.phone })}
+              </Text>
+            )}
             <Button
-              title={t('requests.declineAction')}
-              variant="outline"
+              title={t('requests.completeAction')}
+              variant="secondary"
               fullWidth
-              onPress={() => handleRespond('declined')}
-              loading={respond.isPending}
+              onPress={handleComplete}
+              loading={complete.isPending}
             />
           </View>
-          <View className="flex-1">
-            <Button
-              title={t('requests.acceptAction')}
-              fullWidth
-              onPress={() => handleRespond('accepted')}
-              loading={respond.isPending}
-            />
-          </View>
-        </View>
-      )}
+        )}
 
-      {request.status === 'accepted' && (
-        <View className="gap-2">
-          {counterpartOwner && (
-            <Text variant="bodySmall" color="secondary">
-              {t('requests.phoneRevealedLabel', { phone: counterpartOwner.phone })}
-            </Text>
-          )}
+        {request.status === 'completed' && !alreadyRated && counterpartOwner && (
           <Button
-            title={t('requests.completeAction')}
+            title={t('requests.rateAction', { name: counterpartOwner.name })}
             variant="secondary"
             fullWidth
-            onPress={handleComplete}
-            loading={complete.isPending}
+            onPress={() => setIsRateDialogOpen(true)}
           />
-        </View>
-      )}
+        )}
 
-      {request.status === 'completed' && !alreadyRated && counterpartOwner && (
-        <Button
-          title={t('requests.rateAction', { name: counterpartOwner.name })}
-          variant="secondary"
-          fullWidth
-          onPress={() => setIsRateDialogOpen(true)}
-        />
-      )}
+        {request.status === 'completed' && alreadyRated && (
+          <Text variant="bodySmall" color="secondary">
+            {t('requests.rated')}
+          </Text>
+        )}
 
-      {request.status === 'completed' && alreadyRated && (
-        <Text variant="bodySmall" color="secondary">
-          {t('requests.rated')}
-        </Text>
-      )}
-
-      {counterpartOwner && (
-        <RateOwnerDialog
-          visible={isRateDialogOpen}
-          onDismiss={() => setIsRateDialogOpen(false)}
-          matchRequestId={request.id}
-          ratedUserId={counterpartOwner.id}
-          ratedUserName={counterpartOwner.name}
-        />
-      )}
-    </View>
+        {counterpartOwner && (
+          <RateOwnerDialog
+            visible={isRateDialogOpen}
+            onDismiss={() => setIsRateDialogOpen(false)}
+            matchRequestId={request.id}
+            ratedUserId={counterpartOwner.id}
+            ratedUserName={counterpartOwner.name}
+          />
+        )}
+      </View>
+    </Card>
   );
 }

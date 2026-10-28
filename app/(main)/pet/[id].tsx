@@ -3,18 +3,22 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
 import {
+  Card,
+  DetailRow,
   EmptyState,
   IconButton,
-  ListItem,
   Loading,
   Menu,
+  Notice,
   ScreenContainer,
+  ScreenHeader,
+  Tag,
   Text,
 } from '@/common/components';
+import { PetAvatar } from '@/features/pets/components/PetAvatar';
 import { PetOwnerCard } from '@/features/pets/components/PetOwnerCard';
 import { ReportPetDialog } from '@/features/pets/components/ReportPetDialog';
 import { SendMatchRequestForm } from '@/features/pets/components/SendMatchRequestForm';
-import { StatusPill } from '@/features/pets/components/StatusPill';
 import { useMyPets, usePet, usePetOwner } from '@/features/pets/hooks/usePets';
 import { useRatingsForUser } from '@/features/pets/hooks/useRatings';
 import { ageLabel, isBreedingEligible } from '@/features/pets/utils/breedingEligibility';
@@ -55,17 +59,20 @@ export default function PetDetailScreen() {
       ? `${t('pets.studTerms.fixedFee')} — ${pet.studTerms.feeAmount ?? 0}`
       : t(`pets.studTerms.${pet.studTerms.type}`);
 
-  let pedigreeSubtitle = t('pets.pedigreeStatus.notCertified');
+  let pedigreeValue = t('pets.pedigreeValue.notCertified');
   if (pet.pedigreeCertified) {
-    pedigreeSubtitle = pet.registrationNumber
-      ? `${t('pets.pedigreeStatus.certified')} · ${pet.registrationNumber}`
-      : t('pets.pedigreeStatus.certified');
+    pedigreeValue = pet.registrationNumber
+      ? `${t('pets.pedigreeValue.certified')} · ${pet.registrationNumber}`
+      : t('pets.pedigreeValue.certified');
   }
 
+  const locationValue =
+    pet.distanceKm !== undefined
+      ? `${pet.city} · ${t('discover.distanceAway', { distance: pet.distanceKm })}`
+      : pet.city;
+
   let requestSection = (
-    <Text variant="body" color="secondary">
-      {t(`pets.matchIncompatibility.${incompatibilityReason}`)}
-    </Text>
+    <Notice tone="warning" message={t(`pets.matchIncompatibility.${incompatibilityReason}`)} />
   );
   if (!myPets || myPets.length === 0) {
     requestSection = (
@@ -89,37 +96,32 @@ export default function PetDetailScreen() {
 
   return (
     <ScreenContainer scrollable>
-      <View className="mb-4 flex-row items-center justify-between gap-2">
-        <View className="flex-row items-center gap-2">
-          <IconButton
-            icon="chevron-back"
-            accessibilityLabel={t('common.back')}
-            variant="ghost"
-            onPress={() => router.back()}
+      <ScreenHeader
+        title={pet.name}
+        onBack={() => router.back()}
+        right={
+          <Menu
+            visible={isMenuOpen}
+            onDismiss={() => setIsMenuOpen(false)}
+            anchor={
+              <IconButton
+                icon="ellipsis-vertical"
+                accessibilityLabel={t('petDetail.report.menuLabel')}
+                variant="ghost"
+                onPress={() => setIsMenuOpen(true)}
+              />
+            }
+            items={[
+              {
+                label: t('petDetail.report.menuLabel'),
+                icon: 'flag-outline',
+                destructive: true,
+                onPress: () => setIsReportOpen(true),
+              },
+            ]}
           />
-          <Text variant="h2">{pet.name}</Text>
-        </View>
-        <Menu
-          visible={isMenuOpen}
-          onDismiss={() => setIsMenuOpen(false)}
-          anchor={
-            <IconButton
-              icon="ellipsis-vertical"
-              accessibilityLabel={t('petDetail.report.menuLabel')}
-              variant="ghost"
-              onPress={() => setIsMenuOpen(true)}
-            />
-          }
-          items={[
-            {
-              label: t('petDetail.report.menuLabel'),
-              icon: 'flag-outline',
-              destructive: true,
-              onPress: () => setIsReportOpen(true),
-            },
-          ]}
-        />
-      </View>
+        }
+      />
 
       <ReportPetDialog
         visible={isReportOpen}
@@ -128,33 +130,45 @@ export default function PetDetailScreen() {
       />
 
       <View className="gap-4 pb-8">
-        <View className="gap-2">
-          <View className="flex-row flex-wrap gap-2">
-            {owner?.verifiedOwner && <StatusPill label={t('pets.verifiedOwner')} tone="success" />}
-            {!eligible && <StatusPill label={t('pets.breedingIneligible')} tone="warning" />}
+        <View className="flex-row items-center gap-4">
+          <PetAvatar petId={pet.id} species={pet.species} size="xl" />
+          <View className="flex-1 gap-2">
+            <Text variant="bodySmall" color="secondary">
+              {`${pet.breed} · ${t(`pets.gender.${pet.gender}`)} · ${t('pets.age', {
+                years: age.years,
+                months: age.months,
+              })}`}
+            </Text>
+            <View className="flex-row flex-wrap gap-2">
+              {owner?.verifiedOwner && <Tag label={t('pets.verifiedOwner')} tone="success" />}
+              <Tag
+                label={
+                  pet.vaccinationUpToDate ? t('pets.vaccinatedShort') : t('pets.vaccinationUnclear')
+                }
+                tone={pet.vaccinationUpToDate ? 'success' : 'warning'}
+              />
+            </View>
           </View>
-          <Text variant="body" color="secondary">
-            {`${pet.breed} · ${t(`pets.gender.${pet.gender}`)} · ${t('pets.age', {
-              years: age.years,
-              months: age.months,
-            })}`}
-          </Text>
-          {!!pet.description && <Text variant="body">{pet.description}</Text>}
         </View>
 
-        <View className="rounded-2xl border border-border dark:border-border-dark">
-          <ListItem
-            title={t('petDetail.healthTitle')}
-            subtitle={
+        {!eligible && <Notice tone="error" message={t('pets.breedingIneligible')} />}
+
+        {!!pet.description && <Text variant="body">{pet.description}</Text>}
+
+        <Card variant="surface">
+          <DetailRow
+            label={t('petDetail.healthTitle')}
+            value={
               pet.vaccinationUpToDate
-                ? t('pets.vaccinationStatus.upToDate')
-                : t('pets.vaccinationStatus.notConfirmed')
+                ? t('pets.vaccinationValue.upToDate')
+                : t('pets.vaccinationValue.notConfirmed')
             }
             divider
           />
-          <ListItem title={t('petDetail.pedigreeLabel')} subtitle={pedigreeSubtitle} divider />
-          <ListItem title={t('petDetail.studTermsTitle')} subtitle={studTermsLabel} />
-        </View>
+          <DetailRow label={t('petDetail.pedigreeLabel')} value={pedigreeValue} divider />
+          <DetailRow label={t('petDetail.studTermsTitle')} value={studTermsLabel} divider />
+          <DetailRow label={t('petDetail.locationLabel')} value={locationValue} />
+        </Card>
 
         {owner && <PetOwnerCard owner={owner} ratings={ownerRatings ?? []} />}
 

@@ -47,11 +47,13 @@ Update the color palette in:
 
 Ask the user:
 
-- **Primary brand color** (defaults to Indigo #6366F1)
-- **Accent color** (defaults to Teal #14B8A6)
+- **Primary brand color** (defaults to Forest #24402F)
+- **Accent color** (defaults to Marigold #E8A33D)
 - **Style preference**: warm, cool, neutral, bold
 
 Generate appropriate light and dark theme token values for `brand.primary`, `brand.secondary`, `brand.tertiary`, `brand.primaryVariant`, and update dependent tokens (overlay, gradient, etc.).
+
+Colors live in three places that must stay in sync: `src/theme/light-theme.ts`, `src/theme/dark-theme.ts` and `tailwind.config.js`. `src/theme/__tests__/tailwindParity.test.ts` checks the Tailwind values against the theme files.
 
 ### 4. Internationalization
 

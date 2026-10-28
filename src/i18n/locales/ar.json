@@ -56,6 +56,16 @@
     "verifiedOwner": "مالك موثّق",
     "breedingIneligible": "لم يبلغ سن التزاوج بعد",
     "age": "{{years}} سنة و{{months}} شهر",
+    "vaccinatedShort": "مُطعَّم",
+    "vaccinationUnclear": "التطعيم غير مؤكد",
+    "vaccinationValue": {
+      "upToDate": "محدّث",
+      "notConfirmed": "غير مؤكد"
+    },
+    "pedigreeValue": {
+      "certified": "معتمد",
+      "notCertified": "غير معتمد"
+    },
     "vaccinationStatus": {
       "upToDate": "التطعيمات محدثة",
       "notConfirmed": "التطعيمات غير مؤكدة"
@@ -115,7 +125,7 @@
     "notVerifiedLabel": "غير موثّق بعد",
     "ratingSummaryTitle": "تقييم الثقة",
     "phoneLabel": "الهاتف",
-    "petsCountLabel": "{{count}} حيوان أليف مُدرَج",
+    "petsListedLabel": "الحيوانات المُدرَجة",
     "viewMyPetsAction": "عرض حيواناتي",
     "editTitle": "بياناتك",
     "nameLabel": "الاسم",
@@ -164,6 +174,7 @@
     "healthTitle": "التطعيمات",
     "pedigreeLabel": "النسب",
     "studTermsTitle": "شروط التزاوج",
+    "locationLabel": "الموقع",
     "ratingSummary": "{{average}} من {{count}} تقييم",
     "noRatingsYet": "لا توجد تقييمات بعد",
     "noOwnPetTitle": "أضف حيوانًا أليفًا لإرسال طلب",
@@ -240,6 +251,7 @@
     "phoneInvalid": "أدخل الرقم مع رمز الدولة، مثل +919876543210"
   },
   "auth": {
+    "brandName": "PetMate",
     "welcomeTitle": "مرحبًا بك في PetMate",
     "welcomeSubtitle": "اعثر على شريك تزاوج موثوق لحيوانك الأليف بالقرب منك.",
     "continueWithGoogle": "المتابعة باستخدام Google",

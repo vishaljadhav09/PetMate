@@ -13,6 +13,17 @@ triggers:
 
 Scaffold a UI component following the project's exact unistyles variant pattern.
 
+## Before You Scaffold
+
+Check `src/common/components/index.ts` first. If a component already covers the need, use it or add a
+variant to it instead of creating a near-duplicate. Examples: a new card look is a `Card` variant;
+a status label is a `Tag` tone; a banner is a `Notice` tone; a screen title is `ScreenHeader`.
+Feature-specific UI that is only a layout of these (a `PetCard`) belongs in the feature, composed
+from them.
+
+Typography rule: set `fontFamily` from `theme.fonts.*` (`regular`, `medium`, `semiBold`, `bold`,
+`display`, `displayBold`). Never use `fontWeight` — React Native needs a separate family per weight.
+
 ## Gather Information
 
 Ask the user for:

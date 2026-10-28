@@ -40,7 +40,7 @@ npm run test:coverage      # Coverage report
 
 ```
 src/
-├── common/components/     # 33 shared UI components (see docs/COMPONENTS.md for full API reference)
+├── common/components/     # 38 shared UI components (see docs/COMPONENTS.md for full API reference)
 ├── config/                # Centralized env config with validation
 ├── features/              # Feature modules (auth, settings)
 ├── hooks/                 # useBottomPadding, useNetworkStatus, useScreenDimensions, useProtectedRoute
@@ -65,11 +65,20 @@ app/                       # Expo Router
 
 ## Theme System
 
-Indigo-based color palette with Teal accent. Light and dark modes with semantic tokens.
+Warm PetMate palette: cream backgrounds, Forest primary, Marigold accent, Clay for errors. Light and dark modes with semantic tokens.
 
 - Use `theme.colors.brand.primary`, `theme.colors.text.secondary`, etc.
 - Use `theme.colors.mode` to check light/dark
-- Responsive metrics: `rf(16)` for fonts, `hs(20)` for horizontal, `vs(24)` for vertical
+- Responsive metrics: `rf(16)` for fonts, `hs(20)` for horizontal, `vs(24)` for vertical. Scaling stops at a 480px-wide screen, so tablets/web get more room, not bigger controls.
+- Fonts: Fraunces (headings, `title`) and Work Sans (everything else). Set the family with `theme.fonts.*` or the `Text` variants — never `fontWeight` (React Native needs one family per weight).
+- Colors are defined in `light-theme.ts`, `dark-theme.ts` **and** `tailwind.config.js`. Change all three together; `src/theme/__tests__/tailwindParity.test.ts` checks the Tailwind values.
+
+## Layout & Responsiveness
+
+- Wrap every screen in `ScreenContainer`. It centers content to a max width (`contentWidth="narrow"` for forms/detail, `"wide"` for lists) and pads for the safe area. Add `withTabBar` on scrollable tab screens so the floating tab bar doesn't cover the last item.
+- Start screens with `ScreenHeader` (large title + subtitle on tab screens; `onBack` for pushed screens).
+- Lists use `ResponsiveList` (1 column on phones, 2 on tablets/web, tab-bar padding included).
+- Prefer the shared building blocks over inline `className` strings: `Card variant="surface"`, `Tag`, `Notice`, `DetailRow`, `Avatar` with `identityColor()`.
 - Style pattern: `StyleSheet.create((theme) => ({...}))` from react-native-unistyles
 
 ## Component Pattern
@@ -136,14 +145,14 @@ Auth is managed by Zustand store (`useAuthStore`), not a React context provider.
 
 Gracefully handles missing env vars - app boots and works without Supabase configured. Just add credentials to `.env` when ready.
 
-## Component Library (33 Components)
+## Component Library (38 Components)
 
 - **Action**: Button, IconButton
-- **Data Display**: Text, Avatar, Badge, Card, Chip, ListItem
+- **Data Display**: Text, Avatar, Badge, Card, Chip, DetailRow, ListItem, Tag
 - **Disclosure**: Accordion
-- **Feedback**: EmptyState, ErrorBoundary, Loading, ProgressBar, Skeleton, Snackbar
+- **Feedback**: EmptyState, ErrorBoundary, Loading, Notice, ProgressBar, Skeleton, Snackbar
 - **Form**: Checkbox, FormField, Input, RadioGroup, SearchBar, SegmentedControl, Select, Switch, TextArea
-- **Layout**: Divider, ScreenContainer
+- **Layout**: Divider, ResponsiveList, ScreenContainer, ScreenHeader
 - **Overlay**: Dialog, Menu
 - **Typography**: Icon, Text
 

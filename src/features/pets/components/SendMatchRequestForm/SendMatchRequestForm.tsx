@@ -3,7 +3,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
 import Toast from 'react-native-toast-message';
-import { Button, FormField, Input, Select, Text, TextArea } from '@/common/components';
+import { Button, Card, FormField, Input, Select, Text, TextArea } from '@/common/components';
 import { useCreateMatchRequest } from '../../hooks/useMatchRequests';
 import { matchRequestSchema } from '../../schemas/matchRequestSchema';
 import type { MatchRequestFormData } from '../../schemas/matchRequestSchema';
@@ -54,41 +54,43 @@ export function SendMatchRequestForm({
   });
 
   return (
-    <View className="gap-4">
-      <Text variant="h3">{t('petDetail.sendRequestTitle')}</Text>
+    <Card variant="surface">
+      <View className="gap-4">
+        <Text variant="title">{t('petDetail.sendRequestTitle')}</Text>
 
-      <View className="gap-2">
-        <Text variant="label">{`${t('petDetail.sendFromLabel')} *`}</Text>
-        <Controller
-          name="senderPetId"
-          control={control}
-          render={({ field: { value, onChange } }) => (
-            <Select
-              value={value}
-              onChange={onChange}
-              options={eligibleSenderPets.map((pet) => ({
-                label: `${pet.name} — ${pet.breed}`,
-                value: pet.id,
-              }))}
-            />
-          )}
+        <View className="gap-2">
+          <Text variant="label">{`${t('petDetail.sendFromLabel')} *`}</Text>
+          <Controller
+            name="senderPetId"
+            control={control}
+            render={({ field: { value, onChange } }) => (
+              <Select
+                value={value}
+                onChange={onChange}
+                options={eligibleSenderPets.map((pet) => ({
+                  label: `${pet.name} — ${pet.breed}`,
+                  value: pet.id,
+                }))}
+              />
+            )}
+          />
+        </View>
+
+        <FormField name="message" control={control} label={t('petDetail.messageLabel')} required>
+          <TextArea placeholder={t('petDetail.messagePlaceholder')} />
+        </FormField>
+
+        <FormField name="proposedDate" control={control} label={t('petDetail.proposedDateLabel')}>
+          <Input placeholder={t('petDetail.proposedDatePlaceholder')} />
+        </FormField>
+
+        <Button
+          title={t('petDetail.sendRequestSubmit')}
+          onPress={onSubmit}
+          loading={createMatchRequest.isPending}
+          fullWidth
         />
       </View>
-
-      <FormField name="message" control={control} label={t('petDetail.messageLabel')} required>
-        <TextArea placeholder={t('petDetail.messagePlaceholder')} />
-      </FormField>
-
-      <FormField name="proposedDate" control={control} label={t('petDetail.proposedDateLabel')}>
-        <Input placeholder={t('petDetail.proposedDatePlaceholder')} />
-      </FormField>
-
-      <Button
-        title={t('petDetail.sendRequestSubmit')}
-        onPress={onSubmit}
-        loading={createMatchRequest.isPending}
-        fullWidth
-      />
-    </View>
+    </Card>
   );
 }

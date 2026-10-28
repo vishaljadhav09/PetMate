@@ -59,6 +59,17 @@ For each file, check ALL of the following rules:
 - [ ] No hardcoded font sizes - use `theme.fonts.size.*`
 - [ ] No hardcoded border radius - use `theme.metrics.borderRadius.*`
 
+#### Design System & Responsiveness Rules
+
+- [ ] No `fontWeight` in styles — set a family from `theme.fonts.*` (or use a `Text` variant); headings use the display font
+- [ ] Screens wrap content in `ScreenContainer` and start with `ScreenHeader` (no hand-written `<Text variant="h1">` header blocks)
+- [ ] Tab screens that scroll pass `withTabBar`; lists use `ResponsiveList` (not a bare `FlatList`) so the last row clears the tab bar and tablets get two columns
+- [ ] No long repeated `className` strings for a bordered card (`rounded-2xl border border-border bg-surface ...`) — use `Card variant="surface"`
+- [ ] Status labels use `Tag`, inline warnings/explanations use `Notice`, label/value rows use `DetailRow` (don't rebuild them)
+- [ ] Per-owner/per-pet colors come from `theme.colors.avatar` via `identityColor()`, never hex literals
+- [ ] A color added to `light-theme.ts`/`dark-theme.ts` that is used via NativeWind is also added to `tailwind.config.js` (parity test covers the existing ones)
+- [ ] No fixed widths that break below 360px or above 768px; content stays within `ScreenContainer`'s max width
+
 #### State Management Rules
 
 - [ ] Zustand stores accessed with selectors: `useStore((s) => s.field)`, NOT `useStore()`

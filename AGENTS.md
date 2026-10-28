@@ -201,7 +201,7 @@ const styles = StyleSheet.create((theme) => ({
 }));
 
 // NEVER - inline styles
-// NEVER - color literals (#fff, 'white', '#6366F1')
+// NEVER - color literals (#fff, 'white', '#24402F')
 // NEVER - raw numbers for spacing (padding: 16)
 ```
 
@@ -223,7 +223,7 @@ Use project components instead of React Native primitives:
 ```typescript
 // Text - always project Text for UI strings
 import { Text } from '@/common/components/Text';
-<Text variant="h1">{t('home.title')}</Text>  // variants: h1-h3, body, bodySmall, caption, label, overline
+<Text variant="h1">{t('home.title')}</Text>  // variants: h1-h3, title, body, bodySmall, caption, label, overline
 
 // Button - variants: primary, secondary, outline, ghost | sizes: sm, md, lg
 import { Button } from '@/common/components/Button';

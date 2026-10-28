@@ -56,6 +56,16 @@
     "verifiedOwner": "Verified owner",
     "breedingIneligible": "Not yet breeding age",
     "age": "{{years}}y {{months}}m",
+    "vaccinatedShort": "Vaccinated",
+    "vaccinationUnclear": "Vaccination unclear",
+    "vaccinationValue": {
+      "upToDate": "Up to date",
+      "notConfirmed": "Not confirmed"
+    },
+    "pedigreeValue": {
+      "certified": "Certified",
+      "notCertified": "Not certified"
+    },
     "vaccinationStatus": {
       "upToDate": "Vaccinations up to date",
       "notConfirmed": "Vaccinations not confirmed"
@@ -115,7 +125,7 @@
     "notVerifiedLabel": "Not yet verified",
     "ratingSummaryTitle": "Trust rating",
     "phoneLabel": "Phone",
-    "petsCountLabel": "{{count}} pet(s) listed",
+    "petsListedLabel": "Pets listed",
     "viewMyPetsAction": "View my pets",
     "editTitle": "Your details",
     "nameLabel": "Name",
@@ -164,6 +174,7 @@
     "healthTitle": "Vaccinations",
     "pedigreeLabel": "Pedigree",
     "studTermsTitle": "Stud terms",
+    "locationLabel": "Location",
     "ratingSummary": "{{average}} from {{count}} review(s)",
     "noRatingsYet": "No ratings yet",
     "noOwnPetTitle": "Add a pet to send a request",
@@ -240,6 +251,7 @@
     "phoneInvalid": "Enter the number with country code, e.g. +919876543210"
   },
   "auth": {
+    "brandName": "PetMate",
     "welcomeTitle": "Welcome to PetMate",
     "welcomeSubtitle": "Find trusted breeding partners for your pet, close to home.",
     "continueWithGoogle": "Continue with Google",

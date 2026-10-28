@@ -131,28 +131,29 @@ Themed typography component. Use this instead of React Native's `Text` for all u
 
 **Props**
 
-| Prop       | Type                                                                                  | Default                     | Description                  |
-| ---------- | ------------------------------------------------------------------------------------- | --------------------------- | ---------------------------- |
-| `children` | `ReactNode`                                                                           | required                    | Text content                 |
-| `variant`  | `'h1' \| 'h2' \| 'h3' \| 'body' \| 'bodySmall' \| 'caption' \| 'label' \| 'overline'` | `'body'`                    | Typography scale             |
-| `weight`   | `'regular' \| 'medium' \| 'semibold' \| 'bold'`                                       | Variant default             | Font weight                  |
-| `color`    | `string`                                                                              | `theme.colors.text.primary` | Text color (use theme token) |
-| `align`    | `'left' \| 'center' \| 'right'`                                                       | `'left'`                    | Text alignment               |
-| `style`    | `StyleProp<TextStyle>`                                                                | `undefined`                 | Additional styles            |
-| `...rest`  | `TextProps`                                                                           | -                           | All RN TextProps forwarded   |
+| Prop       | Type                                                                                             | Default                     | Description                      |
+| ---------- | ------------------------------------------------------------------------------------------------ | --------------------------- | -------------------------------- |
+| `children` | `ReactNode`                                                                                      | required                    | Text content                     |
+| `variant`  | `'h1' \| 'h2' \| 'h3' \| 'title' \| 'body' \| 'bodySmall' \| 'caption' \| 'label' \| 'overline'` | `'body'`                    | Typography scale                 |
+| `weight`   | `'regular' \| 'medium' \| 'semibold' \| 'bold'`                                                  | Variant default             | Work Sans weight (not for h1–h3) |
+| `color`    | `string`                                                                                         | `theme.colors.text.primary` | Text color (use theme token)     |
+| `align`    | `'left' \| 'center' \| 'right'`                                                                  | `'left'`                    | Text alignment                   |
+| `style`    | `StyleProp<TextStyle>`                                                                           | `undefined`                 | Additional styles                |
+| `...rest`  | `TextProps`                                                                                      | -                           | All RN TextProps forwarded       |
 
 **Variant Scale**
 
-| Variant     | Size       | Weight   | Use Case                   |
-| ----------- | ---------- | -------- | -------------------------- |
-| `h1`        | 30px (3xl) | bold     | Page titles                |
-| `h2`        | 24px (2xl) | bold     | Section headers            |
-| `h3`        | 20px (xl)  | semibold | Card titles                |
-| `body`      | 16px (md)  | regular  | Body copy                  |
-| `bodySmall` | 14px (sm)  | regular  | Secondary body             |
-| `caption`   | 12px (xs)  | regular  | Captions, metadata         |
-| `label`     | 14px (sm)  | medium   | Form labels, tags          |
-| `overline`  | 11px (xxs) | medium   | Category labels, uppercase |
+| Variant     | Size       | Weight   | Use Case                         |
+| ----------- | ---------- | -------- | -------------------------------- |
+| `h1`        | 30px (3xl) | bold     | Page titles (Fraunces)           |
+| `h2`        | 24px (2xl) | bold     | Section headers (Fraunces)       |
+| `h3`        | 20px (xl)  | semibold | Card titles (Fraunces)           |
+| `title`     | 18px (lg)  | semibold | List-item / pet names (Fraunces) |
+| `body`      | 16px (md)  | regular  | Body copy                        |
+| `bodySmall` | 14px (sm)  | regular  | Secondary body                   |
+| `caption`   | 12px (xs)  | regular  | Captions, metadata               |
+| `label`     | 14px (sm)  | medium   | Form labels, tags                |
+| `overline`  | 11px (xxs) | medium   | Category labels, uppercase       |
 
 **Usage**
 
@@ -175,13 +176,14 @@ Displays user or entity representation as an image, initials, or icon fallback.
 
 **Props**
 
-| Prop                 | Type                                   | Default     | Description               |
-| -------------------- | -------------------------------------- | ----------- | ------------------------- |
-| `source`             | `ImageSource` (expo-image)             | `undefined` | Image source              |
-| `initials`           | `string`                               | `undefined` | Fallback text (e.g. "JD") |
-| `icon`               | `ReactNode`                            | `undefined` | Fallback icon node        |
-| `size`               | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'`      | Avatar size               |
-| `accessibilityLabel` | `string`                               | `undefined` | Screen reader label       |
+| Prop                 | Type                                   | Default     | Description                                                                      |
+| -------------------- | -------------------------------------- | ----------- | -------------------------------------------------------------------------------- |
+| `source`             | `ImageSource` (expo-image)             | `undefined` | Image source                                                                     |
+| `initials`           | `string`                               | `undefined` | Fallback text (e.g. "JD")                                                        |
+| `icon`               | `ReactNode`                            | `undefined` | Fallback icon node                                                               |
+| `size`               | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'`      | Avatar size                                                                      |
+| `color`              | `string`                               | brand color | Background for initials/icon; pair with `identityColor(theme.colors.avatar, id)` |
+| `accessibilityLabel` | `string`                               | `undefined` | Screen reader label                                                              |
 
 **Size Reference**
 
@@ -255,14 +257,14 @@ Container with themed background, padding, and optional press behavior.
 
 **Props**
 
-| Prop        | Type                                   | Default     | Description                        |
-| ----------- | -------------------------------------- | ----------- | ---------------------------------- |
-| `children`  | `ReactNode`                            | required    | Card content                       |
-| `variant`   | `'filled' \| 'elevated' \| 'outlined'` | `'filled'`  | Visual style                       |
-| `pressable` | `boolean`                              | `false`     | Makes the card tappable            |
-| `onPress`   | `() => void`                           | `undefined` | Press handler (requires pressable) |
-| `style`     | `StyleProp<ViewStyle>`                 | `undefined` | Additional styles                  |
-| `...rest`   | `ViewProps`                            | -           | All ViewProps forwarded            |
+| Prop        | Type                                                | Default     | Description                                                                               |
+| ----------- | --------------------------------------------------- | ----------- | ----------------------------------------------------------------------------------------- |
+| `children`  | `ReactNode`                                         | required    | Card content                                                                              |
+| `variant`   | `'filled' \| 'elevated' \| 'outlined' \| 'surface'` | `'filled'`  | Visual style (`surface` = white card with hairline border, the standard list/detail card) |
+| `pressable` | `boolean`                                           | `false`     | Makes the card tappable                                                                   |
+| `onPress`   | `() => void`                                        | `undefined` | Press handler (requires pressable)                                                        |
+| `style`     | `StyleProp<ViewStyle>`                              | `undefined` | Additional styles                                                                         |
+| `...rest`   | `ViewProps`                                         | -           | All ViewProps forwarded                                                                   |
 
 **Usage**
 
@@ -320,6 +322,44 @@ import { Chip } from '@/common/components/Chip';
   variant="outline"
   onClose={() => removeTag(tag.id)}
 />
+```
+
+---
+
+### Tag
+
+**File:** `src/common/components/Tag/Tag.tsx`
+
+Small non-interactive colored label for statuses and facts. Use `Chip` for selectable filters and `Badge` for numeric counts.
+
+| Prop    | Type                                                       | Default     | Description     |
+| ------- | ---------------------------------------------------------- | ----------- | --------------- |
+| `label` | `string`                                                   | required    | Text in the tag |
+| `tone`  | `'neutral' \| 'success' \| 'warning' \| 'error' \| 'info'` | `'neutral'` | Semantic color  |
+
+```typescript
+<Tag label={t('pets.verifiedOwner')} tone="success" />
+```
+
+---
+
+### DetailRow
+
+**File:** `src/common/components/DetailRow/DetailRow.tsx`
+
+A label on the left and its value on the right. Stack inside `Card variant="surface"`, with `divider` on all but the last row.
+
+| Prop      | Type      | Default  | Description            |
+| --------- | --------- | -------- | ---------------------- |
+| `label`   | `string`  | required | Field name             |
+| `value`   | `string`  | required | Field value            |
+| `divider` | `boolean` | `false`  | Hairline under the row |
+
+```typescript
+<Card variant="surface">
+  <DetailRow label={t('petDetail.pedigreeLabel')} value={pedigree} divider />
+  <DetailRow label={t('petDetail.locationLabel')} value={city} />
+</Card>
 ```
 
 ---
@@ -449,6 +489,24 @@ import { Icon } from '@/common/components/Icon';
   actionLabel={t('search.clearFilters')}
   onAction={clearFilters}
 />
+```
+
+---
+
+### Notice
+
+**File:** `src/common/components/Notice/Notice.tsx`
+
+Inline banner for a short explanation or warning tied to a screen section. For transient feedback use `Snackbar` or a toast.
+
+| Prop      | Type                                          | Default              | Description           |
+| --------- | --------------------------------------------- | -------------------- | --------------------- |
+| `message` | `string`                                      | required             | Banner text           |
+| `tone`    | `'info' \| 'success' \| 'warning' \| 'error'` | `'info'`             | Semantic color        |
+| `icon`    | Ionicons name                                 | icon matching `tone` | Leading icon override |
+
+```typescript
+<Notice tone="warning" message={t('pets.matchIncompatibility.senderIneligible')} />
 ```
 
 ---
@@ -1033,24 +1091,26 @@ Root container for every screen. Handles safe area insets, scroll, and padding.
 
 **Props**
 
-| Prop         | Type                    | Default             | Description                 |
-| ------------ | ----------------------- | ------------------- | --------------------------- |
-| `children`   | `ReactNode`             | required            | Screen content              |
-| `scrollable` | `boolean`               | `false`             | Wraps content in ScrollView |
-| `padded`     | `boolean`               | `true`              | Applies horizontal padding  |
-| `edges`      | `('top' \| 'bottom')[]` | `['top', 'bottom']` | Safe area edges to respect  |
-| `style`      | `ViewStyle`             | `undefined`         | Additional container styles |
+| Prop           | Type                    | Default     | Description                                           |
+| -------------- | ----------------------- | ----------- | ----------------------------------------------------- |
+| `children`     | `ReactNode`             | required    | Screen content                                        |
+| `scrollable`   | `boolean`               | `false`     | Wraps content in ScrollView                           |
+| `padded`       | `boolean`               | `true`      | Applies horizontal padding                            |
+| `edges`        | `('top' \| 'bottom')[]` | `['top']`   | Safe area edges to respect                            |
+| `contentWidth` | `'narrow' \| 'wide'`    | `'narrow'`  | Max content width on tablets/web (640 / 960)          |
+| `withTabBar`   | `boolean`               | `false`     | Bottom padding so content clears the floating tab bar |
+| `style`        | `ViewStyle`             | `undefined` | Additional container styles                           |
 
 **Usage**
 
 ```typescript
-import { ScreenContainer } from '@/common/components/ScreenContainer';
+import { ScreenContainer, ScreenHeader } from '@/common/components';
 
-// Standard screen
+// Standard tab screen
 export default function ProfileScreen() {
   return (
-    <ScreenContainer scrollable>
-      <Text variant="h1">{t('profile.title')}</Text>
+    <ScreenContainer scrollable withTabBar>
+      <ScreenHeader title={t('profile.title')} />
       {/* content */}
     </ScreenContainer>
   );
@@ -1060,6 +1120,51 @@ export default function ProfileScreen() {
 <ScreenContainer edges={['bottom']}>
   {/* content */}
 </ScreenContainer>
+```
+
+---
+
+### ScreenHeader
+
+**File:** `src/common/components/ScreenHeader/ScreenHeader.tsx`
+
+Standard screen heading. Large title (+ optional subtitle) on tab screens; with `onBack` it becomes the compact back-button row for pushed screens.
+
+| Prop       | Type         | Default     | Description                                           |
+| ---------- | ------------ | ----------- | ----------------------------------------------------- |
+| `title`    | `string`     | required    | Screen title                                          |
+| `subtitle` | `string`     | `undefined` | Supporting line (large layout only)                   |
+| `onBack`   | `() => void` | `undefined` | Switches to the back layout and wires the back button |
+| `right`    | `ReactNode`  | `undefined` | End-aligned content, e.g. a `Menu` (back layout only) |
+
+```typescript
+<ScreenHeader title={t('discover.title')} subtitle={t('discover.subtitle')} />
+<ScreenHeader title={pet.name} onBack={() => router.back()} right={<Menu ... />} />
+```
+
+---
+
+### ResponsiveList
+
+**File:** `src/common/components/ResponsiveList/ResponsiveList.tsx`
+
+Vertical list: one column on phones, two on tablets and wide web windows. Adds bottom padding so the last row clears the floating tab bar. Place it in a non-scrollable `ScreenContainer` (it scrolls itself).
+
+| Prop             | Type                                  | Default     | Description                    |
+| ---------------- | ------------------------------------- | ----------- | ------------------------------ |
+| `data`           | `readonly T[]`                        | required    | Items                          |
+| `renderItem`     | `(item: T, index: number) => Element` | required    | Renders one item               |
+| `keyExtractor`   | `(item: T) => string`                 | required    | Unique key                     |
+| `emptyComponent` | `ReactElement`                        | `undefined` | Shown when `data` is empty     |
+| `withTabBar`     | `boolean`                             | `true`      | Bottom padding for the tab bar |
+
+```typescript
+<ResponsiveList
+  data={pets}
+  keyExtractor={(pet) => pet.id}
+  renderItem={(pet) => <PetCard pet={pet} />}
+  emptyComponent={<EmptyState title={t('myPets.emptyTitle')} />}
+/>
 ```
 
 ---

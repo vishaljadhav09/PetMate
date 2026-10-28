@@ -1,12 +1,14 @@
 import { useRouter } from 'expo-router';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FlatList, View } from 'react-native';
+import { View } from 'react-native';
 import {
   Chip,
   EmptyState,
   Loading,
+  ResponsiveList,
   ScreenContainer,
+  ScreenHeader,
   SearchBar,
   Select,
   Text,
@@ -14,7 +16,7 @@ import {
 import { PetCard } from '@/features/pets/components/PetCard';
 import { useMyPets, usePets } from '@/features/pets/hooks/usePets';
 import { MOCK_CURRENT_USER_ID } from '@/features/pets/services/mockDb';
-import type { Pet, PetGender } from '@/features/pets/types';
+import type { PetGender } from '@/features/pets/types';
 import { isBreedingEligible } from '@/features/pets/utils/breedingEligibility';
 
 function oppositeGenderOf(gender: PetGender): PetGender {
@@ -57,18 +59,11 @@ export default function DiscoverTab() {
     [candidates]
   );
 
-  const header = (
-    <View className="gap-1 pb-4">
-      <Text variant="h1">{t('discover.title')}</Text>
-      <Text variant="body" color="secondary">
-        {t('discover.subtitle')}
-      </Text>
-    </View>
-  );
+  const header = <ScreenHeader title={t('discover.title')} subtitle={t('discover.subtitle')} />;
 
   if (isMyPetsLoading) {
     return (
-      <ScreenContainer>
+      <ScreenContainer contentWidth="wide">
         {header}
         <Loading />
       </ScreenContainer>
@@ -77,7 +72,7 @@ export default function DiscoverTab() {
 
   if (!matchingForPet) {
     return (
-      <ScreenContainer>
+      <ScreenContainer contentWidth="wide">
         {header}
         <EmptyState
           title={t('discover.noEligiblePetsTitle')}
@@ -90,11 +85,13 @@ export default function DiscoverTab() {
   }
 
   return (
-    <ScreenContainer>
+    <ScreenContainer contentWidth="wide">
       {header}
 
       <View className="gap-2 pb-3">
-        <Text variant="label">{t('discover.matchingForLabel')}</Text>
+        <Text variant="label" color="secondary">
+          {t('discover.matchingForLabel')}
+        </Text>
         <Select
           value={matchingForPet.id}
           onChange={setMatchingForPetId}
@@ -113,7 +110,7 @@ export default function DiscoverTab() {
         />
       </View>
 
-      <View className="flex-row pb-3">
+      <View className="flex-row pb-4">
         <Chip
           label={t('discover.verifiedOnlyLabel')}
           selected={verifiedOnly}
@@ -124,24 +121,21 @@ export default function DiscoverTab() {
       {isCandidatesLoading ? (
         <Loading />
       ) : (
-        <FlatList<Pet>
-          className="flex-1"
+        <ResponsiveList
           data={results}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
+          keyExtractor={(pet) => pet.id}
+          renderItem={(pet) => (
             <PetCard
-              pet={item}
+              pet={pet}
               onPress={() =>
                 router.push({
                   pathname: '/pet/[id]',
-                  params: { id: item.id, senderPetId: matchingForPet.id },
+                  params: { id: pet.id, senderPetId: matchingForPet.id },
                 })
               }
             />
           )}
-          contentContainerClassName="gap-3 pb-6"
-          showsVerticalScrollIndicator={false}
-          ListEmptyComponent={
+          emptyComponent={
             <EmptyState title={t('discover.emptyTitle')} message={t('discover.emptyMessage')} />
           }
         />

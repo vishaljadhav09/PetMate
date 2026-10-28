@@ -37,27 +37,27 @@ Screen files use **lowercase with hyphens** and **default exports**.
 ```typescript
 // app/(main)/(tabs)/<name>.tsx  OR  app/(main)/<name>.tsx
 import { useTranslation } from 'react-i18next';
-import { StyleSheet } from 'react-native-unistyles';
-import { ScreenContainer } from '@/common/components/ScreenContainer';
-import { Text } from '@/common/components/Text';
+import { ScreenContainer, ScreenHeader } from '@/common/components';
 import { ErrorBoundary } from '@/common/components/ErrorBoundary';
 
 export default function <Name>Screen() {
   const { t } = useTranslation();
 
   return (
-    <ScreenContainer scrollable padded>
-      <ErrorBoundary>
-        <Text variant="h1">{t('<name>.title')}</Text>
-      </ErrorBoundary>
+    // withTabBar: only for screens inside the tab navigator (floating tab bar).
+    <ScreenContainer scrollable withTabBar>
+      <ScreenHeader title={t('<name>.title')} subtitle={t('<name>.subtitle')} />
+      <ErrorBoundary>{/* content */}</ErrorBoundary>
     </ScreenContainer>
   );
 }
-
-const styles = StyleSheet.create((theme) => ({
-  // Add styles as needed
-}));
 ```
+
+For a **pushed** screen (detail, form) use `edges={['top', 'bottom']}` and
+`<ScreenHeader title={...} onBack={() => router.back()} />` instead; it renders the back button.
+
+Pick `contentWidth` on `ScreenContainer`: `"narrow"` (default, forms and detail pages) or
+`"wide"` (lists that show two columns on tablets). Do not hand-roll max widths or headers.
 
 **If protected (requires auth):**
 
@@ -140,26 +140,31 @@ Run `npm run validate` to ensure no TypeScript or lint errors.
 
 ### List Screen (with data)
 
+Use `ResponsiveList`, not a bare `FlatList`: it switches to two columns on tablets and keeps the
+last row clear of the tab bar (`withTabBar={false}` on pushed screens). Put the header and filters
+above it, inside a non-scrollable `ScreenContainer`.
+
 ```typescript
-import { FlatList } from 'react-native';
-import { Loading } from '@/common/components/Loading';
-import { EmptyState } from '@/common/components/EmptyState';
+import { EmptyState, Loading, ResponsiveList, ScreenContainer, ScreenHeader } from '@/common/components';
 import { use<Entities> } from '@/features/<name>/hooks/use<Name>';
 
 export default function <Name>Screen() {
   const { t } = useTranslation();
   const { data, isLoading } = use<Entities>();
 
-  if (isLoading) return <Loading fullScreen />;
-
   return (
-    <ScreenContainer>
-      <FlatList
-        data={data}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <ItemCard item={item} />}
-        ListEmptyComponent={<EmptyState title={t('<name>.empty')} />}
-      />
+    <ScreenContainer contentWidth="wide">
+      <ScreenHeader title={t('<name>.title')} subtitle={t('<name>.subtitle')} />
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <ResponsiveList
+          data={data ?? []}
+          keyExtractor={(item) => item.id}
+          renderItem={(item) => <ItemCard item={item} />}
+          emptyComponent={<EmptyState title={t('<name>.empty')} />}
+        />
+      )}
     </ScreenContainer>
   );
 }
@@ -186,6 +191,8 @@ export default function <Name>DetailScreen() {
 - `Text` from `@/common/components/Text`, NOT `react-native`
 - All user-facing strings via `useTranslation()`
 - Always update BOTH locale files
-- Wrap screen content in `ScreenContainer`
+- Wrap screen content in `ScreenContainer` and start with `ScreenHeader`
+- Lists use `ResponsiveList`; cards use `Card variant="surface"`; labels use `Tag`; inline messages use `Notice`; label/value rows use `DetailRow`
+- Test the screen at phone width and at 768px+ (tablet/web): content must stay centered and readable
 - Use `ErrorBoundary` for data-driven screens
 - No inline styles, no color literals, no hardcoded strings

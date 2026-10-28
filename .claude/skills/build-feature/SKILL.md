@@ -66,7 +66,10 @@ new and old components don't disagree on how to style things.
 
 Before creating anything new:
 
-- A common component in `src/common/components/` that already does this? Use it.
+- A common component in `src/common/components/` that already does this? Use it. The ones most
+  often rebuilt by mistake: `ScreenHeader` (screen titles/back row), `ResponsiveList` (lists),
+  `Card variant="surface"` (bordered card), `Tag` (status labels), `Notice` (inline warnings),
+  `DetailRow` (label/value rows), `Avatar` + `identityColor()` (per-entity colors).
 - A utility in `src/utils/` that already does this? Use it.
 - A constant already defined in `src/constants/` or the relevant feature's `constants/`? Use it.
 

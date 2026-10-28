@@ -1,7 +1,14 @@
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FlatList, View } from 'react-native';
-import { EmptyState, Loading, ScreenContainer, SegmentedControl, Text } from '@/common/components';
+import { View } from 'react-native';
+import {
+  EmptyState,
+  Loading,
+  ResponsiveList,
+  ScreenContainer,
+  ScreenHeader,
+  SegmentedControl,
+} from '@/common/components';
 import { RequestCard } from '@/features/pets/components/RequestCard';
 import { useMatchRequests } from '@/features/pets/hooks/useMatchRequests';
 import { MOCK_CURRENT_USER_ID } from '@/features/pets/services/mockDb';
@@ -37,15 +44,10 @@ export default function RequestsTab() {
     subtab === 'inbox' ? t('requests.emptyInboxMessage') : t('requests.emptySentMessage');
 
   return (
-    <ScreenContainer>
-      <View className="gap-1 pb-4">
-        <Text variant="h1">{t('requests.title')}</Text>
-        <Text variant="body" color="secondary">
-          {t('requests.subtitle')}
-        </Text>
-      </View>
+    <ScreenContainer contentWidth="wide">
+      <ScreenHeader title={t('requests.title')} subtitle={t('requests.subtitle')} />
 
-      <View className="pb-3">
+      <View className="pb-4">
         <SegmentedControl
           value={subtab}
           onChange={(value) => setSubtab(value as RequestsSubtab)}
@@ -59,14 +61,11 @@ export default function RequestsTab() {
       {isLoading ? (
         <Loading />
       ) : (
-        <FlatList<MatchRequest>
-          className="flex-1"
+        <ResponsiveList
           data={list}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => <RequestCard request={item} direction={subtab} />}
-          contentContainerClassName="gap-3 pb-6"
-          showsVerticalScrollIndicator={false}
-          ListEmptyComponent={<EmptyState title={emptyTitle} message={emptyMessage} />}
+          keyExtractor={(request) => request.id}
+          renderItem={(request) => <RequestCard request={request} direction={subtab} />}
+          emptyComponent={<EmptyState title={emptyTitle} message={emptyMessage} />}
         />
       )}
     </ScreenContainer>

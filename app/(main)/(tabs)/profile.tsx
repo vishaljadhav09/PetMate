@@ -2,10 +2,18 @@ import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
-import { Avatar, Button, Loading, ScreenContainer, Text } from '@/common/components';
+import {
+  Button,
+  Card,
+  DetailRow,
+  Loading,
+  ScreenContainer,
+  ScreenHeader,
+  Tag,
+  Text,
+} from '@/common/components';
 import { signOut } from '@/features/auth/services/authService';
-import { RatingStars } from '@/features/pets/components/RatingStars';
-import { StatusPill } from '@/features/pets/components/StatusPill';
+import { OwnerAvatar } from '@/features/pets/components/OwnerAvatar';
 import { useMyPets } from '@/features/pets/hooks/usePets';
 import { DeleteAccountDialog } from '@/features/profile/components/DeleteAccountDialog';
 import { ProfileForm } from '@/features/profile/components/ProfileForm';
@@ -27,71 +35,69 @@ export default function ProfileTab() {
   }
 
   return (
-    <ScreenContainer scrollable>
-      <View className="gap-1 pb-4">
-        <Text variant="h1">{t('profile.title')}</Text>
-      </View>
+    <ScreenContainer scrollable withTabBar>
+      <ScreenHeader title={t('profile.title')} />
 
       <View className="gap-4">
-        <View className="flex-row items-center gap-3 rounded-2xl border border-border bg-surface p-4 dark:border-border-dark dark:bg-surface-dark">
-          <Avatar initials={profile.name.slice(0, 2).toUpperCase()} size="lg" />
-          <View className="flex-1 gap-1">
-            <View className="flex-row flex-wrap items-center gap-2">
-              <Text variant="label" weight="semibold">
-                {profile.name}
+        <Card variant="surface">
+          <View className="flex-row items-center gap-3">
+            <OwnerAvatar ownerId={profile.id} name={profile.name} size="lg" />
+            <View className="flex-1 gap-1">
+              <Text variant="title">{profile.name}</Text>
+              <Text variant="bodySmall" color="secondary">
+                {profile.city}
               </Text>
-              {profile.verifiedOwner ? (
-                <StatusPill label={t('pets.verifiedOwner')} tone="success" />
-              ) : (
-                <StatusPill label={t('profile.notVerifiedLabel')} tone="neutral" />
-              )}
+              <Tag
+                label={
+                  profile.verifiedOwner ? t('pets.verifiedOwner') : t('profile.notVerifiedLabel')
+                }
+                tone={profile.verifiedOwner ? 'success' : 'neutral'}
+              />
             </View>
-            <Text variant="bodySmall" color="secondary">
-              {profile.city}
-            </Text>
           </View>
-        </View>
+        </Card>
 
-        <View className="gap-2 rounded-2xl border border-border bg-surface p-4 dark:border-border-dark dark:bg-surface-dark">
-          <Text variant="label" weight="semibold">
-            {t('profile.ratingSummaryTitle')}
-          </Text>
-          <View className="flex-row items-center gap-2">
-            <RatingStars value={profile.ratingAvg} />
-            <Text variant="bodySmall" color="secondary">
-              {profile.ratingCount > 0
+        <Card variant="surface">
+          <DetailRow
+            label={t('profile.ratingSummaryTitle')}
+            value={
+              profile.ratingCount > 0
                 ? t('petDetail.ratingSummary', {
                     average: profile.ratingAvg.toFixed(1),
                     count: profile.ratingCount,
                   })
-                : t('petDetail.noRatingsYet')}
-            </Text>
-          </View>
-        </View>
-
-        <View className="gap-3 rounded-2xl border border-border bg-surface p-4 dark:border-border-dark dark:bg-surface-dark">
-          <Text variant="label" weight="semibold">
-            {t('profile.editTitle')}
-          </Text>
-          <ProfileForm profile={profile} />
-        </View>
-
-        <View className="gap-3 rounded-2xl border border-border bg-surface p-4 dark:border-border-dark dark:bg-surface-dark">
-          <Text variant="body" color="secondary">
-            {t('profile.petsCountLabel', { count: myPets?.length ?? 0 })}
-          </Text>
-          <Button
-            title={t('profile.viewMyPetsAction')}
-            variant="secondary"
-            onPress={() => router.push('/my-pets')}
+                : t('petDetail.noRatingsYet')
+            }
+            divider
           />
-        </View>
+          <DetailRow label={t('profile.petsListedLabel')} value={`${myPets?.length ?? 0}`} />
+        </Card>
+
+        <Card variant="surface">
+          <View className="gap-3">
+            <Text variant="title">{t('profile.editTitle')}</Text>
+            <ProfileForm profile={profile} />
+          </View>
+        </Card>
+
+        <Button
+          title={t('profile.viewMyPetsAction')}
+          variant="secondary"
+          fullWidth
+          onPress={() => router.push('/my-pets')}
+        />
 
         <View className="gap-3 pb-4">
-          <Button title={t('profile.signOutAction')} variant="outline" onPress={signOut} />
+          <Button
+            title={t('profile.signOutAction')}
+            variant="outline"
+            fullWidth
+            onPress={signOut}
+          />
           <Button
             title={t('profile.deleteAccountAction')}
             variant="ghost"
+            fullWidth
             onPress={() => setIsDeleteDialogVisible(true)}
           />
         </View>

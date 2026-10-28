@@ -938,7 +938,7 @@ const styles = StyleSheet.create((theme) => ({
 
 ```typescript
 // WRONG
-<Text style={{ color: '#6366F1' }}>Hello</Text>
+<Text style={{ color: '#24402F' }}>Hello</Text>
 <View style={{ backgroundColor: 'white' }}>
 
 // CORRECT
@@ -1115,10 +1115,11 @@ router.replace('/(auth)/login');
 
 ```
 COLORS
-  Brand:       theme.colors.brand.primary         (#6366F1 indigo)
-               theme.colors.brand.secondary       (#1E293B dark slate)
-               theme.colors.brand.tertiary        (#14B8A6 teal)
-               theme.colors.brand.primaryVariant  (#4F46E5 darker indigo)
+  Brand:       theme.colors.brand.primary         (#24402F forest)
+               theme.colors.brand.secondary       (#16281C deep forest)
+               theme.colors.brand.tertiary        (#E8A33D marigold)
+               theme.colors.brand.primaryVariant  (#16281C deep forest)
+  Avatar:      theme.colors.avatar                (palette; pick one per id with identityColor())
 
   Background:  theme.colors.background.app        (page background)
                theme.colors.background.surface    (cards, sheets)
@@ -1133,7 +1134,7 @@ COLORS
                theme.colors.text.tertiary         (metadata)
                theme.colors.text.muted            (placeholder, hints)
                theme.colors.text.inverse          (text on dark/primary)
-               theme.colors.text.accent           (teal accent text)
+               theme.colors.text.accent           (marigold accent text)
                theme.colors.text.link             (links)
 
   Border:      theme.colors.border.default        (standard borders)
@@ -1145,20 +1146,20 @@ COLORS
   Icon:        theme.colors.icon.primary          (primary icons)
                theme.colors.icon.secondary        (secondary icons)
                theme.colors.icon.muted            (subtle icons)
-               theme.colors.icon.accent           (teal accent icons)
+               theme.colors.icon.accent           (marigold accent icons)
                theme.colors.icon.inverse          (icons on dark bg)
 
-  State:       theme.colors.state.success         (#10B981)
-               theme.colors.state.successBg       (#ECFDF5)
-               theme.colors.state.error           (#EF4444)
-               theme.colors.state.errorBg         (rgba red)
-               theme.colors.state.warning         (#F59E0B)
-               theme.colors.state.warningBg       (rgba amber)
-               theme.colors.state.info            (#3B82F6)
-               theme.colors.state.infoBg          (rgba blue)
+  State:       theme.colors.state.success         (#24402F forest)
+               theme.colors.state.successBg       (#E4ECE3 pale forest)
+               theme.colors.state.error           (#B24A2C clay)
+               theme.colors.state.errorBg         (#F5DFD4 pale clay)
+               theme.colors.state.warning         (#B9791E deep marigold)
+               theme.colors.state.warningBg       (#FBEDD3 pale marigold)
+               theme.colors.state.info            (#3C5A46 moss)
+               theme.colors.state.infoBg          (#E4ECE3 pale forest)
 
-  Overlay:     theme.colors.overlay.modal         (rgba black 0.5)
-               theme.colors.overlay.pressed       (rgba indigo 0.12)
+  Overlay:     theme.colors.overlay.modal         (rgba dark 0.42)
+               theme.colors.overlay.pressed       (rgba forest 0.12)
                theme.colors.overlay.ripple        (rgba white 0.25)
 
   Mode:        theme.colors.mode                  ('light' | 'dark')
