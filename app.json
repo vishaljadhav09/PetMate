@@ -74,7 +74,19 @@
         }
       ],
       "expo-image",
-      "@react-native-google-signin/google-signin"
+      "@react-native-google-signin/google-signin",
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "PetMate uses your location to find breeding partners near you. Your exact home location is never shown to others."
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "PetMate needs access to your photos so you can add pictures of your pet."
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,

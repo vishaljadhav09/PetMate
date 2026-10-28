@@ -82,7 +82,10 @@
       "senderUnavailable": "هذا الحيوان غير مفتوح حاليًا لطلبات التزاوج.",
       "recipientUnavailable": "هذا الحيوان غير مفتوح حاليًا لطلبات التزاوج.",
       "sameOwner": "لا يمكنك إرسال طلب تزاوج لحيوانك الخاص."
-    }
+    },
+    "pendingApproval": "بانتظار الموافقة",
+    "hiddenListing": "مخفي",
+    "verifiedPet": "موثّق"
   },
   "myPets": {
     "title": "حيواناتي",
@@ -118,7 +121,30 @@
     "submit": "حفظ ملف الحيوان الأليف",
     "submitEdit": "حفظ التغييرات",
     "createSuccess": "تم إنشاء ملف الحيوان الأليف.",
-    "updateSuccess": "تم تحديث ملف الحيوان الأليف."
+    "updateSuccess": "تم تحديث ملف الحيوان الأليف.",
+    "photosLabel": "الصور ({{count}}/{{max}})",
+    "addPhoto": "إضافة صورة",
+    "removePhoto": "إزالة الصورة",
+    "photoUploadFailed": "تعذر رفع الصورة. يرجى المحاولة مرة أخرى.",
+    "lastVetCheckupLabel": "آخر فحص بيطري",
+    "hipScoreLabel": "درجة الورك",
+    "hipScorePlaceholder": "مثال: A/A (اختياري)",
+    "litterRefLabel": "مرجع الفقس",
+    "litterRefPlaceholder": "اختياري",
+    "litterRefHelp": "تظهر الحيوانات ذات المرجع نفسه تحذيرًا من القرابة.",
+    "certificateLabel": "وثيقة صحية أو نسب",
+    "certificateHelp": "خاصة. يراها أنت وPetMate فقط. تُستخدم لمراجعة شارة التوثيق.",
+    "certificateAdd": "اختر صورة للوثيقة",
+    "certificateReplace": "استبدال صورة الوثيقة",
+    "certificateSelected": "تم اختيار الوثيقة. ستُرفع عند الحفظ.",
+    "certificateUploadFailed": "تم حفظ الحيوان، لكن فشل رفع الوثيقة. حاول مرة أخرى من التعديل.",
+    "locationLabel": "الموقع",
+    "locationHelp": "يظهر للآخرين كمنطقة تقريبية فقط (نحو 500 م)، وليس عنوانك الدقيق.",
+    "locationUseCurrent": "استخدم موقعي الحالي",
+    "locationCaptured": "تم تحديد الموقع. اضغط للتحديث",
+    "locationDenied": "تم رفض إذن الموقع. اسمح به من الإعدادات لإدراج حيوانك.",
+    "locationRequired": "نحتاج إلى موقعك لإدراج هذا الحيوان.",
+    "attestLabel": "أؤكد أن هذا الحيوان بصحة جيدة وجاهز للتزاوج"
   },
   "profile": {
     "title": "الملف الشخصي",
@@ -248,7 +274,11 @@
     "detailsMax": "يجب ألا تتجاوز التفاصيل 500 حرف",
     "profileNameMax": "يجب ألا يزيد الاسم عن 60 حرفًا",
     "profileCityMax": "يجب ألا تزيد المدينة عن 80 حرفًا",
-    "phoneInvalid": "أدخل الرقم مع رمز الدولة، مثل +919876543210"
+    "phoneInvalid": "أدخل الرقم مع رمز الدولة، مثل +919876543210",
+    "photosMax": "يمكنك إضافة 4 صور كحد أقصى",
+    "hipScoreTooLong": "يجب ألا تزيد درجة الورك عن 40 حرفًا",
+    "litterRefTooLong": "يجب ألا يزيد مرجع الفقس عن 60 حرفًا",
+    "attestRequired": "أكّد أن الحيوان جاهز للتزاوج، أو أوقف المطابقة"
   },
   "auth": {
     "brandName": "PetMate",

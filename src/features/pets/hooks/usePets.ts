@@ -1,8 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { MOCK_CURRENT_USER_ID } from '../services/mockDb';
+import { useAuthStore } from '@/providers/auth/authStore';
 import {
   createPet,
-  fetchCurrentUser,
   fetchPetById,
   fetchPetOwner,
   fetchPets,
@@ -16,7 +15,6 @@ export const PETS_KEYS = {
   detail: (id: string) => [...PETS_KEYS.all, 'detail', id] as const,
   owners: ['petOwners'] as const,
   owner: (id: string) => [...PETS_KEYS.owners, id] as const,
-  currentUser: ['petOwners', 'me'] as const,
 };
 
 export function usePets(filters?: PetFilters) {
@@ -31,13 +29,13 @@ export function usePet(id: string) {
   });
 }
 
-/** Client-side view over `usePets()`'s own cache, filtered to the current user's pets. */
 export function useMyPets() {
-  const query = usePets();
-  return {
-    ...query,
-    data: query.data?.filter((pet) => pet.ownerId === MOCK_CURRENT_USER_ID),
-  };
+  const userId = useAuthStore((s) => s.user?.id);
+  return useQuery({
+    queryKey: PETS_KEYS.list({ ownerId: userId }),
+    queryFn: () => fetchPets({ ownerId: userId }),
+    enabled: !!userId,
+  });
 }
 
 export function usePetOwner(ownerId: string) {
@@ -46,10 +44,6 @@ export function usePetOwner(ownerId: string) {
     queryFn: () => fetchPetOwner(ownerId),
     enabled: !!ownerId,
   });
-}
-
-export function useCurrentUser() {
-  return useQuery({ queryKey: PETS_KEYS.currentUser, queryFn: fetchCurrentUser });
 }
 
 export function useCreatePet() {

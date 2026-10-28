@@ -40,12 +40,12 @@ Legend: `[x]` done in repo, `[ ]` to do. Nothing has been run against a real Sup
 
 ## Phase 4: Pets [12.5, 12.6, 12.9, 11]
 
-- [ ] T4.1 Update Pet types, Zod schemas and snake/camel mappers
-- [ ] T4.2 `petsService`: create, edit, list mine, get detail (replace mock)
-- [ ] T4.3 Photo upload: compress, Cloudinary signed upload, max 4 photos
-- [ ] T4.4 Add/edit pet form: health fields, attestation, stud fee, location
-- [ ] T4.5 My Pets: "pending approval" and "hidden" badges (dormant while approval is off)
-- [ ] T4.6 Certificate upload to private bucket; verified badge display
+- [x] T4.1 Update Pet types, Zod schemas and snake/camel mappers
+- [x] T4.2 `petsService`: create, edit, list mine, get detail (replace mock)
+- [x] T4.3 Photo upload: compress, Cloudinary signed upload, max 4 photos
+- [x] T4.4 Add/edit pet form: health fields, attestation, stud fee, location
+- [x] T4.5 My Pets: "pending approval" and "hidden" badges (dormant while approval is off)
+- [x] T4.6 Certificate upload to private bucket; verified badge display
 
 ## Phase 5: Discover [12.8]
 

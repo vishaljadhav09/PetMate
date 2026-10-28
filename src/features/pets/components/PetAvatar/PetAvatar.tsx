@@ -11,6 +11,8 @@ export interface PetAvatarProps {
   petId: string;
   species: PetSpecies;
   size?: AvatarSize;
+  /** First pet photo. Replaces the species emoji when present. */
+  photoUrl?: string;
 }
 
 const EMOJI_SCALE: Record<AvatarSize, number> = { xs: 12, sm: 16, md: 20, lg: 28, xl: 40 };
@@ -18,13 +20,14 @@ const EMOJI_SCALE: Record<AvatarSize, number> = { xs: 12, sm: 16, md: 20, lg: 28
 const TINT_ALPHA = '22';
 
 /** Species emoji on a soft tint of the pet's identity color. */
-export function PetAvatar({ petId, species, size = 'lg' }: PetAvatarProps) {
+export function PetAvatar({ petId, species, size = 'lg', photoUrl }: PetAvatarProps) {
   const { theme } = useUnistyles();
   const color = identityColor(theme.colors.avatar, petId);
 
   return (
     <Avatar
       size={size}
+      source={photoUrl ? { uri: photoUrl } : undefined}
       color={`${color}${TINT_ALPHA}`}
       icon={<Text style={styles.emoji(EMOJI_SCALE[size])}>{SPECIES_EMOJI[species]}</Text>}
     />

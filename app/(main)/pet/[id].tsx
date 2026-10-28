@@ -131,7 +131,7 @@ export default function PetDetailScreen() {
 
       <View className="gap-4 pb-8">
         <View className="flex-row items-center gap-4">
-          <PetAvatar petId={pet.id} species={pet.species} size="xl" />
+          <PetAvatar petId={pet.id} species={pet.species} size="xl" photoUrl={pet.photos[0]} />
           <View className="flex-1 gap-2">
             <Text variant="bodySmall" color="secondary">
               {`${pet.breed} · ${t(`pets.gender.${pet.gender}`)} · ${t('pets.age', {
@@ -140,6 +140,7 @@ export default function PetDetailScreen() {
               })}`}
             </Text>
             <View className="flex-row flex-wrap gap-2">
+              {pet.verified && <Tag label={t('pets.verifiedPet')} tone="success" />}
               {owner?.verifiedOwner && <Tag label={t('pets.verifiedOwner')} tone="success" />}
               <Tag
                 label={

@@ -28,13 +28,14 @@ export function PetCard({ pet, onPress }: PetCardProps) {
   return (
     <Card variant="surface" pressable onPress={onPress} accessibilityLabel={pet.name}>
       <View className="flex-row gap-3">
-        <PetAvatar petId={pet.id} species={pet.species} size="lg" />
+        <PetAvatar petId={pet.id} species={pet.species} size="lg" photoUrl={pet.photos[0]} />
         <View className="flex-1 gap-1">
           <View className="flex-row items-center justify-between gap-2">
             <View className="flex-1 flex-row flex-wrap items-center gap-2">
               <Text variant="title" numberOfLines={1}>
                 {pet.name}
               </Text>
+              {pet.verified && <Tag label={t('pets.verifiedPet')} tone="success" />}
               {owner?.verifiedOwner && <Tag label={t('pets.verifiedOwner')} tone="success" />}
             </View>
             {pet.distanceKm !== undefined && (
@@ -55,6 +56,8 @@ export function PetCard({ pet, onPress }: PetCardProps) {
               tone={pet.vaccinationUpToDate ? 'success' : 'warning'}
             />
             {!eligible && <Tag label={t('pets.breedingIneligible')} tone="error" />}
+            {!pet.approved && <Tag label={t('pets.pendingApproval')} tone="warning" />}
+            {pet.hidden && <Tag label={t('pets.hiddenListing')} tone="error" />}
           </View>
         </View>
       </View>

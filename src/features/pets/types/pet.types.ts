@@ -26,6 +26,26 @@ export interface Pet {
   description: string;
   studTerms: StudTerms;
   city: string;
+  /** Up to 4 image URLs (Cloudinary). */
+  photos: string[];
+  /** ISO date of the last vet checkup. */
+  lastVetCheckup?: string;
+  hipScore?: string;
+  /** Path of the private health/pedigree document in the `pet-certificates` bucket. */
+  certificatePath?: string;
+  /** Optional shared litter/parent reference, used only for the close-relative advisory. */
+  litterRef?: string;
+  /** Owner confirms the pet is healthy and ready for breeding. Required to be available. */
+  ownerAttestsBreedingReady: boolean;
+  /** Approximate (about 500 m grid) coordinates, set by the server. Read-only. */
+  lat?: number;
+  lng?: number;
+  /** Set by an admin after reviewing the certificate. Read-only. */
+  verified: boolean;
+  /** False while the listing waits for admin approval. Read-only. */
+  approved: boolean;
+  /** True when an admin or the report auto-hide removed the listing. Read-only. */
+  hidden: boolean;
   /**
    * Owner-controlled toggle for whether this pet is currently open to match
    * requests, independent of the derived age-eligibility check — see
@@ -37,7 +57,13 @@ export interface Pet {
   createdAt: string;
 }
 
-export type CreatePetData = Omit<Pet, 'id' | 'ownerId' | 'createdAt' | 'distanceKm'>;
+export type CreatePetData = Omit<
+  Pet,
+  'id' | 'ownerId' | 'createdAt' | 'distanceKm' | 'verified' | 'approved' | 'hidden' | 'lat' | 'lng'
+> & {
+  /** Where the pet lives. The server snaps it to a ~500 m grid before storing. */
+  location: { lat: number; lng: number };
+};
 export type UpdatePetData = Partial<CreatePetData>;
 
 export interface PetFilters {

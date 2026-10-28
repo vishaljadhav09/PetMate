@@ -19,6 +19,7 @@ export default function EditPetScreen() {
         <PetForm
           mode="edit"
           petId={pet.id}
+          hasCertificate={!!pet.certificatePath}
           defaultValues={{
             name: pet.name,
             species: pet.species,
@@ -33,6 +34,11 @@ export default function EditPetScreen() {
             studFeeAmount:
               pet.studTerms.feeAmount !== undefined ? String(pet.studTerms.feeAmount) : '',
             city: pet.city,
+            photos: pet.photos,
+            lastVetCheckup: pet.lastVetCheckup ?? '',
+            hipScore: pet.hipScore ?? '',
+            litterRef: pet.litterRef ?? '',
+            ownerAttestsBreedingReady: pet.ownerAttestsBreedingReady,
             availableForMatching: pet.availableForMatching,
           }}
           onSuccess={() => router.back()}

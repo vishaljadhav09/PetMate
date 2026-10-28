@@ -82,7 +82,10 @@
       "senderUnavailable": "This pet is not currently open to match requests.",
       "recipientUnavailable": "This pet is not currently open to match requests.",
       "sameOwner": "You can't send a match request to your own pet."
-    }
+    },
+    "pendingApproval": "Pending approval",
+    "hiddenListing": "Hidden",
+    "verifiedPet": "Verified"
   },
   "myPets": {
     "title": "My Pets",
@@ -118,7 +121,30 @@
     "submit": "Save pet profile",
     "submitEdit": "Save changes",
     "createSuccess": "Pet profile created.",
-    "updateSuccess": "Pet profile updated."
+    "updateSuccess": "Pet profile updated.",
+    "photosLabel": "Photos ({{count}}/{{max}})",
+    "addPhoto": "Add photo",
+    "removePhoto": "Remove photo",
+    "photoUploadFailed": "Could not upload the photo. Please try again.",
+    "lastVetCheckupLabel": "Last vet checkup",
+    "hipScoreLabel": "Hip score",
+    "hipScorePlaceholder": "e.g. A/A (optional)",
+    "litterRefLabel": "Litter reference",
+    "litterRefPlaceholder": "Optional",
+    "litterRefHelp": "Pets with the same reference are shown a close-relative warning.",
+    "certificateLabel": "Health or pedigree document",
+    "certificateHelp": "Private. Only you and PetMate can see it. Used to review your verified badge.",
+    "certificateAdd": "Choose a document photo",
+    "certificateReplace": "Replace document photo",
+    "certificateSelected": "Document selected. It uploads when you save.",
+    "certificateUploadFailed": "Pet saved, but the document upload failed. Try again from Edit.",
+    "locationLabel": "Location",
+    "locationHelp": "Shown to others only as an approximate area (about 500 m), never your exact address.",
+    "locationUseCurrent": "Use my current location",
+    "locationCaptured": "Location captured. Tap to refresh",
+    "locationDenied": "Location permission was denied. Allow it in Settings to list your pet.",
+    "locationRequired": "We need your location to list this pet.",
+    "attestLabel": "I confirm this pet is healthy and ready for breeding"
   },
   "profile": {
     "title": "Profile",
@@ -248,7 +274,11 @@
     "detailsMax": "Details must be at most 500 characters",
     "profileNameMax": "Name must be at most 60 characters",
     "profileCityMax": "City must be at most 80 characters",
-    "phoneInvalid": "Enter the number with country code, e.g. +919876543210"
+    "phoneInvalid": "Enter the number with country code, e.g. +919876543210",
+    "photosMax": "You can add up to 4 photos",
+    "hipScoreTooLong": "Hip score must be at most 40 characters",
+    "litterRefTooLong": "Litter reference must be at most 60 characters",
+    "attestRequired": "Confirm the pet is ready for breeding, or turn off matching"
   },
   "auth": {
     "brandName": "PetMate",

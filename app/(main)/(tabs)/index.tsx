@@ -15,9 +15,9 @@ import {
 } from '@/common/components';
 import { PetCard } from '@/features/pets/components/PetCard';
 import { useMyPets, usePets } from '@/features/pets/hooks/usePets';
-import { MOCK_CURRENT_USER_ID } from '@/features/pets/services/mockDb';
 import type { PetGender } from '@/features/pets/types';
 import { isBreedingEligible } from '@/features/pets/utils/breedingEligibility';
+import { useAuthStore } from '@/providers/auth/authStore';
 
 function oppositeGenderOf(gender: PetGender): PetGender {
   return gender === 'male' ? 'female' : 'male';
@@ -26,6 +26,7 @@ function oppositeGenderOf(gender: PetGender): PetGender {
 export default function DiscoverTab() {
   const { t } = useTranslation();
   const router = useRouter();
+  const userId = useAuthStore((s) => s.user?.id);
   const { data: myPets, isLoading: isMyPetsLoading } = useMyPets();
   const [matchingForPetId, setMatchingForPetId] = useState<string | undefined>(undefined);
   const [breedQuery, setBreedQuery] = useState('');
@@ -44,7 +45,7 @@ export default function DiscoverTab() {
       ? {
           species: matchingForPet.species,
           gender: oppositeGenderOf(matchingForPet.gender),
-          excludeOwnerId: MOCK_CURRENT_USER_ID,
+          excludeOwnerId: userId,
           breedQuery,
           verifiedOnly,
         }

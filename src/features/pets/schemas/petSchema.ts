@@ -27,6 +27,11 @@ export const petSchema = z
     studTermsType: z.enum(['fixedFee', 'negotiable', 'pickOfLitter', 'free']),
     studFeeAmount: z.string().optional(),
     city: z.string().trim().min(1, 'validation.required').max(60, 'validation.cityTooLong'),
+    photos: z.array(z.string()).max(4, 'validation.photosMax'),
+    lastVetCheckup: z.union([z.literal(''), z.iso.date('validation.dateInvalid')]).optional(),
+    hipScore: z.string().trim().max(40, 'validation.hipScoreTooLong').optional(),
+    litterRef: z.string().trim().max(60, 'validation.litterRefTooLong').optional(),
+    ownerAttestsBreedingReady: z.boolean(),
     availableForMatching: z.boolean(),
   })
   .superRefine((data, ctx) => {
@@ -41,6 +46,13 @@ export const petSchema = z
       } else if (amount < 0) {
         ctx.addIssue({ code: 'custom', path: ['studFeeAmount'], message: 'validation.studFeeMin' });
       }
+    }
+    if (data.availableForMatching && !data.ownerAttestsBreedingReady) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['ownerAttestsBreedingReady'],
+        message: 'validation.attestRequired',
+      });
     }
     if (data.pedigreeCertified && !data.registrationNumber?.trim()) {
       ctx.addIssue({

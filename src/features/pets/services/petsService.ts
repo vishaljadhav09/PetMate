@@ -1,58 +1,74 @@
+import { supabase } from '@/integrations/supabase';
 import type { CreatePetData, Pet, PetFilters, PetOwner, UpdatePetData } from '../types';
-import { delay, generateId, mockPets, mockUsers, MOCK_CURRENT_USER_ID } from './mockDb';
+import { mapPetRow, toPetInsert, toPetUpdate } from '../utils/petMapper';
+
+function requireSupabase() {
+  if (!supabase) {
+    throw new Error('Supabase is not configured. Add the Supabase env vars to .env.');
+  }
+  return supabase;
+}
 
 export async function fetchPets(filters: PetFilters = {}): Promise<Pet[]> {
-  const results = mockPets.filter((pet) => {
-    if (filters.ownerId && pet.ownerId !== filters.ownerId) return false;
-    if (filters.excludeOwnerId && pet.ownerId === filters.excludeOwnerId) return false;
-    if (filters.species && pet.species !== filters.species) return false;
-    if (filters.gender && pet.gender !== filters.gender) return false;
-    if (
-      filters.breedQuery &&
-      !pet.breed.toLowerCase().includes(filters.breedQuery.trim().toLowerCase())
-    ) {
-      return false;
-    }
-    if (filters.verifiedOnly) {
-      const owner = mockUsers.find((user) => user.id === pet.ownerId);
-      if (!owner?.verifiedOwner) return false;
-    }
-    return true;
-  });
-  return delay([...results]);
+  const client = requireSupabase();
+
+  let query = client.from('pets').select('*, owner:profiles!inner(verified_owner)');
+  if (filters.ownerId) query = query.eq('owner_id', filters.ownerId);
+  if (filters.excludeOwnerId) query = query.neq('owner_id', filters.excludeOwnerId);
+  if (filters.species) query = query.eq('species', filters.species);
+  if (filters.gender) query = query.eq('gender', filters.gender);
+  if (filters.breedQuery?.trim()) query = query.ilike('breed', `%${filters.breedQuery.trim()}%`);
+  if (filters.verifiedOnly) query = query.eq('owner.verified_owner', true);
+
+  const { data, error } = await query.order('created_at', { ascending: false });
+  if (error) throw error;
+  return data.map(mapPetRow);
 }
 
 export async function fetchPetById(id: string): Promise<Pet> {
-  const pet = mockPets.find((item) => item.id === id);
-  if (!pet) throw new Error('Pet not found');
-  return delay(pet);
+  const client = requireSupabase();
+  const { data, error } = await client.from('pets').select('*').eq('id', id).single();
+  if (error) throw error;
+  return mapPetRow(data);
 }
 
 export async function createPet(data: CreatePetData): Promise<Pet> {
-  const pet: Pet = {
-    ...data,
-    id: generateId('pet'),
-    ownerId: MOCK_CURRENT_USER_ID,
-    createdAt: new Date().toISOString().slice(0, 10),
-  };
-  mockPets.unshift(pet);
-  return delay(pet);
+  const client = requireSupabase();
+  const { data: row, error } = await client
+    .from('pets')
+    .insert(toPetInsert(data))
+    .select()
+    .single();
+  if (error) throw error;
+  return mapPetRow(row);
 }
 
 export async function updatePet(id: string, data: UpdatePetData): Promise<Pet> {
-  const index = mockPets.findIndex((pet) => pet.id === id);
-  if (index === -1) throw new Error('Pet not found');
-  const updated: Pet = { ...mockPets[index], ...data };
-  mockPets[index] = updated;
-  return delay(updated);
+  const client = requireSupabase();
+  const { data: row, error } = await client
+    .from('pets')
+    .update(toPetUpdate(data))
+    .eq('id', id)
+    .select()
+    .single();
+  if (error) throw error;
+  return mapPetRow(row);
 }
 
+/** Public owner info. The phone stays empty: it is only revealed after a request is accepted. */
 export async function fetchPetOwner(ownerId: string): Promise<PetOwner> {
-  const owner = mockUsers.find((user) => user.id === ownerId);
-  if (!owner) throw new Error('Pet owner not found');
-  return delay(owner);
-}
-
-export async function fetchCurrentUser(): Promise<PetOwner> {
-  return fetchPetOwner(MOCK_CURRENT_USER_ID);
+  const client = requireSupabase();
+  const { data, error } = await client
+    .from('profiles')
+    .select('id, name, city, verified_owner')
+    .eq('id', ownerId)
+    .single();
+  if (error) throw error;
+  return {
+    id: data.id,
+    name: data.name,
+    phone: '',
+    city: data.city ?? '',
+    verifiedOwner: data.verified_owner,
+  };
 }
